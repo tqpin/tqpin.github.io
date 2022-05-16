@@ -1,0 +1,24 @@
+{
+  "legacyEditor": false,
+  "livePreview": true,
+  "alwaysUpdateLinks": true,
+  "pdfExportSettings": {
+    "pageSize": "Tabloid",
+    "landscape": false,
+    "margin": "0",
+    "downscalePercent": 100
+  },
+  "foldHeading": true,
+  "foldIndent": true,
+  "showLineNumber": false,
+  "autoPairMarkdown": false,
+  "showUnsupportedFiles": true,
+  "attachmentFolderPath": "附件/图片",
+  "useMarkdownLinks": false,
+  "spellcheckLanguages": [
+    "zh-CN",
+    "en-US"
+  ],
+  "strictLineBreaks": false,
+  "fileSortOrder": "alphabeticalReverse"
+}

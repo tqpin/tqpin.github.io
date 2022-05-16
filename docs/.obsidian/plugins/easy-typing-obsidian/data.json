@@ -1,0 +1,19 @@
+{
+  "AutoFormatting": true,
+  "ChineseEnglishSpace": true,
+  "ChineseNoSpace": true,
+  "Capitalization": true,
+  "PunctuationSpace": true,
+  "EnglishSpace": true,
+  "BraceSpace": true,
+  "NumberSpace": true,
+  "InlineCodeSpace": true,
+  "InlineFormulaSpace": true,
+  "LinkSpace": true,
+  "LinkSmartSpace": true,
+  "FullWidthCharacterEnhance": true,
+  "UserDefinedRegExp": ":\\w*:\n{{.*?}}\n(\\d{2}):(\\d{2})",
+  "UserDefinedRegSwitch": true,
+  "UserPartSpace": true,
+  "Debug": false
+}

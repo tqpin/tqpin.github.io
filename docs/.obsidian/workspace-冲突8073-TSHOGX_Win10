@@ -1,0 +1,220 @@
+{
+  "main": {
+    "id": "9e3841a3386b3f2b",
+    "type": "split",
+    "children": [
+      {
+        "id": "64e36a4cf32b8202",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "HOME.md",
+            "mode": "source",
+            "source": false
+          }
+        }
+      },
+      {
+        "id": "aa24994eed45dfd4",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "学习/数学/数值最优化/数值最优化.md",
+            "mode": "source",
+            "source": false
+          }
+        }
+      },
+      {
+        "id": "c8f1acde680304f4",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "学习/数学/数值最优化/Lec 02 Linear Programming 线性规划.md",
+            "mode": "source",
+            "source": false
+          }
+        }
+      },
+      {
+        "id": "45d01a750ed6bdeb",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "学习/课程/毕设.md",
+            "mode": "source",
+            "source": false
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "84b4bb5954e58ffe",
+    "type": "split",
+    "children": [
+      {
+        "id": "a36314157f54a2a5",
+        "type": "tabs",
+        "dimension": 69.05626134301271,
+        "children": [
+          {
+            "id": "e6688e66268aeaa6",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "46ee16e491e182a8",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "7aef718795cbc937",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ]
+      },
+      {
+        "id": "57ea9c888e232ae0",
+        "type": "tabs",
+        "dimension": 30.943738656987296,
+        "children": [
+          {
+            "id": "39bb5be032d07269",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 232.01364135742188
+  },
+  "right": {
+    "id": "65ddfc98f0ed1c40",
+    "type": "split",
+    "children": [
+      {
+        "id": "e8734b57cbfe7fba",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "41ffbbe090bd228e",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "HOME.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "2f2d8ef5af03d19f",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "HOME.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "8b8693fe347da3d9",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "HOME.md"
+              }
+            }
+          },
+          {
+            "id": "6f116d4ce7752af8",
+            "type": "leaf",
+            "state": {
+              "type": "stats-tracker",
+              "state": {}
+            }
+          },
+          {
+            "id": "d9086a449f5f55df",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {}
+            }
+          }
+        ],
+        "currentTab": 2
+      },
+      {
+        "id": "f6ccaf8be8e8cf2b",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "35b8860dd9fbf0bb",
+            "type": "leaf",
+            "state": {
+              "type": "kanban",
+              "state": {
+                "file": "看板/00 看板.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 304.7547607421875
+  },
+  "active": "64e36a4cf32b8202",
+  "lastOpenFiles": [
+    "HOME.md",
+    "学习/数学/数值最优化/数值最优化.md",
+    "学习/数学/数值最优化/Lec 02 Linear Programming 线性规划.md",
+    "学习/数学/数值最优化/Ch2 The geometry of linear programmIng.md",
+    "学习/课程/毕设.md",
+    "学习/数学/数值最优化/Lec 01 Introduction.md",
+    "卡片/整数规划 - 指派问题.md",
+    "毕设论文.md",
+    "卡片/202205041953 python to cpp 转换.md",
+    "卡片/202203241342 毕设中期报告.md"
+  ]
+}

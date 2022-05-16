@@ -1,0 +1,229 @@
+{
+  "main": {
+    "id": "9e3841a3386b3f2b",
+    "type": "split",
+    "children": [
+      {
+        "id": "8fb9f89c14482548",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "卡片/202203201435 摩卡壶.md",
+            "mode": "source",
+            "source": false
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "84b4bb5954e58ffe",
+    "type": "split",
+    "children": [
+      {
+        "id": "a36314157f54a2a5",
+        "type": "tabs",
+        "dimension": 69.05626134301271,
+        "children": [
+          {
+            "id": "e6688e66268aeaa6",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "46ee16e491e182a8",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "tag:#咖啡",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "7aef718795cbc937",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ],
+        "currentTab": 1
+      },
+      {
+        "id": "57ea9c888e232ae0",
+        "type": "tabs",
+        "dimension": 30.943738656987296,
+        "children": [
+          {
+            "id": "39bb5be032d07269",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 232.01364135742188
+  },
+  "right": {
+    "id": "65ddfc98f0ed1c40",
+    "type": "split",
+    "children": [
+      {
+        "id": "e8734b57cbfe7fba",
+        "type": "tabs",
+        "dimension": 34.280639431616336,
+        "children": [
+          {
+            "id": "41ffbbe090bd228e",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "卡片/202203201435 摩卡壶.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "2f2d8ef5af03d19f",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "卡片/202203201435 摩卡壶.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "8b8693fe347da3d9",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "卡片/202203201435 摩卡壶.md"
+              }
+            }
+          },
+          {
+            "id": "6f116d4ce7752af8",
+            "type": "leaf",
+            "state": {
+              "type": "stats-tracker",
+              "state": {}
+            }
+          },
+          {
+            "id": "d9086a449f5f55df",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {}
+            }
+          }
+        ],
+        "currentTab": 2
+      },
+      {
+        "id": "fb36800e7a75f03d",
+        "type": "tabs",
+        "dimension": 29.484902309058615,
+        "children": [
+          {
+            "id": "ebe00c1ad3154357",
+            "type": "leaf",
+            "state": {
+              "type": "localgraph",
+              "state": {
+                "file": "卡片/202203201435 摩卡壶.md",
+                "options": {
+                  "collapse-filter": true,
+                  "search": "",
+                  "localJumps": 1,
+                  "localBacklinks": true,
+                  "localForelinks": true,
+                  "localInterlinks": false,
+                  "showTags": false,
+                  "showAttachments": false,
+                  "hideUnresolved": false,
+                  "collapse-color-groups": true,
+                  "colorGroups": [],
+                  "collapse-display": true,
+                  "showArrow": false,
+                  "textFadeMultiplier": 0,
+                  "nodeSizeMultiplier": 1,
+                  "lineSizeMultiplier": 1,
+                  "collapse-forces": true,
+                  "centerStrength": 0.518713248970312,
+                  "repelStrength": 10,
+                  "linkStrength": 1,
+                  "linkDistance": 250,
+                  "scale": 0.5843581180567515,
+                  "close": true
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "f6ccaf8be8e8cf2b",
+        "type": "tabs",
+        "dimension": 36.234458259325045,
+        "children": [
+          {
+            "id": "35b8860dd9fbf0bb",
+            "type": "leaf",
+            "state": {
+              "type": "kanban",
+              "state": {
+                "file": "看板.md"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 303.02801513671875
+  },
+  "active": "8fb9f89c14482548",
+  "lastOpenFiles": [
+    "卡片/202203201435 摩卡壶.md",
+    "index.md",
+    "看板.md",
+    "过去 12 年里，我的生产力工具只是一个 .txt 文件.md",
+    "卡片/201800000000 From workflowy.md",
+    "卡片/202110010000一些奇怪的自我分析.md",
+    "卡片/202203181521 LP 在线计算器.md",
+    "卡片/202203211400 Ubuntu.md",
+    "卡片/202203222154 MBTI 16人格测试.md",
+    "卡片/202203232144 咖啡价格上涨.md"
+  ]
+}

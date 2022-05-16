@@ -1,0 +1,227 @@
+{
+  "main": {
+    "id": "09aac576b3730fa5",
+    "type": "split",
+    "children": [
+      {
+        "id": "8111e7ea6afabd4f",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "HOME.md",
+            "mode": "source",
+            "source": false
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "f868e1b832578ec9",
+    "type": "split",
+    "children": [
+      {
+        "id": "523a3618193f976a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2fb6d7959de7d0da",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "66027e6d496df239",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "体态",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          },
+          {
+            "id": "923bedf5ef51a142",
+            "type": "leaf",
+            "state": {
+              "type": "starred",
+              "state": {}
+            }
+          }
+        ]
+      },
+      {
+        "id": "ef62dbe42fac7cc5",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "8b9ac387efd55a8f",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "6b95ed7a02b8f3af",
+    "type": "split",
+    "children": [
+      {
+        "id": "83bd131de7a9686d",
+        "type": "tabs",
+        "dimension": 32.33256351039261,
+        "children": [
+          {
+            "id": "92207d19b6fd0489",
+            "type": "leaf",
+            "state": {
+              "type": "stats-tracker",
+              "state": {}
+            }
+          },
+          {
+            "id": "dbdfd056109c3b49",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "HOME.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "d53deaf37edf517b",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "HOME.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "63ecab12336b8a38",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "HOME.md"
+              }
+            }
+          }
+        ],
+        "currentTab": 3
+      },
+      {
+        "id": "99acce138072ae37",
+        "type": "tabs",
+        "dimension": 28.17551963048499,
+        "children": [
+          {
+            "id": "d85648b94d57bcfd",
+            "type": "leaf",
+            "state": {
+              "type": "localgraph",
+              "state": {
+                "file": "HOME.md",
+                "options": {
+                  "collapse-filter": true,
+                  "search": "",
+                  "localJumps": 1,
+                  "localBacklinks": true,
+                  "localForelinks": true,
+                  "localInterlinks": false,
+                  "showTags": false,
+                  "showAttachments": false,
+                  "hideUnresolved": false,
+                  "collapse-color-groups": true,
+                  "colorGroups": [],
+                  "collapse-display": true,
+                  "showArrow": false,
+                  "textFadeMultiplier": 0,
+                  "nodeSizeMultiplier": 1,
+                  "lineSizeMultiplier": 1,
+                  "collapse-forces": true,
+                  "centerStrength": 0.518713248970312,
+                  "repelStrength": 10,
+                  "linkStrength": 1,
+                  "linkDistance": 250,
+                  "scale": 0.3737763682973264,
+                  "close": true
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "161398a0d0ed711a",
+        "type": "tabs",
+        "dimension": 39.4919168591224,
+        "children": [
+          {
+            "id": "9bd6ba044f3f68e0",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {}
+            }
+          },
+          {
+            "id": "ed29c149e39e6e09",
+            "type": "leaf",
+            "state": {
+              "type": "kanban",
+              "state": {
+                "file": "看板/00 看板.md"
+              }
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "active": "8111e7ea6afabd4f",
+  "lastOpenFiles": [
+    "HOME.md",
+    "看板/体态纠正.md",
+    "学习/实验室/SPIN.md",
+    "学习/课程/化学作业.md",
+    "学习/课程/化学.md",
+    "学习/算法/普林斯顿/算法.md",
+    "卡片/202204221515.md",
+    "卡片/3月/Ubuntu.md",
+    "卡片/202203202039 双系统安装教程.md",
+    "卡片/202203211405 ubuntu source.md"
+  ]
+}

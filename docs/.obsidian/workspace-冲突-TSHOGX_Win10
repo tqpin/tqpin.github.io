@@ -1,0 +1,136 @@
+{
+  "main": {
+    "id": "09aac576b3730fa5",
+    "type": "split",
+    "children": [
+      {
+        "id": "a85e1ace6a4f8cbc",
+        "type": "leaf",
+        "state": {
+          "type": "empty",
+          "state": {}
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "e24671c302fc8392",
+    "type": "split",
+    "children": [
+      {
+        "id": "aa169046d157c605",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6d6b3e5806f8a4a4",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "d50810e8d7d1ed16",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "09eef0f9dea84563",
+    "type": "split",
+    "children": [
+      {
+        "id": "db86ee69fa5bafb0",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2482722556f8468d",
+            "type": "leaf",
+            "state": {
+              "type": "stats-tracker",
+              "state": {}
+            }
+          },
+          {
+            "id": "1d8c3f6a1e17606c",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "7d1c0976ece08443",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "3274869168d6ed84",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "aeca18494e37b10f",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "a85e1ace6a4f8cbc",
+  "lastOpenFiles": [
+    "卡片/202203202039 双系统安装教程.md",
+    "未命名.md",
+    "日常/2022/3月/健身干货合集 帅soserious.md",
+    "日常/2022/3月/卢曼笔记法.md",
+    "日常/2022/3月/单反基础知识.md",
+    "课程/- 待办 -.md",
+    "课程/数值最优化/路径规划 - TSP.md",
+    "课程/化学/化学.md",
+    "课程/化学/化学实验.md",
+    "课程/化学/作业.md"
+  ]
+}

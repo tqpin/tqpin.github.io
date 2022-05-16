@@ -1,0 +1,2924 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="icon" href="../../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.3.0, mkdocs-material-8.2.15">
+    
+    
+      
+        <title>第5章 大规模线性规划求解算法 - TSHOGX</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../../assets/stylesheets/main.c382b1dc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../../assets/stylesheets/palette.cc9b2e1e.min.css">
+        
+      
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../../..",location),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#第5章-大规模线性规划求解算法" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../../../.." title="TSHOGX" class="md-header__button md-logo" aria-label="TSHOGX" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            TSHOGX
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              第5章 大规模线性规划求解算法
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" aria-label="清空当前内容" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../../../../.." class="md-tabs__link">
+      Home
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  <li class="md-tabs__item">
+    <a href="../../../../../../%E7%9C%8B%E6%9D%BF/" class="md-tabs__link">
+      看板
+    </a>
+  </li>
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../../%E5%8D%A1%E7%89%87/201800000000%20From%20workflowy/" class="md-tabs__link">
+        卡片
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+
+
+  
+  
+  
+    
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../ML/" class="md-tabs__link md-tabs__link--active">
+        学习
+      </a>
+    </li>
+  
+
+  
+
+      
+        
+  
+  
+
+
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../../../%E9%99%84%E4%BB%B6/%E6%A8%A1%E6%9D%BF/" class="md-tabs__link">
+        附件
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+  
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../../.." title="TSHOGX" class="md-nav__button md-logo" aria-label="TSHOGX" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    TSHOGX
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../%E7%9C%8B%E6%9D%BF/" class="md-nav__link">
+        看板
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3">
+          卡片
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="卡片" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          卡片
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../%E5%8D%A1%E7%89%87/201800000000%20From%20workflowy/" class="md-nav__link">
+        201800000000 From workflowy
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../%E5%8D%A1%E7%89%87/202110010000%E4%B8%80%E4%BA%9B%E5%A5%87%E6%80%AA%E7%9A%84%E8%87%AA%E6%88%91%E5%88%86%E6%9E%90/" class="md-nav__link">
+        202110010000一些奇怪的自我分析
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../%E5%8D%A1%E7%89%87/202203181521%20LP%20%E5%9C%A8%E7%BA%BF%E8%AE%A1%E7%AE%97%E5%99%A8/" class="md-nav__link">
+        LP 在线计算器
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../%E5%8D%A1%E7%89%87/202203201435%20%E6%91%A9%E5%8D%A1%E5%A3%B6/" class="md-nav__link">
+        摩卡壶
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../%E5%8D%A1%E7%89%87/202203211400%20Ubuntu/" class="md-nav__link">
+        Ubuntu
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../%E5%8D%A1%E7%89%87/202203222154%20MBTI%2016%E4%BA%BA%E6%A0%BC%E6%B5%8B%E8%AF%95/" class="md-nav__link">
+        MBTI 16人格测试
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../%E5%8D%A1%E7%89%87/202203232144%20%E5%92%96%E5%95%A1%E4%BB%B7%E6%A0%BC%E4%B8%8A%E6%B6%A8/" class="md-nav__link">
+        咖啡价格上涨
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../%E5%8D%A1%E7%89%87/202203241342%20%E6%AF%95%E8%AE%BE%E4%B8%AD%E6%9C%9F%E6%8A%A5%E5%91%8A/" class="md-nav__link">
+        202203241342 毕设中期报告
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../%E5%8D%A1%E7%89%87/202203251555%20Unity/" class="md-nav__link">
+        Unity
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../%E5%8D%A1%E7%89%87/202203271736%20%E5%9F%83%E5%A1%9E%E4%BF%84%E6%AF%94%E4%BA%9A%E5%92%96%E5%95%A1%E5%9C%B0%E5%9B%BE/" class="md-nav__link">
+        埃塞俄比亚咖啡地图
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../%E5%8D%A1%E7%89%87/202203271741%20%E5%92%96%E5%95%A1%E5%A4%84%E7%90%86%E6%B3%95/" class="md-nav__link">
+        咖啡处理法
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../%E5%8D%A1%E7%89%87/202204110933%20%E4%BB%8E%E6%B3%95%E5%8E%8B%E5%A3%B6%E5%88%B0%E6%84%8F%E5%BC%8F%E5%92%96%E5%95%A1%E6%9C%BA/" class="md-nav__link">
+        从法压壶到意式咖啡机
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../%E5%8D%A1%E7%89%87/202204131533%20%E5%86%A5%E6%83%B3%E4%B8%8E%E7%BB%B4%E4%BF%AE%E8%89%BA%E6%9C%AF/" class="md-nav__link">
+        冥想与维修艺术
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../%E5%8D%A1%E7%89%87/202204132221%20%E4%BB%BB%E5%8A%A1%E4%B9%A6/" class="md-nav__link">
+        202204132221 任务书
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../%E5%8D%A1%E7%89%87/202204140945%20OSU%E7%94%9F%E6%B4%BB%E4%BF%A1%E6%81%AF/" class="md-nav__link">
+        OSU生活信息
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../%E5%8D%A1%E7%89%87/202204162023%20%E4%BD%93%E6%80%81%E7%BA%A0%E6%AD%A3%E6%B1%87%E6%80%BB/" class="md-nav__link">
+        体态纠正汇总
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../%E5%8D%A1%E7%89%87/202205041942%20opendr%20install/" class="md-nav__link">
+        opendr install
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../%E5%8D%A1%E7%89%87/202205041953%20python%20to%20cpp%20%E8%BD%AC%E6%8D%A2/" class="md-nav__link">
+        python to cpp 转换
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../%E5%8D%A1%E7%89%87/202205132333%20%E7%AD%BE%E8%AF%81%E6%9D%90%E6%96%99/" class="md-nav__link">
+        签证材料
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../%E5%8D%A1%E7%89%87/202205162007%20%E5%8D%95%E5%8F%8D%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="md-nav__link">
+        单反基础知识
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4">
+          学习
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="学习" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          学习
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_1" type="checkbox" id="__nav_4_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_1">
+          ML
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="ML" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          ML
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../ML/" class="md-nav__link">
+        A list of ML
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../ML/DL/" class="md-nav__link">
+        Deep Learning
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../ML/Ensemble/" class="md-nav__link">
+        集成学习
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../ML/LDA-QDA/" class="md-nav__link">
+        LDA QDA
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../ML/linear-model/" class="md-nav__link">
+        Linear Model
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../ML/%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/" class="md-nav__link">
+        主成分分析
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../ML/%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA/" class="md-nav__link">
+        学习理论
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../ML/%E6%96%B9%E5%B7%AE-%E5%81%8F%E5%B7%AE%E5%88%86%E8%A7%A3/" class="md-nav__link">
+        方差-偏差分解
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../ML/%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B/" class="md-nav__link">
+        概率图模型
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../ML/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA/" class="md-nav__link">
+        统计学习理论
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../ML/%E7%BB%B4%E5%BA%A6%E7%81%BE%E9%9A%BE/" class="md-nav__link">
+        维数灾难
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_2" type="checkbox" id="__nav_4_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_2">
+          冥想与维修艺术
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="冥想与维修艺术" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_2">
+          <span class="md-nav__icon md-icon"></span>
+          冥想与维修艺术
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E5%86%A5%E6%83%B3%E4%B8%8E%E7%BB%B4%E4%BF%AE%E8%89%BA%E6%9C%AF/E0%20%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%96%E7%95%8C%E4%B8%8A%E8%A6%81%E6%9C%89%E8%BF%99%E6%A0%B7%E4%B8%80%E4%B8%AA%E8%AF%BE%E7%A8%8B%EF%BC%8C%E8%BF%99%E6%A0%B7%E4%B8%80%E6%9C%AC%E4%B9%A6%EF%BC%9F/" class="md-nav__link">
+        E0 为什么世界上要有这样一个课程，这样一本书？
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E5%86%A5%E6%83%B3%E4%B8%8E%E7%BB%B4%E4%BF%AE%E8%89%BA%E6%9C%AF/E1%20%E4%BB%80%E4%B9%88%E6%98%AF%E5%86%A5%E6%83%B3%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E5%86%A5%E6%83%B3%E3%80%81%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%86%A5%E6%83%B3/" class="md-nav__link">
+        E1 什么是冥想、为什么冥想、第一次冥想
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E5%86%A5%E6%83%B3%E4%B8%8E%E7%BB%B4%E4%BF%AE%E8%89%BA%E6%9C%AF/E10%20%E8%A7%82%E5%BF%83%E3%80%81%E5%BF%B5%E5%A4%B4%E7%9A%84%E5%88%86%E8%A7%A3%E3%80%81%E5%A4%A7%E8%84%91%E5%B7%A5%E4%BD%9C%E6%96%B9%E5%BC%8F/" class="md-nav__link">
+        E10 观心、念头的分解、大脑工作方式
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E5%86%A5%E6%83%B3%E4%B8%8E%E7%BB%B4%E4%BF%AE%E8%89%BA%E6%9C%AF/E11%20%E8%A7%82%E6%B3%95%E3%80%81%E4%BA%94%E6%84%9F%E7%9A%84%E7%A7%91%E5%AD%A6%E3%80%81%E4%BA%BA%E4%B8%8E%E7%8E%AF%E5%A2%83%E7%9A%84%E5%85%B3%E7%B3%BB/" class="md-nav__link">
+        E11 观法、五感的科学、人与环境的关系
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E5%86%A5%E6%83%B3%E4%B8%8E%E7%BB%B4%E4%BF%AE%E8%89%BA%E6%9C%AF/E12%20%E5%A4%A7%E8%84%91%E7%B3%BB%E7%BB%9F%E6%A8%A1%E5%9E%8B%E3%80%81%E5%BC%80%E6%94%BE%E5%BC%8F%E8%A7%89%E7%9F%A5/" class="md-nav__link">
+        E12 大脑系统模型、开放式觉知
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E5%86%A5%E6%83%B3%E4%B8%8E%E7%BB%B4%E4%BF%AE%E8%89%BA%E6%9C%AF/E13%20%E5%86%A5%E6%83%B3%E7%BB%83%E4%B9%A0%E7%9A%84%E9%9A%9C%E7%A2%8D%E5%8F%8A%E5%85%8B%E6%9C%8D/" class="md-nav__link">
+        E13 冥想练习的障碍及克服
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E5%86%A5%E6%83%B3%E4%B8%8E%E7%BB%B4%E4%BF%AE%E8%89%BA%E6%9C%AF/E14%20%E2%80%9C%E8%AA%93%E6%84%BF%E2%80%9D%E7%9A%84%E6%8A%80%E5%B7%A7%E3%80%81%E5%86%A5%E6%83%B3%E4%B9%A0%E6%83%AF%E7%9A%84%E5%9F%B9%E5%85%BB/" class="md-nav__link">
+        E14 “誓愿”的技巧、冥想习惯的培养
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E5%86%A5%E6%83%B3%E4%B8%8E%E7%BB%B4%E4%BF%AE%E8%89%BA%E6%9C%AF/E15%20%E8%BA%AB%E4%BD%93%E5%92%8C%E5%91%BC%E5%90%B8%EF%BC%8C%E5%86%A5%E6%83%B3%E7%9A%84%E4%B8%A4%E4%B8%AA%E7%BF%85%E8%86%80/" class="md-nav__link">
+        E15 身体和呼吸，冥想的两个翅膀
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E5%86%A5%E6%83%B3%E4%B8%8E%E7%BB%B4%E4%BF%AE%E8%89%BA%E6%9C%AF/E16%20%E5%86%A5%E6%83%B3%E7%9A%84%E9%98%B6%E6%AE%B5%E6%80%A7%E7%9B%AE%E6%A0%87%EF%BC%8C%E6%97%B6%E6%97%B6%E5%88%BB%E5%88%BB%E7%9A%84%E2%80%9C%E6%AD%A3%E5%BF%B5%E2%80%9D/" class="md-nav__link">
+        E16 冥想的阶段性目标，时时刻刻的“正念”
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E5%86%A5%E6%83%B3%E4%B8%8E%E7%BB%B4%E4%BF%AE%E8%89%BA%E6%9C%AF/E2%20%E5%86%A5%E6%83%B3%E5%A7%BF%E5%8A%BF%E3%80%81%E6%95%B0%E5%90%B8%E6%B3%95%E3%80%81%E8%B5%B0%E8%B7%AF%E5%86%A5%E6%83%B3%E7%9A%84%E7%BB%83%E4%B9%A0/" class="md-nav__link">
+        E2 冥想姿势、数吸法、走路冥想的练习
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E5%86%A5%E6%83%B3%E4%B8%8E%E7%BB%B4%E4%BF%AE%E8%89%BA%E6%9C%AF/E3%20%E8%85%B9%E5%BC%8F%E5%91%BC%E5%90%B8%E3%80%81%E7%AC%AC%E4%BA%8C%E4%B8%AA%E5%A4%A7%E8%84%91%E3%80%81%E7%9B%B4%E8%A7%89%E7%9A%84%E8%BF%90%E7%94%A8/" class="md-nav__link">
+        E3 腹式呼吸、第二个大脑、直觉的运用
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E5%86%A5%E6%83%B3%E4%B8%8E%E7%BB%B4%E4%BF%AE%E8%89%BA%E6%9C%AF/E4%20%E5%AF%B9%E5%91%BC%E5%90%B8%E7%9A%84%E7%90%86%E8%A7%A3%E3%80%81%E5%A6%82%E4%BD%95%E5%85%B3%E6%B3%A8%E5%91%BC%E5%90%B8/" class="md-nav__link">
+        E4 对呼吸的理解、如何关注呼吸
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E5%86%A5%E6%83%B3%E4%B8%8E%E7%BB%B4%E4%BF%AE%E8%89%BA%E6%9C%AF/E5%20%E6%B3%A8%E6%84%8F%E5%8A%9B%E7%A7%91%E5%AD%A6%E3%80%81%E5%85%8B%E6%9C%8D%E2%80%9C%E8%B5%B0%E7%A5%9E%E2%80%9D%E7%9A%84%E6%8A%80%E5%B7%A7/" class="md-nav__link">
+        E5 注意力科学、克服“走神”的技巧
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E5%86%A5%E6%83%B3%E4%B8%8E%E7%BB%B4%E4%BF%AE%E8%89%BA%E6%9C%AF/E6%20%E9%9A%8F%E5%90%B8%E6%B3%95%E3%80%81%E5%AF%B9%E6%8A%97%E2%80%9C%E6%98%8F%E6%B2%89%E2%80%9D%E7%9A%84%E6%8A%80%E5%B7%A7/" class="md-nav__link">
+        E6 随吸法、对抗“昏沉”的技巧
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E5%86%A5%E6%83%B3%E4%B8%8E%E7%BB%B4%E4%BF%AE%E8%89%BA%E6%9C%AF/E7%20%E4%BB%80%E4%B9%88%E6%98%AF%E6%AD%A3%E5%BF%B5%EF%BC%9F%E5%9B%9B%E5%BF%B5%E4%BD%8F/" class="md-nav__link">
+        E7 什么是正念？四念住
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E5%86%A5%E6%83%B3%E4%B8%8E%E7%BB%B4%E4%BF%AE%E8%89%BA%E6%9C%AF/E8%20%E8%A7%82%E8%BA%AB%E3%80%81%E8%BA%AB%E4%BD%93%E6%89%AB%E6%8F%8F%E7%9A%84%E6%8A%80%E5%B7%A7%E3%80%81%E7%96%BC%E7%97%9B%E7%9A%84%E7%A7%91%E5%AD%A6/" class="md-nav__link">
+        E8 观身、身体扫描的技巧、疼痛的科学
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E5%86%A5%E6%83%B3%E4%B8%8E%E7%BB%B4%E4%BF%AE%E8%89%BA%E6%9C%AF/E9%20%E8%A7%82%E5%8F%97%E3%80%81%E8%BE%B9%E7%BC%98%E8%84%91%E3%80%81%E6%83%85%E7%BB%AA%E7%9A%84%E7%A7%91%E5%AD%A6/" class="md-nav__link">
+        E9 观受、边缘脑、情绪的科学
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E5%86%A5%E6%83%B3%E4%B8%8E%E7%BB%B4%E4%BF%AE%E8%89%BA%E6%9C%AF/%E5%86%A5%E6%83%B3%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        播客 by cosmosrepair
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3">
+          数学
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="数学" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_3">
+          <span class="md-nav__icon md-icon"></span>
+          数学
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E5%87%B8%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        凸优化
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_2" type="checkbox" id="__nav_4_3_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_2">
+          Ebook Linear Programming
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Ebook Linear Programming" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          Ebook Linear Programming
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../" class="md-nav__link">
+        Index
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_2_2" type="checkbox" id="__nav_4_3_2_2" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_2_2">
+          Docs
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Docs" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_3_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Docs
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_2_2_1" type="checkbox" id="__nav_4_3_2_2_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_2_2_1">
+          Chapter1
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Chapter1" data-md-level="5">
+        <label class="md-nav__title" for="__nav_4_3_2_2_1">
+          <span class="md-nav__icon md-icon"></span>
+          Chapter1
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter1/chapter1/" class="md-nav__link">
+        第1章 概述
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_2_2_2" type="checkbox" id="__nav_4_3_2_2_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_2_2_2">
+          Chapter2
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Chapter2" data-md-level="5">
+        <label class="md-nav__title" for="__nav_4_3_2_2_2">
+          <span class="md-nav__icon md-icon"></span>
+          Chapter2
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter2/chapter2/" class="md-nav__link">
+        第2章 线性规划的几何原理
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_2_2_3" type="checkbox" id="__nav_4_3_2_2_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_2_2_3">
+          Chapter3
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Chapter3" data-md-level="5">
+        <label class="md-nav__title" for="__nav_4_3_2_2_3">
+          <span class="md-nav__icon md-icon"></span>
+          Chapter3
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter3/chapter3/" class="md-nav__link">
+        第3章 单纯形法
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_2_2_4" type="checkbox" id="__nav_4_3_2_2_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_2_2_4">
+          Chapter4
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Chapter4" data-md-level="5">
+        <label class="md-nav__title" for="__nav_4_3_2_2_4">
+          <span class="md-nav__icon md-icon"></span>
+          Chapter4
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter4/chapter4/" class="md-nav__link">
+        第4章 对偶理论和敏感度分析
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_2_2_5" type="checkbox" id="__nav_4_3_2_2_5" checked>
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_2_2_5">
+          Chapter5
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Chapter5" data-md-level="5">
+        <label class="md-nav__title" for="__nav_4_3_2_2_5">
+          <span class="md-nav__icon md-icon"></span>
+          Chapter5
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          第5章 大规模线性规划求解算法
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        第5章 大规模线性规划求解算法
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#51-列生成算法" class="md-nav__link">
+    5.1 列生成算法
+  </a>
+  
+    <nav class="md-nav" aria-label="5.1 列生成算法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#511-引例" class="md-nav__link">
+    5.1.1 引例
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#512-列生成" class="md-nav__link">
+    5.1.2 列生成
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#513-延伸" class="md-nav__link">
+    5.1.3 延伸
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#52-dantzig-wolfe分解" class="md-nav__link">
+    5.2 Dantzig-Wolfe分解
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 Dantzig-Wolfe分解">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#521-方块对角线性规划问题的分解" class="md-nav__link">
+    5.2.1 方块对角线性规划问题的分解
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#522-主问题再塑造" class="md-nav__link">
+    5.2.2 主问题再塑造
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#523-限制主问题和修正单纯形法" class="md-nav__link">
+    5.2.3 限制主问题和修正单纯形法
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#524-dantzig-wolfe分解方法的步骤" class="md-nav__link">
+    5.2.4 Dantzig-Wolfe分解方法的步骤
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#参考文献" class="md-nav__link">
+    参考文献
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_2_2_6" type="checkbox" id="__nav_4_3_2_2_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_2_2_6">
+          Chapter6
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Chapter6" data-md-level="5">
+        <label class="md-nav__title" for="__nav_4_3_2_2_6">
+          <span class="md-nav__icon md-icon"></span>
+          Chapter6
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter6/chapter6/" class="md-nav__link">
+        第六章 网络流问题
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_2_2_7" type="checkbox" id="__nav_4_3_2_2_7" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_2_2_7">
+          Chapter7
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="Chapter7" data-md-level="5">
+        <label class="md-nav__title" for="__nav_4_3_2_2_7">
+          <span class="md-nav__icon md-icon"></span>
+          Chapter7
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../chapter7/chapter7/" class="md-nav__link">
+        第7章 优化求解器及其比较
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_3" type="checkbox" id="__nav_4_3_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_3">
+          数值最优化
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="数值最优化" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          数值最优化
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/" class="md-nav__link">
+        数值最优化
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_3_2" type="checkbox" id="__nav_4_3_3_2" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_3_2">
+          知识点
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="知识点" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_3_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          知识点
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%9F%A5%E8%AF%86%E7%82%B9/%E6%95%B4%E6%95%B0%E8%A7%84%E5%88%92%20-%20%E6%8C%87%E6%B4%BE%E9%97%AE%E9%A2%98/" class="md-nav__link">
+        整数规划 - 指派问题
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%9F%A5%E8%AF%86%E7%82%B9/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E7%9A%84%E6%9C%AC%E8%B4%A8-3Blue1Brown/" class="md-nav__link">
+        线性代数的本质-3Blue1Brown
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%9F%A5%E8%AF%86%E7%82%B9/%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92%20-%20TSP/" class="md-nav__link">
+        路径规划   TSP
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3_3_3" type="checkbox" id="__nav_4_3_3_3" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_3_3_3">
+          笔记
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="笔记" data-md-level="4">
+        <label class="md-nav__title" for="__nav_4_3_3_3">
+          <span class="md-nav__icon md-icon"></span>
+          笔记
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%AC%94%E8%AE%B0/Ch1%20Introduction%20to%20linear%20optimization/" class="md-nav__link">
+        Ch1 Introduction to linear optimization
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%AC%94%E8%AE%B0/Ch2%20The%20geometry%20of%20linear%20programmIng/" class="md-nav__link">
+        Ch2 The geometry of linear programmIng
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%AC%94%E8%AE%B0/Ch3%20The%20simplex%20method/" class="md-nav__link">
+        Ch3 The simplex method
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%AC%94%E8%AE%B0/Lec%2001%20Introduction/" class="md-nav__link">
+        Lec 01 Introduction
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%AC%94%E8%AE%B0/Lec%2002%20Linear%20Programming%20%E7%BA%BF%E6%80%A7%E8%A7%84%E5%88%92/" class="md-nav__link">
+        Lec 02 Linear Programming 线性规划
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%AC%94%E8%AE%B0/Lec%2003%20Simplex/" class="md-nav__link">
+        Lec 03 Simplex
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%AC%94%E8%AE%B0/Lec%2004%20Duality%20%26%20Dual%20Simplex/" class="md-nav__link">
+        Lec 04 Duality & Dual Simplex
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_4">
+          算法
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="算法" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          算法
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4_1" type="checkbox" id="__nav_4_4_1" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_4_1">
+          普林斯顿
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="普林斯顿" data-md-level="3">
+        <label class="md-nav__title" for="__nav_4_4_1">
+          <span class="md-nav__icon md-icon"></span>
+          普林斯顿
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E7%AE%97%E6%B3%95/%E6%99%AE%E6%9E%97%E6%96%AF%E9%A1%BF/Lecture%2001%20Union%E2%80%93Find/" class="md-nav__link">
+        Lecture 01 Union–Find
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E7%AE%97%E6%B3%95/%E6%99%AE%E6%9E%97%E6%96%AF%E9%A1%BF/%E7%AE%97%E6%B3%95/" class="md-nav__link">
+        算法
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_5" type="checkbox" id="__nav_4_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_5">
+          艺术哲学
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="艺术哲学" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_5">
+          <span class="md-nav__icon md-icon"></span>
+          艺术哲学
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E8%89%BA%E6%9C%AF%E5%93%B2%E5%AD%A6/%E4%BA%BA%E9%97%B4%E8%AF%8D%E8%AF%9D%E7%9A%84%E8%AF%84%E8%AE%BA/" class="md-nav__link">
+        人间词话的评论
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E8%89%BA%E6%9C%AF%E5%93%B2%E5%AD%A6/%E5%8D%A1%E6%8B%89%E7%93%A6%E4%B9%94/" class="md-nav__link">
+        卡拉瓦乔
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E8%89%BA%E6%9C%AF%E5%93%B2%E5%AD%A6/%E5%93%B2%E5%AD%A6%E5%8F%B2%E5%A4%A7%E7%BA%B2/" class="md-nav__link">
+        哲学史大纲
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E8%89%BA%E6%9C%AF%E5%93%B2%E5%AD%A6/%E5%AD%98%E5%9C%A8%E7%9A%84%E8%89%BA%E6%9C%AF/" class="md-nav__link">
+        存在的艺术
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E8%89%BA%E6%9C%AF%E5%93%B2%E5%AD%A6/%E8%89%BA%E6%9C%AF%E5%93%B2%E5%AD%A6%EF%BC%88%E5%AD%99%E5%91%A8%E5%85%B4%EF%BC%89/" class="md-nav__link">
+        艺术哲学 孙周兴
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E8%89%BA%E6%9C%AF%E5%93%B2%E5%AD%A6/%E8%AE%BA%E6%80%9D%E7%BB%B4/" class="md-nav__link">
+        论思维
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_6" type="checkbox" id="__nav_4_6" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4_6">
+          课程
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="课程" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_6">
+          <span class="md-nav__icon md-icon"></span>
+          课程
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E8%AF%BE%E7%A8%8B/SPIN/" class="md-nav__link">
+        SPIN
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E8%AF%BE%E7%A8%8B/%E5%8C%96%E5%AD%A6/" class="md-nav__link">
+        Lec 01
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E8%AF%BE%E7%A8%8B/%E5%8C%96%E5%AD%A6%E4%BD%9C%E4%B8%9A/" class="md-nav__link">
+        hw1
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E8%AF%BE%E7%A8%8B/%E5%8C%96%E5%AD%A6%E5%AE%9E%E9%AA%8C/" class="md-nav__link">
+        化学实验
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E8%AF%BE%E7%A8%8B/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6/" class="md-nav__link">
+        物体在空间运动的描述
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E8%AF%BE%E7%A8%8B/%E6%AF%95%E8%AE%BE/" class="md-nav__link">
+        毕设
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../%E8%AF%BE%E7%A8%8B/%E6%AF%95%E8%AE%BE%E8%AE%BA%E6%96%87/" class="md-nav__link">
+        0 摘要
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      
+      
+      
+        <label class="md-nav__link" for="__nav_5">
+          附件
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" aria-label="附件" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          附件
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../../%E9%99%84%E4%BB%B6/%E6%A8%A1%E6%9D%BF/" class="md-nav__link">
+        模板
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+
+
+<h1 id="第5章-大规模线性规划求解算法">第5章 大规模线性规划求解算法<a class="headerlink" href="#第5章-大规模线性规划求解算法" title="Permanent link">#</a></h1>
+<p>经典的大规模线性规划求解算法有切平面法，列生成和Dantzig-Wolfe分解等，很多算法的应用场景都属于整数规划的范畴。在线性规划专题下，我们简单地给读者介绍列生成和Dantzig-Wolfe分解的原理，想要深入了解的读者可以阅读整数规划专题的相关内容。</p>
+<h2 id="51-列生成算法">5.1 列生成算法<a class="headerlink" href="#51-列生成算法" title="Permanent link">#</a></h2>
+<p>作者：阎泳楠，同济大学 交通运输工程 硕士研究生</p>
+<p>研究方向：交通网络优化与建模</p>
+<p>列生成算法是基于单纯形法的基本思想改进而来的，要理好解列生成，前提条件是掌握好线性规划单纯形法和对偶问题等知识，主要是单纯形法中非基变量进基时检验数（reduced cost）的计算，对偶问题中的影子价格和对偶变量。遗忘了或者对这部分内容不熟悉的读者，可以往前阅读相关章节的内容。</p>
+<h3 id="511-引例">5.1.1 引例<a class="headerlink" href="#511-引例" title="Permanent link">#</a></h3>
+<p>下面通过木料切割（Cutting Stock Problem）这一经典问题，介绍列生成算法。</p>
+<p>**引例：**木材厂有3种不同长度的木料：9m,14m,和16m。这三种木料的成本价分别是5，9和10元。有顾客需要4m的木料30根，5m的木料20根以及7m的木料40根。如何切割木料，使得既能满足顾客需求，又能使成本最少？</p>
+<p>对这样一个小型算例，我们不妨试着枚举一下，这三种长度的木料（9,14,16）一共可以有多少种满足顾客需求（4,5,7）的切割方式。图5.1列出了13种可行的切割方案<span class="arithmatex"><span class="MathJax_Preview">A_j</span><script type="math/tex">A_j</script></span>，<span class="arithmatex"><span class="MathJax_Preview">A_j</span><script type="math/tex">A_j</script></span>是个三维的列向量，表示每个方案关于三种需求样式的切割次数，每个切割方案的数量用<span class="arithmatex"><span class="MathJax_Preview">x_j</span><script type="math/tex">x_j</script></span>表示（注意，此处仅考虑物料浪费最少的切割方案，故并非所有方案）。L表示每种切割方案所用原材料的长度：L=(9,14,16)T，而C对应每种切割方案的成本：C=(5,9,10)T，与原材料长度相关；<em>l*表示不同的需求样式：*l</em>=(4,5,7)T；<em>d*表示不同样式的需求量：*d</em>=(30,20,40)T。我们举个例子，切割方案 = (2, 0, 0)T表示原材料9m长的木棒，可被切割成2个4m长的木料。</p>
+<p><img src="./img/5-1.png"/></p>
+<p><center>图5.1  满足需求的切割方案</center></p>
+<p>对该物料切割问题建立线性规划模型：</p>
+<p>式（5.1）<br />
+$$<br />
+\min \sum_{i=j}^{13}{c_jx_j}\<br />
+\mbox{s.t.}\quad<br />
+\sum_{i=j}^{13}{a_{ij}x_j\geq d_i}\quad i\in {1,2,3}\ <br />
+ x_j \in Z^{+} \quad j\in{1,2,...,13}<br />
+$$<br />
+式中，<span class="arithmatex"><span class="MathJax_Preview">x_j</span><script type="math/tex">x_j</script></span>表示第*j*种方案的数量，取值为正整数；<span class="arithmatex"><span class="MathJax_Preview">a_{ij}</span><script type="math/tex">a_{ij}</script></span>表示第j种方案中需求样式i的个数，其中i取值为1，2，3，分别表示4m、5m和7m的需求样式。</p>
+<p>我们依然能用单纯形法求解上述模型。先不谈单纯形法求解该模型的效率，仅从需要枚举所有的切割方案<span class="arithmatex"><span class="MathJax_Preview">x_j</span><script type="math/tex">x_j</script></span>这一操作，就能知道上述求解方法一定不是最优的。而且上述枚举法存在以下缺点：</p>
+<ul>
+<li>
+<p>当原材料长度增加时，切割方案呈指数式增长，我们无法枚举所有的<span class="arithmatex"><span class="MathJax_Preview">x_j</span><script type="math/tex">x_j</script></span>；</p>
+</li>
+<li>
+<p>枚举出来的切割方案可能会剩余过多的木料，这种方案通常不会被选择。</p>
+</li>
+</ul>
+<p>单纯形法要求我们列出所有的变量（<span class="arithmatex"><span class="MathJax_Preview">x_j</span><script type="math/tex">x_j</script></span>）。回忆一下，单纯形法在每次迭代的过程中，只能用**一个非基变量替换一个基变量**，而最终的**基变量个数仅与约束条件的数量**有关。这么看来，有大部分的<span class="arithmatex"><span class="MathJax_Preview">x_j</span><script type="math/tex">x_j</script></span>是不会被用到的（也就是说这些方案都不够好）。因此，我们不需要，也没必要列出所有的<span class="arithmatex"><span class="MathJax_Preview">x_j</span><script type="math/tex">x_j</script></span>；再者，对于大规模的问题，我们无法列出满足条件的所有变量。基于此，有学者就提出了求解大规模线性规划的高效算法 —— 列生成法，主要适用于**变量数目（列）大于约束条件个数（行）**的线性规划问题。</p>
+<h3 id="512-列生成">5.1.2 列生成<a class="headerlink" href="#512-列生成" title="Permanent link">#</a></h3>
+<p>列生成算法的主要思想是对那些无法列出所有变量的原问题（master problem，MP），先考虑有限变量的主问题restricted master problem (RMP)，其余变量在有需要的时候，再添加到RMP中。什么变量是需要被加入到RMP中的呢？在单纯形法中，我们根据非基变量检验数的正负来选择进基变量；在列生成中，我们通过子问题（subproblem）来寻找满足reduced cost条件的变量，如果找到的话，就将它加入到RMP中，直至找不到为止，那么MP就求得了最优解。</p>
+<p>对5.1.1的引例，我们已经列出了包含13种切割方案的master problem，即式(5.1)。假设初始只考虑3种切割方案(可以与图5.1中列举的方案不一致，如仅考虑9m长原材料的以下三种切割样式<span class="arithmatex"><span class="MathJax_Preview">x_1</span><script type="math/tex">x_1</script></span>、<span class="arithmatex"><span class="MathJax_Preview">x_2</span><script type="math/tex">x_2</script></span>和 <span class="arithmatex"><span class="MathJax_Preview">x_3</span><script type="math/tex">x_3</script></span>,分别取<span class="arithmatex"><span class="MathJax_Preview">A_1</span><script type="math/tex">A_1</script></span>=(2,0,0)T、<span class="arithmatex"><span class="MathJax_Preview">A_2</span><script type="math/tex">A_2</script></span>=(0,1,0)T和<span class="arithmatex"><span class="MathJax_Preview">A_3</span><script type="math/tex">A_3</script></span>=(0,0,1)T，可得到RMP(5.2)。在式(5.2)中，变量的整数约束松弛成了非负约束。</p>
+<p>RMP(5.2):<br />
+$$<br />
+\min {5x_1+5x_2+5x_3}\<br />
+\mbox{s.t.}\quad <br />
+2x_1\geq 30\<br />
+x_2\geq 20\<br />
+x_3\geq 40\<br />
+x_1,x_2,x_3 \geq 0<br />
+$$<br />
+Subproblem的构建依赖于求解RMP得到的对偶变量，也就是影子价格**w**。获得对偶变量有两种方法：一是通过求RMP的对偶问题获得，二是通过RMP问题中的<span class="arithmatex"><span class="MathJax_Preview">C_BB^{-1}</span><script type="math/tex">C_BB^{-1}</script></span>计算得到。基于检验数的计算公式，可以得到Subproblem的目标函数，即<br />
+$$<br />
+\max \sigma_j = z_j - c_j = C_BB^{-1}A_j-c_j = \sum_{i=1}^{m}{w_ia_{ij}-c_j}\quad i\in{1,2,3}<br />
+$$</p>
+<p>若<span class="arithmatex"><span class="MathJax_Preview">max</span><script type="math/tex">max</script></span> ${\sigma_j}&gt;0 $ ，则<span class="arithmatex"><span class="MathJax_Preview">A_j</span><script type="math/tex">A_j</script></span>可以加到RMP的约束条件中，变量加<span class="arithmatex"><span class="MathJax_Preview">x_j</span><script type="math/tex">x_j</script></span>到目标函数中；若  <span class="arithmatex"><span class="MathJax_Preview">max</span><script type="math/tex">max</script></span> ${\sigma_j}\leq0 $，则RMP的当前解已是最优解。</p>
+<p>Subproblem的约束条件如下:<br />
+$$<br />
+\mbox{s.t.}\quad <br />
+\sum_{i=1}^{3}{l_ia_{ij}}\leq{L_i}\<br />
+a_i \geq 0 \quad  x_j \in Z^{+}<br />
+$$<br />
+不难理解，影子价格**w**指的是满足顾客需求可获得的价值，那么子问题目标函数的含义可以理解为新切割方案带来的利润，所以只要使利润大于0的切割方案才能被加到RMP中。子问题的个数一般取决于原材料的类型，求解一个子问题能够得到一个切割方案<span class="arithmatex"><span class="MathJax_Preview">A_j</span><script type="math/tex">A_j</script></span>。约束条件表示当前切割方案要足原材料的要求。Cutting Stock Problem这类问题的subproblem其实是个背包问题，可以用动态规划等方法求解。对车辆路径问题（Vehicle Routing Problem, VRP）而言，它的子问题是最短路问题。可见，列生成算法可以将规模庞大的原问题分解成规模较小的RMP以及一个经典的，有成熟求解算法的线性规划子问题。求解这两个问题的难度将远远小于求解原问题的难度。</p>
+<p>接下来，我们用列生成算法求解引例。</p>
+<p><strong>Iteration 1</strong>：基于RMP(5-2), 用单纯形法可求得<span class="arithmatex"><span class="MathJax_Preview">X^*</span><script type="math/tex">X^*</script></span> = (15,20,40)T, <span class="arithmatex"><span class="MathJax_Preview">Z^*</span><script type="math/tex">Z^*</script></span> = 375，影子价格 <strong>w</strong> = <span class="arithmatex"><span class="MathJax_Preview">C_BB^{-1}</span><script type="math/tex">C_BB^{-1}</script></span> = (2.5,5,5). 设新加入的列为<span class="arithmatex"><span class="MathJax_Preview">A_4</span><script type="math/tex">A_4</script></span> = (<span class="arithmatex"><span class="MathJax_Preview">a_{14}</span><script type="math/tex">a_{14}</script></span>,<span class="arithmatex"><span class="MathJax_Preview">a_{24}</span><script type="math/tex">a_{24}</script></span>,<span class="arithmatex"><span class="MathJax_Preview">a_{34}</span><script type="math/tex">a_{34}</script></span> )T，构造Subproblem。本算例中有三种不同长度的原材料L=(9, 14, 16)T，对应三种不同的成本C=(5,9,10)T，因此这里有三个子问题。</p>
+<p>Subproblem 1:<br />
+$$<br />
+\max {2.5a_{14}+5a_{24}+5a_{34}-\textbf{5}}\<br />
+\mbox{s.t.}\quad <br />
+4a_{14}+5a_{24}+7a_{34}\leq \textbf{9}\<br />
+ a_{ij} \in Z^{+}<br />
+$$<br />
+Subproblem 2:<br />
+$$<br />
+\max {2.5a_{14}+5a_{24}+5a_{34}-\textbf{9}}\<br />
+\mbox{s.t.}\quad <br />
+4a_{14}+5a_{24}+7a_{34}\leq \textbf{14}\<br />
+ a_{ij} \in Z^{+}<br />
+$$<br />
+Subproblem 3:<br />
+$$<br />
+\max {2.5a_{14}+5a_{24}+5a_{34}-\textbf{10}}\<br />
+\mbox{s.t.}\quad <br />
+4a_{14}+5a_{24}+7a_{34}\leq \textbf{16}\<br />
+ a_{ij} \in Z^{+}<br />
+$$<br />
+求得三个子问题的解如下：</p>
+<p>Subproblem 1:  <span class="arithmatex"><span class="MathJax_Preview">A_4</span><script type="math/tex">A_4</script></span> = (1,1,0)T ,  <span class="arithmatex"><span class="MathJax_Preview">\sigma_4 = 2.5</span><script type="math/tex">\sigma_4 = 2.5</script></span>.</p>
+<p>Subproblem 2:  <span class="arithmatex"><span class="MathJax_Preview">A_4</span><script type="math/tex">A_4</script></span> = (1,2,0)T ,  <span class="arithmatex"><span class="MathJax_Preview">\sigma_4 = 3.5</span><script type="math/tex">\sigma_4 = 3.5</script></span>.</p>
+<p>Subproblem 3:  <span class="arithmatex"><span class="MathJax_Preview">A_4</span><script type="math/tex">A_4</script></span> = (0,3,0)T ,  <span class="arithmatex"><span class="MathJax_Preview">\sigma_4 = 5.</span><script type="math/tex">\sigma_4 = 5.</script></span></p>
+<p>三个子问题的检验数都大于0，我们取检验数最大的子问题的解 <span class="arithmatex"><span class="MathJax_Preview">A_4</span><script type="math/tex">A_4</script></span> = (0,3,0)T加入RMP(5.2)中。</p>
+<p><strong>Iteration 2</strong>：   式(5-2)加入了新的切割方案<span class="arithmatex"><span class="MathJax_Preview">A_4</span><script type="math/tex">A_4</script></span>后，得到新的RMP(5.3)如下：</p>
+<p>RMP(5.3):<br />
+$$<br />
+\min {5x_1+5x_2+5x_3+\textbf{10}x_4}\<br />
+\mbox{s.t.}\quad <br />
+2x_1\geq 30\<br />
+x_2+\textbf{3}x_4\geq 20\<br />
+x_3\geq 40\<br />
+x_1,x_2,x_3,x_4 \geq 0<br />
+$$<br />
+切割方案<span class="arithmatex"><span class="MathJax_Preview">A_4</span><script type="math/tex">A_4</script></span>对应原材料为16m的木棒，切割成本为10元。可求得<span class="arithmatex"><span class="MathJax_Preview">X^*</span><script type="math/tex">X^*</script></span> = (15,0,40,20/3)T, <span class="arithmatex"><span class="MathJax_Preview">Z^*</span><script type="math/tex">Z^*</script></span> = 341.7，影子价格 <strong>w</strong> =<span class="arithmatex"><span class="MathJax_Preview">C_BB^{-1}</span><script type="math/tex">C_BB^{-1}</script></span> = (2.5,10/3,5). 设新加入的列为<span class="arithmatex"><span class="MathJax_Preview">A_5</span><script type="math/tex">A_5</script></span> = (<span class="arithmatex"><span class="MathJax_Preview">a_{15}</span><script type="math/tex">a_{15}</script></span>,<span class="arithmatex"><span class="MathJax_Preview">a_{25}</span><script type="math/tex">a_{25}</script></span>,<span class="arithmatex"><span class="MathJax_Preview">a_{35}</span><script type="math/tex">a_{35}</script></span> )T ,构造Subproblem.</p>
+<p>Subproblem:<br />
+$$<br />
+\max \quad{2.5a_{15}+10/3a_{25}+5a_{35}-c_j}\<br />
+\mbox{s.t.}\quad <br />
+4a_{15}+5a_{25}+7a_{35}\leq L_i\<br />
+ a_{ij} \in Z^{+}<br />
+$$<br />
+第二次迭代中同样有三个子问题，其中<span class="arithmatex"><span class="MathJax_Preview">c_j\in\{5,9,10\}</span><script type="math/tex">c_j\in\{5,9,10\}</script></span>,<span class="arithmatex"><span class="MathJax_Preview">L_i\in\{9,14,16\}</span><script type="math/tex">L_i\in\{9,14,16\}</script></span>.</p>
+<p>求得三个子问题的解如下：</p>
+<p>Subproblem 1:  <span class="arithmatex"><span class="MathJax_Preview">A_5</span><script type="math/tex">A_5</script></span> = (0,0,1)T ,  <span class="arithmatex"><span class="MathJax_Preview">\sigma_5 = 0</span><script type="math/tex">\sigma_5 = 0</script></span>.</p>
+<p>Subproblem 2:  <span class="arithmatex"><span class="MathJax_Preview">A_5</span><script type="math/tex">A_5</script></span> = (0,0,2)T ,  <span class="arithmatex"><span class="MathJax_Preview">\sigma_5 = 1.</span><script type="math/tex">\sigma_5 = 1.</script></span></p>
+<p>Subproblem 3:  <span class="arithmatex"><span class="MathJax_Preview">A_5</span><script type="math/tex">A_5</script></span> = (0,0,3)T ,  <span class="arithmatex"><span class="MathJax_Preview">\sigma_5 = 0</span><script type="math/tex">\sigma_5 = 0</script></span>.</p>
+<p>三个检验数中只有Subproblem 2的检验数大于0，故将 <span class="arithmatex"><span class="MathJax_Preview">A_5</span><script type="math/tex">A_5</script></span> = (0,0,2)T加入到新的RMP中。</p>
+<p><strong>Iteration 3</strong>：   式(5.3)加入了新的切割方案<span class="arithmatex"><span class="MathJax_Preview">A_5</span><script type="math/tex">A_5</script></span>后，得到RMP(5.4)如下：</p>
+<p>RMP(5.4):<br />
+$$<br />
+\min {5x_1+5x_2+5x_3+10x_4+\textbf{9}x_5}\<br />
+\mbox{s.t.}\quad<br />
+ 2x_1\geq 30\<br />
+x_2+3x_4\geq 20\<br />
+x_3+\textbf{2}x_5\geq 40\<br />
+x_1,x_2,x_3,x_4,x_5 \geq 0<br />
+$$<br />
+切割方案<span class="arithmatex"><span class="MathJax_Preview">A_5</span><script type="math/tex">A_5</script></span>对应原材料为14m的木棒，切割成本为9元。可求得<span class="arithmatex"><span class="MathJax_Preview">X^*</span><script type="math/tex">X^*</script></span> = (15,0,0,20/3,20)T, <span class="arithmatex"><span class="MathJax_Preview">Z^*</span><script type="math/tex">Z^*</script></span> = 322，影子价格 <strong>w</strong> =$ C_BB^{-1}$ = (2.5,10/3,4.5). 设新加入的列为<span class="arithmatex"><span class="MathJax_Preview">A_6</span><script type="math/tex">A_6</script></span> = (<span class="arithmatex"><span class="MathJax_Preview">a_{16}</span><script type="math/tex">a_{16}</script></span>,<span class="arithmatex"><span class="MathJax_Preview">a_{26}</span><script type="math/tex">a_{26}</script></span>,<span class="arithmatex"><span class="MathJax_Preview">a_{36}</span><script type="math/tex">a_{36}</script></span> )T，构造Subproblem.</p>
+<p>Subproblem:<br />
+$$<br />
+\max \quad{2.5a_{16}+10/3a_{26}+4.5a_{36}-c_j}\<br />
+\mbox{s.t.}\quad <br />
+4a_{16}+5a_{26}+7a_{36}\leq L_i\<br />
+ a_{ij} \in Z^{+}<br />
+$$<br />
+求得三个子问题的解如下：</p>
+<p>Subproblem 1:  <span class="arithmatex"><span class="MathJax_Preview">A_6</span><script type="math/tex">A_6</script></span> = (1,1,0)T ,  <span class="arithmatex"><span class="MathJax_Preview">\sigma_6 = 5/6.</span><script type="math/tex">\sigma_6 = 5/6.</script></span></p>
+<p>Subproblem 2:  <span class="arithmatex"><span class="MathJax_Preview">A_6</span><script type="math/tex">A_6</script></span> = (1,2,0)T ,  <span class="arithmatex"><span class="MathJax_Preview">\sigma_6 = 1/6</span><script type="math/tex">\sigma_6 = 1/6</script></span>.</p>
+<p>Subproblem 3:  <span class="arithmatex"><span class="MathJax_Preview">A_6</span><script type="math/tex">A_6</script></span> = (0,3,0)T ,  <span class="arithmatex"><span class="MathJax_Preview">\sigma_6 = 0</span><script type="math/tex">\sigma_6 = 0</script></span>.</p>
+<p>三个检验数中Subproblem 1的检验数最大，将该检验数对应的切割方案 <span class="arithmatex"><span class="MathJax_Preview">A_6</span><script type="math/tex">A_6</script></span> = (1,1,0)T加入到新的RMP中。</p>
+<p><strong>Iteration 4</strong>：   式(5.4)加入了新的切割方案<span class="arithmatex"><span class="MathJax_Preview">A_6</span><script type="math/tex">A_6</script></span>后，得到新的RMP(5.5)如下：</p>
+<p>RMP(5.5):<br />
+$$<br />
+\min {5x_1+5x_2+5x_3+10x_4+9x_5+\textbf{5}x_6}\<br />
+\mbox{s.t.}\quad<br />
+ 2x_1+\textbf{1}x_6\geq 30\<br />
+x_2+3x_4+\textbf{1}x_6\geq 20\<br />
+x_3+2x_5\geq 40\<br />
+x_1,x_2,x_3,x_4,x_5,x_6 \geq 0<br />
+$$<br />
+切割方案<span class="arithmatex"><span class="MathJax_Preview">A_6</span><script type="math/tex">A_6</script></span>对应原材料为9m的木棒，切割成本为5元。可求得<span class="arithmatex"><span class="MathJax_Preview">X^*</span><script type="math/tex">X^*</script></span> = (5,0,0,0,20,20)T, <span class="arithmatex"><span class="MathJax_Preview">Z^*</span><script type="math/tex">Z^*</script></span> = 305，影子价格 <strong>w</strong> =$ C_BB^{-1}$ = (2.5, 2.5 ,4.5). 设新加入的列为<span class="arithmatex"><span class="MathJax_Preview">A_7</span><script type="math/tex">A_7</script></span> = (<span class="arithmatex"><span class="MathJax_Preview">a_{17}</span><script type="math/tex">a_{17}</script></span>,<span class="arithmatex"><span class="MathJax_Preview">a_{27}</span><script type="math/tex">a_{27}</script></span>,<span class="arithmatex"><span class="MathJax_Preview">a_{37}</span><script type="math/tex">a_{37}</script></span> )T，构造Subproblem.</p>
+<p>Subproblem:<br />
+$$<br />
+\max \quad{2.5a_{17}+2.5a_{27}+4.5a_{37}-c_j}\<br />
+\mbox{s.t.}\quad <br />
+4a_{17}+5a_{27}+7a_{37}\leq L_i\<br />
+ a_{ij} \in Z^{+}<br />
+$$<br />
+求得三个子问题的解如下：</p>
+<p>Subproblem 1:  <span class="arithmatex"><span class="MathJax_Preview">A_7</span><script type="math/tex">A_7</script></span> = (0,0,1)T ,  <span class="arithmatex"><span class="MathJax_Preview">\sigma_7 = -0.5</span><script type="math/tex">\sigma_7 = -0.5</script></span>.</p>
+<p>Subproblem 2:  <span class="arithmatex"><span class="MathJax_Preview">A_7</span><script type="math/tex">A_7</script></span> = (0,0,2)T ,  <span class="arithmatex"><span class="MathJax_Preview">\sigma_7 = 0</span><script type="math/tex">\sigma_7 = 0</script></span>.</p>
+<p>Subproblem 3:  <span class="arithmatex"><span class="MathJax_Preview">A_7</span><script type="math/tex">A_7</script></span> = (0,0,2)T ,  <span class="arithmatex"><span class="MathJax_Preview">\sigma_7 = -1</span><script type="math/tex">\sigma_7 = -1</script></span>.</p>
+<p>当前子问题的检验数均小于等于0，所以X* = (5,0,0,0,20,20)T是RMP(5.5)的最优解。具体方案如下：方案①：将5根9m长的原材料各切成2个4m,；方案②：将20根14m长的原材料各切成2个7m；方案③：将20根9m长的原材料各切成一个4m和一个5m。</p>
+<p><img src="./img/5-2.png"/></p>
+<p><center>图5.2  切方案</center></p>
+<h3 id="513-延伸">5.1.3 延伸<a class="headerlink" href="#513-延伸" title="Permanent link">#</a></h3>
+<p>除了经典的Cutting Stock Problem，旅行商问题（Travelling salesman problem, TSP），车辆路径问题（Vehicle Routing Problem, VRP），车间调度问题（scheduling）等都可以用列生成算法求得下界。本算例的计算过程都是手动计算的，如果有读者想要了解关于调用求解器求解列生成的算例，可查询参考文献[1-3]。</p>
+<h2 id="52-dantzig-wolfe分解">5.2 Dantzig-Wolfe分解<a class="headerlink" href="#52-dantzig-wolfe分解" title="Permanent link">#</a></h2>
+<p>作者：李崇楠 北京交通大学 交通运输规划与管理 研究生在读</p>
+<p>研究方向：运输组织优化</p>
+<p>在本部分，我们考虑求解具有**特殊结构**的线性规划问题。特别地，我们考虑具有**方块对角**（Block Angular）的线性规划问题，并使用Dantzig-Wolfe分解方法来解决这样的问题。</p>
+<h3 id="521-方块对角线性规划问题的分解">5.2.1 方块对角线性规划问题的分解<a class="headerlink" href="#521-方块对角线性规划问题的分解" title="Permanent link">#</a></h3>
+<p>考虑具有如下形式的线性规划问题：<br />
+$$<br />
+\begin{alignat}{2}<br />
+\min\quad &amp; \textbf{c}^T \textbf x\\<br />
+\mbox{s.t.}\quad<br />
+&amp;\textbf A\textbf{x} \le \textbf{b}\\<br />
+&amp; \textbf{x} \geq 0  &amp;{}&amp; <br />
+\end{alignat}<br />
+$$<br />
+其中<span class="arithmatex"><span class="MathJax_Preview">\textbf A</span><script type="math/tex">\textbf A</script></span>是一个<span class="arithmatex"><span class="MathJax_Preview">m\times n</span><script type="math/tex">m\times n</script></span>维度的矩阵，并且假设该矩阵能够写成如下的形式：<br />
+$$<br />
+\textbf A = <br />
+\begin{bmatrix}<br />
+   L_1 &amp; L_2 &amp; \cdots &amp; L_K \\<br />
+   A_1 &amp;   \\<br />
+    &amp; A_2 &amp; &amp;\vdots \\<br />
+    &amp;&amp; \ddots \\<br />
+    &amp;&amp;&amp; A_K<br />
+  \end{bmatrix}<br />
+$$</p>
+<p>其中<span class="arithmatex"><span class="MathJax_Preview">L_k</span><script type="math/tex">L_k</script></span>是一个子矩阵，维度为<span class="arithmatex"><span class="MathJax_Preview">m_L\times n_k</span><script type="math/tex">m_L\times n_k</script></span>，<span class="arithmatex"><span class="MathJax_Preview">k=1,\cdots,K</span><script type="math/tex">k=1,\cdots,K</script></span>，并且<span class="arithmatex"><span class="MathJax_Preview">A_k</span><script type="math/tex">A_k</script></span>是一个子矩阵，维度为<span class="arithmatex"><span class="MathJax_Preview">m_k\times n_k</span><script type="math/tex">m_k\times n_k</script></span>，<span class="arithmatex"><span class="MathJax_Preview">k=1,\cdots,K</span><script type="math/tex">k=1,\cdots,K</script></span>，并且满足：<span class="arithmatex"><span class="MathJax_Preview">\sum_{k=1}^K n_k=n</span><script type="math/tex">\sum_{k=1}^K n_k=n</script></span>以及<span class="arithmatex"><span class="MathJax_Preview">m_L+\sum_{k=1}^Km_k=m</span><script type="math/tex">m_L+\sum_{k=1}^Km_k=m</script></span>。这样的矩阵<span class="arithmatex"><span class="MathJax_Preview">\textbf A</span><script type="math/tex">\textbf A</script></span>称为**方块对角矩阵**.。</p>
+<p>令<span class="arithmatex"><span class="MathJax_Preview">\textbf x^k</span><script type="math/tex">\textbf x^k</script></span>, <span class="arithmatex"><span class="MathJax_Preview">\textbf c^k</span><script type="math/tex">\textbf c^k</script></span>和<span class="arithmatex"><span class="MathJax_Preview">\textbf b^k</span><script type="math/tex">\textbf b^k</script></span>为与<span class="arithmatex"><span class="MathJax_Preview">\textbf A</span><script type="math/tex">\textbf A</script></span>对应的子向量，满足：<br />
+$$<br />
+\textbf x =<br />
+\begin{bmatrix}<br />
+   \textbf x^1  \\<br />
+   \vdots   \<br />
+    \textbf x^K \\<br />
+  \end{bmatrix}, \quad <br />
+  \textbf c  =  \begin{bmatrix}<br />
+   \textbf c^1  \\<br />
+   \vdots   \\<br />
+    \textbf c^K \\<br />
+  \end{bmatrix}, \quad <br />
+   \textbf b  =  \begin{bmatrix}<br />
+   \textbf b^1  \\<br />
+   \vdots   \\<br />
+    \textbf b^K \\<br />
+  \end{bmatrix}.<br />
+$$<br />
+进而，原来的线性规划问题可以写成如下的形式：<br />
+$$<br />
+\begin{alignat}{2}<br />
+\min\quad &amp; (\textbf{c}<sup>1)</sup>T \textbf x<sup>1+(\textbf{c}</sup>2)^T \textbf x<sup>2+\cdots+(\textbf{c}</sup>K)^T \textbf x^K \\<br />
+\mbox{s.t.}\quad<br />
+&amp;{L}<em k="1">1 \textbf x^1+L_2 \textbf x^2+\cdots+L_K \textbf x^K \leq \textbf b^0\\<br />
+&amp; A_1 \textbf x^1 \leq \textbf b^1 \\<br />
+&amp;  A_2 \textbf x^2 \leq \textbf b^2 \\<br />
+&amp; \vdots   \\<br />
+&amp; A_K \textbf x^K  \leq \textbf b^K \\<br />
+&amp; \textbf{x}<sup>1,\textbf{x}</sup>2,\cdots,\textbf{x}^K \geq \textbf 0  &amp;{}&amp; <br />
+\end{alignat}<br />
+$$<br />
+或者使用求和算符写成更加紧凑的形式：<br />
+$$<br />
+\begin{alignat}{2}<br />
+\min\quad &amp; \sum</em>^K (\textbf{c}<sup>k)</sup>T \textbf x^k \\<br />
+\mbox{s.t.}\quad<br />
+&amp;\sum_{k=1}^K L_k \textbf x^k \leq \textbf b^0\\<br />
+&amp; A_k \textbf x^k  \leq \textbf b^k, \quad \forall k=1,\cdots,K. \\<br />
+&amp; \textbf{x}^k \geq \textbf 0, \quad \forall k=1,\cdots,K.  &amp;{}&amp; <br />
+\end{alignat}<br />
+$$<br />
+约束<span class="arithmatex"><span class="MathJax_Preview">\sum_{k=1}^K L_k \textbf x^k \leq \textbf b^0</span><script type="math/tex">\sum_{k=1}^K L_k \textbf x^k \leq \textbf b^0</script></span>称为**耦合约束**（coupling constraints）或**链接约束**（linking constraints），这种约束的个数为<span class="arithmatex"><span class="MathJax_Preview">\textbf b^0</span><script type="math/tex">\textbf b^0</script></span>向量的行数，即之前提到的<span class="arithmatex"><span class="MathJax_Preview">m_L</span><script type="math/tex">m_L</script></span>。之所以称为耦合约束，是因为如果没有这些约束，那么原来的线性规划问题就可以等价地分解为<span class="arithmatex"><span class="MathJax_Preview">K</span><script type="math/tex">K</script></span>个独立的子问题（subproblem），其中第<span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>个子问题是：<br />
+$$<br />
+(SP_k):\left{ <br />
+\begin{alignat}{2}<br />
+\min\quad &amp; (\textbf{c}<sup>k)</sup>T \textbf x^k \\<br />
+\mbox{s.t.}\quad<br />
+&amp; A_k \textbf x^k  \leq \textbf b^k \\<br />
+&amp; \textbf{x}^k \geq \textbf 0  &amp;{}&amp; <br />
+\end{alignat}<br />
+\right.<br />
+$$<br />
+​   这个子问题也是一个线性规划（linear programming）。</p>
+<p>​   分解的基本思想是寻找像刚才提到的这种具有方块对角形式的线性规划问题，这时整个问题并不必须一次性全部解决，而是可以分解为若干更小更好解决的子问题。<strong>原问题经过Dantzig-Wolfe分解后，会生成一个只带有耦合约束的主问题（master problem）与若干子问题</strong>。</p>
+<p>​   主问题可以写成如下形式：（<strong>注意没有非负约束！</strong>）<br />
+$$<br />
+(MP):\left{ <br />
+\begin{alignat}{2}<br />
+\min\quad &amp; \sum_{k=1}^K (\textbf{c}<sup>k)</sup>T \textbf x^k \\<br />
+\mbox{s.t.}\quad<br />
+&amp; \sum_{k=1}^K L_k \textbf x^k \leq \textbf b^0 \\<br />
+\end{alignat}<br />
+\right.<br />
+$$</p>
+<h3 id="522-主问题再塑造">5.2.2 主问题再塑造<a class="headerlink" href="#522-主问题再塑造" title="Permanent link">#</a></h3>
+<p>​   仅仅将问题分解为如上介绍的形式是不够的。为了使得分解后的求解更加高效，主问题需要进行再塑造（reformulation）。再塑造可以保证主问题与子问题在求解的过程中交换信息，同时保证分别对每个问题进行求解。但是在重塑后的主问题中，<strong>约束矩阵的列数会远大于行数</strong>，增加求解的难度。以下内容是主问题再塑造的详细过程，对推导不感兴趣的读者可以略过本节，不影响后续阅读。</p>
+<p>​   再塑造的关键是如下事实：子问题都是线性规划问题，因此每个子问题的可行域都是多边形（polyhedron）。而在单纯形算法学习中，我们学习过**多边形的表示定理**（Resolution Theorem）：可行域内任意一点可以表示为极点的凸组合和极方向的非负组合，用符号表示该定理为：</p>
+<p>​   设<span class="arithmatex"><span class="MathJax_Preview">\textbf x^1,\textbf x^2,\cdots,\textbf x^N</span><script type="math/tex">\textbf x^1,\textbf x^2,\cdots,\textbf x^N</script></span>为某一线性规划可行域的极点（extreme point），<span class="arithmatex"><span class="MathJax_Preview">\textbf d^1,\textbf d^2,\cdots,\textbf d^M</span><script type="math/tex">\textbf d^1,\textbf d^2,\cdots,\textbf d^M</script></span>为可行域的极方向（extreme direction）,那么可行域内的任意一点<span class="arithmatex"><span class="MathJax_Preview">\textbf x</span><script type="math/tex">\textbf x</script></span>可以用下式表示：<br />
+$$<br />
+\textbf x = \sum_{i=1}^N \lambda_i\textbf x^i + \sum_{j=1}^M \mu_j\textbf d^j<br />
+$$<br />
+​   其中<span class="arithmatex"><span class="MathJax_Preview">\lambda_i\in[0,1],\forall i=1,\cdots,N.</span><script type="math/tex">\lambda_i\in[0,1],\forall i=1,\cdots,N.</script></span> <span class="arithmatex"><span class="MathJax_Preview">\sum_{i=1}^N \lambda_i =1</span><script type="math/tex">\sum_{i=1}^N \lambda_i =1</script></span>且<span class="arithmatex"><span class="MathJax_Preview">\mu_j \geq 0, \forall j=1,\cdots,M</span><script type="math/tex">\mu_j \geq 0, \forall j=1,\cdots,M</script></span>. 令<span class="arithmatex"><span class="MathJax_Preview">P_k=\{\textbf x^k | A_k \textbf x^k  \leq \textbf b^k , \textbf x^k \geq \textbf 0 \}</span><script type="math/tex">P_k=\{\textbf x^k | A_k \textbf x^k  \leq \textbf b^k , \textbf x^k \geq \textbf 0 \}</script></span>为第<span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>个子问题<span class="arithmatex"><span class="MathJax_Preview">(SP_k)</span><script type="math/tex">(SP_k)</script></span> 的可行域. 令<span class="arithmatex"><span class="MathJax_Preview">\textbf v^k_1,\textbf v^k_2,\cdots,\textbf v^k_{N_k}</span><script type="math/tex">\textbf v^k_1,\textbf v^k_2,\cdots,\textbf v^k_{N_k}</script></span>为<span class="arithmatex"><span class="MathJax_Preview">P_k</span><script type="math/tex">P_k</script></span>的极点，<span class="arithmatex"><span class="MathJax_Preview">\textbf d^k_1,\textbf d^k_2,\cdots,\textbf d^k_{l_k}</span><script type="math/tex">\textbf d^k_1,\textbf d^k_2,\cdots,\textbf d^k_{l_k}</script></span>为<span class="arithmatex"><span class="MathJax_Preview">P_k</span><script type="math/tex">P_k</script></span>的极方向。根据表示定理，<span class="arithmatex"><span class="MathJax_Preview">P_k</span><script type="math/tex">P_k</script></span>中的任意一点<span class="arithmatex"><span class="MathJax_Preview">\textbf x^k</span><script type="math/tex">\textbf x^k</script></span>可以表示为<br />
+$$<br />
+\textbf x^k = \sum_{i=1}^{N_k} \lambda_i^k\textbf v^k_i + \sum_{j=1}^{l_k} \mu_j^k\textbf d^k_j<br />
+$$<br />
+​   其中，<span class="arithmatex"><span class="MathJax_Preview">\sum_{i=1}^{N_k}\lambda_i^k=1</span><script type="math/tex">\sum_{i=1}^{N_k}\lambda_i^k=1</script></span>, 且对于<span class="arithmatex"><span class="MathJax_Preview">\forall i=1,\cdots,N_k</span><script type="math/tex">\forall i=1,\cdots,N_k</script></span>, <span class="arithmatex"><span class="MathJax_Preview">\lambda_i^k \geq 0</span><script type="math/tex">\lambda_i^k \geq 0</script></span>, 对于<span class="arithmatex"><span class="MathJax_Preview">\forall j=1,\cdots,l_k,\mu_j^k\geq 0</span><script type="math/tex">\forall j=1,\cdots,l_k,\mu_j^k\geq 0</script></span>。将<span class="arithmatex"><span class="MathJax_Preview">\textbf x^k</span><script type="math/tex">\textbf x^k</script></span>由表示定理得到的展开式代入主问题便得到：<br />
+$$<br />
+(MP):\left{ <br />
+\begin{alignat}{2}<br />
+\min\quad &amp; \sum_{k=1}^K (\textbf{c}<sup>k)</sup>T (\sum_{i=1}^{N_k} \lambda_i^k\textbf v^k_i + \sum_{j=1}^{l_k} \mu_j^k\textbf d^k_j) \\<br />
+\mbox{s.t.}\quad<br />
+&amp; \sum_{k=1}^K L_k (\sum_{i=1}^{N_k} \lambda_i^k\textbf v^k_i + \sum_{j=1}^{l_k} \mu_j^k\textbf d^k_j) \leq \textbf b^0 \\<br />
+&amp; \sum_{i=1}<sup>{N_k}\lambda_i</sup>k=1, \quad  k=1,\cdots,K. \\<br />
+&amp; \lambda_i^k \geq 0, \quad  i=1,\cdots,N_k,  k=1,\cdots,K.\\<br />
+&amp; \mu_j^k \geq 0, \quad  j=1,\cdots,l_k,  k=1,\cdots,K.<br />
+\end{alignat}<br />
+\right.<br />
+$$<br />
+​   将括号打开，得到：<br />
+$$<br />
+(MP):\left{ <br />
+\begin{alignat}{2}<br />
+\min\quad &amp; \sum_{k=1}^K \sum_{i=1}^{N_k} \lambda_i^k (\textbf{c}<sup>k)</sup>T ( \textbf v^k_i ) + \sum_{k=1}^K \sum_{j=1}^{l_k} \mu_j^k (\textbf{c}<sup>k)</sup>T ( \textbf d^k_j) \\<br />
+\mbox{s.t.}\quad<br />
+&amp; \sum_{k=1}^K \sum_{i=1}^{N_k} \lambda_i^k (L_k \textbf v<sup>k_i)+\sum_{k=1}</sup>K \sum_{j=1}^{l_k} \mu_j^k (L_k \textbf d^k_j) \leq \textbf b^0 \\<br />
+&amp; \sum_{i=1}<sup>{N_k}\lambda_i</sup>k=1, \quad  k=1,\cdots,K. \\<br />
+&amp; \lambda_i^k \geq 0, \quad  i=1,\cdots,N_k,  k=1,\cdots,K.\\<br />
+&amp; \mu_j^k \geq 0, \quad  j=1,\cdots,l_k,  k=1,\cdots,K.<br />
+\end{alignat}<br />
+\right.<br />
+$$<br />
+​   这里我们认为极点<span class="arithmatex"><span class="MathJax_Preview">\textbf v^k_i</span><script type="math/tex">\textbf v^k_i</script></span>和极方向<span class="arithmatex"><span class="MathJax_Preview">\textbf d^k_j</span><script type="math/tex">\textbf d^k_j</script></span>是已知信息，需要求解出最优的系数<span class="arithmatex"><span class="MathJax_Preview">\lambda^k_i</span><script type="math/tex">\lambda^k_i</script></span>与<span class="arithmatex"><span class="MathJax_Preview">\mu^k_j</span><script type="math/tex">\mu^k_j</script></span>。再由表示定理推算出最优解<span class="arithmatex"><span class="MathJax_Preview">\textbf x^*</span><script type="math/tex">\textbf x^*</script></span>。换句话说，此时原问题的决策变量是<span class="arithmatex"><span class="MathJax_Preview">\lambda^k_i</span><script type="math/tex">\lambda^k_i</script></span>与<span class="arithmatex"><span class="MathJax_Preview">\mu^k_j</span><script type="math/tex">\mu^k_j</script></span>。</p>
+<p>​   对于每一个极点<span class="arithmatex"><span class="MathJax_Preview">\textbf v^k_i\in P_k</span><script type="math/tex">\textbf v^k_i\in P_k</script></span>，令<span class="arithmatex"><span class="MathJax_Preview">f^k_i=(\textbf{c}^k)^T ( \textbf v^k_i )</span><script type="math/tex">f^k_i=(\textbf{c}^k)^T ( \textbf v^k_i )</script></span>和<span class="arithmatex"><span class="MathJax_Preview">q^k_i=L_k \textbf v^k_i</span><script type="math/tex">q^k_i=L_k \textbf v^k_i</script></span>，对于每一个极方向<span class="arithmatex"><span class="MathJax_Preview">\textbf d^k_j</span><script type="math/tex">\textbf d^k_j</script></span>，令<span class="arithmatex"><span class="MathJax_Preview">f^{-k}_j=(\textbf{c}^k)^T ( \textbf d^k_j)</span><script type="math/tex">f^{-k}_j=(\textbf{c}^k)^T ( \textbf d^k_j)</script></span>和<span class="arithmatex"><span class="MathJax_Preview">q^{-k}_j=L_k \textbf d^k_j</span><script type="math/tex">q^{-k}_j=L_k \textbf d^k_j</script></span>。</p>
+<p>​   代入主问题得到：<br />
+$$<br />
+(MP):\left{ <br />
+\begin{alignat}{2}<br />
+\min\quad &amp; \sum_{k=1}^K \sum_{i=1}^{N_k} \lambda_i^k f^k_i + \sum_{k=1}^K \sum_{j=1}^{l_k} \mu_j^k f^{-k}<em k="1">j \\<br />
+\mbox{s.t.}\quad<br />
+&amp; \sum</em>^K \sum_{i=1}^{N_k} \lambda_i^k q<sup>k_i+\sum_{k=1}</sup>K \sum_{j=1}^{l_k} \mu_j^k q^{-k}<em i="1">j \leq \textbf b^0 \\<br />
+&amp; \sum</em><sup>{N_k}\lambda_i</sup>k=1, \quad  k=1,\cdots,K. \\<br />
+&amp; \lambda_i^k \geq 0, \quad  i=1,\cdots,N_k,  k=1,\cdots,K.\\<br />
+&amp; \mu_j^k \geq 0, \quad  j=1,\cdots,l_k,  k=1,\cdots,K.<br />
+\end{alignat}<br />
+\right.<br />
+$$<br />
+​   其中约束<span class="arithmatex"><span class="MathJax_Preview">\sum_{i=1}^{N_k}\lambda_i^k=1, \quad  k=1,\cdots,K</span><script type="math/tex">\sum_{i=1}^{N_k}\lambda_i^k=1, \quad  k=1,\cdots,K</script></span>称为对应于子问题<span class="arithmatex"><span class="MathJax_Preview">(SP_k)</span><script type="math/tex">(SP_k)</script></span>的**凸约束**（convexity constraint）。</p>
+<p>​   主问题可以进一步紧凑表示：<br />
+$$<br />
+(MP):\left{ <br />
+\begin{alignat}{2}<br />
+\min\quad &amp; \textbf f^T_v \boldsymbol \lambda + \textbf f^T_d \boldsymbol \mu \\<br />
+\mbox{s.t.}\quad<br />
+&amp; \textbf Q_v \boldsymbol \lambda + \textbf Q_d \boldsymbol \mu  + \textbf s = \textbf r \\<br />
+&amp; \boldsymbol{\lambda} \geq \textbf 0, \boldsymbol \mu \geq \textbf 0, \textbf s \geq \textbf 0 \\<br />
+\end{alignat}<br />
+\right.<br />
+$$<br />
+​   其中<br />
+$$<br />
+\boldsymbol \lambda = (\lambda_1<sup>1,\cdots,\lambda</sup>1_{N_1},\lambda<sup>2_1,\cdots,\lambda</sup>2_{N_2},\cdots,\lambda<sup>K_1,\cdots,\lambda</sup>K_{N_K})^T<br />
+$$</p>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\boldsymbol \mu = (\mu_1^1,\cdots,\mu^1_{l_1},\mu^2_1,\cdots,\mu^2_{l_2},\cdots,\mu^K_1,\cdots,\mu^K_{l_K})^T
+</div>
+<script type="math/tex; mode=display">
+\boldsymbol \mu = (\mu_1^1,\cdots,\mu^1_{l_1},\mu^2_1,\cdots,\mu^2_{l_2},\cdots,\mu^K_1,\cdots,\mu^K_{l_K})^T
+</script>
+</div>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\boldsymbol f_v = (f_1^1,\cdots,f^1_{N_1},f^2_1,\cdots,f^2_{N_2},\cdots,f^K_1,\cdots,f^K_{N_K})^T
+</div>
+<script type="math/tex; mode=display">
+\boldsymbol f_v = (f_1^1,\cdots,f^1_{N_1},f^2_1,\cdots,f^2_{N_2},\cdots,f^K_1,\cdots,f^K_{N_K})^T
+</script>
+</div>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\boldsymbol f_d = (f_1^{-1},\cdots,f^{-1}_{l_1},f^{-2}_1,\cdots,f^{-2}_{l_2},\cdots,f^{-K}_1,\cdots,f^{-K}_{l_K})^T
+</div>
+<script type="math/tex; mode=display">
+\boldsymbol f_d = (f_1^{-1},\cdots,f^{-1}_{l_1},f^{-2}_1,\cdots,f^{-2}_{l_2},\cdots,f^{-K}_1,\cdots,f^{-K}_{l_K})^T
+</script>
+</div>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\textbf r^T = [(\textbf b_0)^T,\textbf e^T] = [(\textbf b_0)^T,\underbrace{(1,\cdots,1)^T}_{K}]
+</div>
+<script type="math/tex; mode=display">
+\textbf r^T = [(\textbf b_0)^T,\textbf e^T] = [(\textbf b_0)^T,\underbrace{(1,\cdots,1)^T}_{K}]
+</script>
+</div>
+<div class="arithmatex">
+<div class="MathJax_Preview">
+\textbf s^T = [\underbrace{(\textbf s^0)^T}_{m_L},\underbrace{(0,\cdots,0)^T}_{K}]
+</div>
+<script type="math/tex; mode=display">
+\textbf s^T = [\underbrace{(\textbf s^0)^T}_{m_L},\underbrace{(0,\cdots,0)^T}_{K}]
+</script>
+</div>
+<p><span class="arithmatex"><span class="MathJax_Preview">\textbf Q_v</span><script type="math/tex">\textbf Q_v</script></span>是一个矩阵，它对应于<span class="arithmatex"><span class="MathJax_Preview">\lambda_i^k</span><script type="math/tex">\lambda_i^k</script></span>的列为：<br />
+$$<br />
+\begin{bmatrix} \textbf q^k_i  \ \textbf e_k  \end{bmatrix} =<br />
+\begin{bmatrix} L_k \textbf v^k_i  \ \textbf e_k  \end{bmatrix}<br />
+$$<br />
+<span class="arithmatex"><span class="MathJax_Preview">\textbf e_k</span><script type="math/tex">\textbf e_k</script></span>为单位向量，在第<span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>处分量为 1。<span class="arithmatex"><span class="MathJax_Preview">\textbf Q_d</span><script type="math/tex">\textbf Q_d</script></span>是一个矩阵，它对应于<span class="arithmatex"><span class="MathJax_Preview">\mu^k_j</span><script type="math/tex">\mu^k_j</script></span>的列为：<br />
+$$<br />
+\begin{bmatrix} \textbf q^{-k}_j  \ \textbf 0  \end{bmatrix} =<br />
+\begin{bmatrix} L_k \textbf d^k_j  \ \textbf 0  \end{bmatrix}<br />
+$$<br />
+​   由于子问题的可行域可以有大量的极点和极方向，即使是中等规模的问题，主问题决策变量<span class="arithmatex"><span class="MathJax_Preview">\lambda^k_i</span><script type="math/tex">\lambda^k_i</script></span>与<span class="arithmatex"><span class="MathJax_Preview">\mu_j^k</span><script type="math/tex">\mu_j^k</script></span>的数目可能也是海量的。换句话说，在重塑后的主问题中，约束矩阵的列数会远大于行数。</p>
+<h3 id="523-限制主问题和修正单纯形法">5.2.3 限制主问题和修正单纯形法<a class="headerlink" href="#523-限制主问题和修正单纯形法" title="Permanent link">#</a></h3>
+<p>​   针对上述重塑主问题带来的决策变量数量及其多这一难点，下面将介绍**修正单纯形法**（revised simplex method）求解主问题。修正单纯形法的好处是求解过程中大量的决策变量会置零（亦即**非基变量**），这就使得没有必要去生成整个**重塑主问题**。</p>
+<p>​   基于上述分析，启发我们去建立一个更小版本的主问题，称为**限制主问题**（restricted master problem），只有一小部分对应于当前基本可行解的<span class="arithmatex"><span class="MathJax_Preview">\lambda^k_i</span><script type="math/tex">\lambda^k_i</script></span>与<span class="arithmatex"><span class="MathJax_Preview">\mu_j^k</span><script type="math/tex">\mu_j^k</script></span>会在此问题中，其他决策变量是非基的，取值为零。如果在当前基本可行解下，非基变量的**检验数**（reduced cost）都是非负的，那么修正单纯形法终止，得到最优解，否则会有某个检验数为负数的非基变量进基。</p>
+<p>​   假设当前限制主问题的基为<span class="arithmatex"><span class="MathJax_Preview">\textbf B</span><script type="math/tex">\textbf B</script></span>，令<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol \pi^T=\textbf f^T_B \textbf B^{-1}</span><script type="math/tex">\boldsymbol \pi^T=\textbf f^T_B \textbf B^{-1}</script></span>，其中<span class="arithmatex"><span class="MathJax_Preview">\textbf f_B</span><script type="math/tex">\textbf f_B</script></span>由与基变量<span class="arithmatex"><span class="MathJax_Preview">\lambda^k_i</span><script type="math/tex">\lambda^k_i</script></span>、<span class="arithmatex"><span class="MathJax_Preview">\mu_j^k</span><script type="math/tex">\mu_j^k</script></span>对应的<span class="arithmatex"><span class="MathJax_Preview">f^k_i</span><script type="math/tex">f^k_i</script></span>、<span class="arithmatex"><span class="MathJax_Preview">f^{-k}_j</span><script type="math/tex">f^{-k}_j</script></span>组成.假定<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol\pi</span><script type="math/tex">\boldsymbol\pi</script></span>的元素为如下形式：<br />
+$$<br />
+\boldsymbol\pi =<br />
+\begin{bmatrix} \boldsymbol\pi^1  \\<br />
+\pi^2_1 \\<br />
+\pi^2_2 \\<br />
+\vdots \\<br />
+\pi^2_K<br />
+\end{bmatrix}<br />
+$$<br />
+​   其中<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol\pi^1</span><script type="math/tex">\boldsymbol\pi^1</script></span>是对应耦合约束的对偶变量，<span class="arithmatex"><span class="MathJax_Preview">\pi^2_i</span><script type="math/tex">\pi^2_i</script></span>是在限制主问题中对应于子问题<span class="arithmatex"><span class="MathJax_Preview">SP_i</span><script type="math/tex">SP_i</script></span>的凸约束的对偶变量，进而，非基变量<span class="arithmatex"><span class="MathJax_Preview">\lambda^k_i</span><script type="math/tex">\lambda^k_i</script></span>的检验数为<br />
+$$<br />
+r<sup>k_i=f</sup>k_i-\boldsymbol \pi^T \begin{bmatrix} \boldsymbol q_i^k  \\<br />
+\textbf e_k \ \end{bmatrix} = <br />
+(\textbf c<sup>k)</sup>T(\textbf v^k_i) - (\boldsymbol \pi<sup>1)</sup>T L_k \boldsymbol v^k_i - \pi^k_2<br />
+$$<br />
+​   非基变量<span class="arithmatex"><span class="MathJax_Preview">\mu^k_j</span><script type="math/tex">\mu^k_j</script></span>的检验数为<br />
+$$<br />
+r^{-k}<em _text_min="\text{min">j = f^{-k}_j - \boldsymbol \pi^T<br />
+ \begin{bmatrix} \boldsymbol q_j^{-k}  \\ <br />
+\textbf 0 \ \end{bmatrix} = <br />
+(\textbf c<sup>k)</sup>T(\textbf d^k_j) - (\boldsymbol \pi<sup>1)</sup>T L_k \boldsymbol d^k_j<br />
+$$<br />
+​   这里会有大量的非基变量，但是没有必要计算所有的检验数.事实上，计算检验数中最小的就足够了。令<br />
+$$<br />
+r</em>}= \min_{k=1,\cdots,K} \left {<br />
+\min_{i=1,\cdots,N_k} { r^k_i }<br />
+\right }<br />
+$$<br />
+或<br />
+$$<br />
+r_{\text{min}}= \min_{k=1,\cdots,K} \left {<br />
+\min_{i=1,\cdots,N_k} { (\textbf c<sup>k)</sup>T(\textbf v^k_i) - (\boldsymbol \pi<sup>1)</sup>T L_k \textbf v^k_i - \pi^k_2 }<br />
+\right }<br />
+$$<br />
+​   我们进一步令 <span class="arithmatex"><span class="MathJax_Preview">r^k_{*}=\min_{i=1,\cdots,N_k} \{ r^k_i \}</span><script type="math/tex">r^k_{*}=\min_{i=1,\cdots,N_k} \{ r^k_i \}</script></span>，然后让<span class="arithmatex"><span class="MathJax_Preview">r^k_{*}</span><script type="math/tex">r^k_{*}</script></span>作为子问题<span class="arithmatex"><span class="MathJax_Preview">SP_k</span><script type="math/tex">SP_k</script></span>的目标函数： <br />
+$$<br />
+(SP_k):\left{ <br />
+\begin{alignat}{2}<br />
+\min\quad &amp; \sigma_k=\left ((\textbf c<sup>k)</sup>T - (\boldsymbol \pi<sup>1)</sup>T L_k  \right ) \textbf x^k \\<br />
+\mbox{s.t.}\quad<br />
+&amp; A_k \textbf x^k  \leq \textbf b^k \\<br />
+&amp; \textbf{x}^k \geq \textbf 0  &amp;{}&amp; <br />
+\end{alignat}<br />
+\right.<br />
+$$<br />
+​   注意到目标函数没有项<span class="arithmatex"><span class="MathJax_Preview">-\pi^2_k</span><script type="math/tex">-\pi^2_k</script></span>，这是因为在固定<span class="arithmatex"><span class="MathJax_Preview">k</span><script type="math/tex">k</script></span>的情况下，<span class="arithmatex"><span class="MathJax_Preview">-\pi^2_k</span><script type="math/tex">-\pi^2_k</script></span>这一项是固定的。</p>
+<p>​   假定使用修正单纯形法去求解子问题，所以如果子问题是**有界的**（bounded），那么生成一个最优解<span class="arithmatex"><span class="MathJax_Preview">\textbf x^k</span><script type="math/tex">\textbf x^k</script></span>，且它为可行域其中一个极点<span class="arithmatex"><span class="MathJax_Preview">\textbf v^k_i</span><script type="math/tex">\textbf v^k_i</script></span>。我们使用符号<span class="arithmatex"><span class="MathJax_Preview">i^*\in \{ 1,\cdots,N_k \}</span><script type="math/tex">i^*\in \{ 1,\cdots,N_k \}</script></span>来代表最优极点的标号，那么最优极点为<span class="arithmatex"><span class="MathJax_Preview">\textbf v^k_{i^*}</span><script type="math/tex">\textbf v^k_{i^*}</script></span>。另外，使用<span class="arithmatex"><span class="MathJax_Preview">\sigma^*_k</span><script type="math/tex">\sigma^*_k</script></span>表示子问题<span class="arithmatex"><span class="MathJax_Preview">SP_k</span><script type="math/tex">SP_k</script></span>的最优目标函数值，进而有<span class="arithmatex"><span class="MathJax_Preview">r^k_*=\sigma^*_k-\pi^k_2</span><script type="math/tex">r^k_*=\sigma^*_k-\pi^k_2</script></span>。</p>
+<p>​   下面讨论一下子问题在求解过程中可能出现的三种情况： </p>
+<p>​   (1)如果所有子问题都是有界的，并且 <span class="arithmatex"><span class="MathJax_Preview">r_{\text{min}}&lt;0</span><script type="math/tex">r_{\text{min}}<0</script></span>，令<span class="arithmatex"><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>是<span class="arithmatex"><span class="MathJax_Preview">r^k_*</span><script type="math/tex">r^k_*</script></span>取得最小的标号，即<span class="arithmatex"><span class="MathJax_Preview">r_{\text{min}}=r^t_*</span><script type="math/tex">r_{\text{min}}=r^t_*</script></span>。对应于子问题<span class="arithmatex"><span class="MathJax_Preview">SP_t</span><script type="math/tex">SP_t</script></span>的最优极点<span class="arithmatex"><span class="MathJax_Preview">\textbf v^t_{i^*}</span><script type="math/tex">\textbf v^t_{i^*}</script></span>的列<br />
+$$<br />
+\begin{bmatrix} \boldsymbol q_i^t  \\<br />
+\textbf e_t \ \end{bmatrix} =<br />
+\begin{bmatrix} L_t \boldsymbol v_{i<sup>*}</sup>t  \\<br />
+\textbf e_t \ \end{bmatrix}<br />
+$$<br />
+将会进入基<span class="arithmatex"><span class="MathJax_Preview">\textbf B</span><script type="math/tex">\textbf B</script></span>(basis)。</p>
+<p>​   (2)如果所有子问题都是有界的，并且<span class="arithmatex"><span class="MathJax_Preview">r_{\text{min}}\geq0</span><script type="math/tex">r_{\text{min}}\geq0</script></span>，那么当前的基为最优的基。</p>
+<p>​   (3)如果这里有至少一个子问题是**无界的**（unbounded），令<span class="arithmatex"><span class="MathJax_Preview">s</span><script type="math/tex">s</script></span>是子问题无界的标号，即子问题<span class="arithmatex"><span class="MathJax_Preview">SP_s</span><script type="math/tex">SP_s</script></span>无界.此时修正单纯形法对应于子问题<span class="arithmatex"><span class="MathJax_Preview">SP_s</span><script type="math/tex">SP_s</script></span>会返回一个满足<span class="arithmatex"><span class="MathJax_Preview">((\textbf c^s)^T-(\boldsymbol \pi^1)^T L_s)\textbf d^s_{j^*}&lt;0</span><script type="math/tex">((\textbf c^s)^T-(\boldsymbol \pi^1)^T L_s)\textbf d^s_{j^*}<0</script></span>的极方向<span class="arithmatex"><span class="MathJax_Preview">\textbf d^s_{j^*}</span><script type="math/tex">\textbf d^s_{j^*}</script></span>，其中 <span class="arithmatex"><span class="MathJax_Preview">j^*\in \{1,\cdots,l_s\}</span><script type="math/tex">j^*\in \{1,\cdots,l_s\}</script></span>，并且对应于<span class="arithmatex"><span class="MathJax_Preview">\mu^s_{j^*}</span><script type="math/tex">\mu^s_{j^*}</script></span>的列 <br />
+$$<br />
+\begin{bmatrix} \boldsymbol q_{j<sup -s="-s">*}</sup>  \\ <br />
+\textbf 0 \ \end{bmatrix} =<br />
+\begin{bmatrix} L_s\boldsymbol d_{j<sup s="s">*}</sup>  \\<br />
+\textbf 0 \ \end{bmatrix}<br />
+$$</p>
+<p>将会进入基<span class="arithmatex"><span class="MathJax_Preview">\textbf B</span><script type="math/tex">\textbf B</script></span>(basis)。</p>
+<h3 id="524-dantzig-wolfe分解方法的步骤">5.2.4 Dantzig-Wolfe分解方法的步骤<a class="headerlink" href="#524-dantzig-wolfe分解方法的步骤" title="Permanent link">#</a></h3>
+<p><strong>算法步骤</strong></p>
+<p>​   在经过前面的介绍之后，我们可以正式介绍Dantzig-Wolfe分解方法的步骤。</p>
+<p>​   <strong>Step 0</strong>：<strong>初始化</strong>。生成主问题的一个初始基<span class="arithmatex"><span class="MathJax_Preview">\textbf B</span><script type="math/tex">\textbf B</script></span>。令<span class="arithmatex"><span class="MathJax_Preview">\textbf x_B</span><script type="math/tex">\textbf x_B</script></span>为基变量向量，<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol{\bar B}</span><script type="math/tex">\boldsymbol{\bar B}</script></span>为基变量的指标集合（index set），并让所有非基变量为0，得到限制主问题。</p>
+<p>​   <strong>Step 1</strong>：<strong>得到单纯形算子</strong>。通过解线性系统：<span class="arithmatex"><span class="MathJax_Preview">\textbf B^T \boldsymbol pi = \textbf f_B</span><script type="math/tex">\textbf B^T \boldsymbol pi = \textbf f_B</script></span>来得到单纯形算子<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol \pi</span><script type="math/tex">\boldsymbol \pi</script></span>。</p>
+<p>​   <strong>Step 2</strong>：<strong>最优性检验</strong>。对于每一个<span class="arithmatex"><span class="MathJax_Preview">k=1,\cdots,K</span><script type="math/tex">k=1,\cdots,K</script></span>，使用修正单纯形法求解子问题<span class="arithmatex"><span class="MathJax_Preview">SP_k</span><script type="math/tex">SP_k</script></span>，亦即求解：<br />
+$$<br />
+(SP_k):\left{ <br />
+\begin{alignat}{2}<br />
+\min\quad &amp; \sigma_k=\left ((\textbf c<sup>k)</sup>T - (\boldsymbol \pi<sup>1)</sup>T L_k  \right ) \textbf x^k \\<br />
+\mbox{s.t.}\quad<br />
+&amp; A_k \textbf x^k  \leq \textbf b^k \\<br />
+&amp; \textbf{x}^k \geq \textbf 0  &amp;{}&amp; <br />
+\end{alignat}<br />
+\right.<br />
+$$<br />
+​   如果 <span class="arithmatex"><span class="MathJax_Preview">SP_k</span><script type="math/tex">SP_k</script></span>是无界的，那么进入Step 3；否则，令<span class="arithmatex"><span class="MathJax_Preview">\textbf x^k=\textbf v^k_{i^*}</span><script type="math/tex">\textbf x^k=\textbf v^k_{i^*}</script></span>来代表最优的基本可行解，并去计算检验数<span class="arithmatex"><span class="MathJax_Preview">r^k_*=\sigma^*_k-\pi^2_k</span><script type="math/tex">r^k_*=\sigma^*_k-\pi^2_k</script></span>。如果所有的<span class="arithmatex"><span class="MathJax_Preview">k=1,\cdots,K</span><script type="math/tex">k=1,\cdots,K</script></span>都已经完成上面的工作后，考虑<span class="arithmatex"><span class="MathJax_Preview">r_{\text{min}}</span><script type="math/tex">r_{\text{min}}</script></span>的情况：</p>
+<p>​   若 <span class="arithmatex"><span class="MathJax_Preview">r_{\text{min}}\geq 0</span><script type="math/tex">r_{\text{min}}\geq 0</script></span>，那么终止算法，当前的基为最优的基，否则进入Step 3。</p>
+<p>​   <strong>Step 3</strong>：列生成。如果所有子问题<span class="arithmatex"><span class="MathJax_Preview">SP_k</span><script type="math/tex">SP_k</script></span>都是有界的，并且<span class="arithmatex"><span class="MathJax_Preview">r_{\text{min}} &lt; 0</span><script type="math/tex">r_{\text{min}} < 0</script></span>，那么令<span class="arithmatex"><span class="MathJax_Preview">t</span><script type="math/tex">t</script></span>为指标，该指标满足：<span class="arithmatex"><span class="MathJax_Preview">r_{\text{min}} = r^t_{*}</span><script type="math/tex">r_{\text{min}} = r^t_{*}</script></span>。令<br />
+$$<br />
+\boldsymbol {\bar a} =<br />
+\begin{bmatrix} \boldsymbol q_{i<sup>*}</sup>t  \\ <br />
+\textbf e_t \ \end{bmatrix} =<br />
+\begin{bmatrix} L_t \boldsymbol v_{i<sup>*}</sup>t  \\ <br />
+\textbf e_t \ \end{bmatrix}<br />
+$$<br />
+其中<span class="arithmatex"><span class="MathJax_Preview">\textbf v^t_{i^*}</span><script type="math/tex">\textbf v^t_{i^*}</script></span>是子问题<span class="arithmatex"><span class="MathJax_Preview">SP_t</span><script type="math/tex">SP_t</script></span>的最优极点，并进入Step 4。</p>
+<p>否则存在一个子问题<span class="arithmatex"><span class="MathJax_Preview">SP_s</span><script type="math/tex">SP_s</script></span>是无界的，那么会有极方向<span class="arithmatex"><span class="MathJax_Preview">\textbf d^s_{j^*}</span><script type="math/tex">\textbf d^s_{j^*}</script></span>生成，该极方向满足<span class="arithmatex"><span class="MathJax_Preview">((\textbf c^s)^T-(\boldsymbol \pi^1)^T L_s)\textbf d^s_{j^*}&lt;0</span><script type="math/tex">((\textbf c^s)^T-(\boldsymbol \pi^1)^T L_s)\textbf d^s_{j^*}<0</script></span>，并且令<br />
+$$<br />
+\boldsymbol {\bar a}<br />
+=<br />
+\begin{bmatrix} \boldsymbol q_{j<sup -s="-s">*}</sup>  \\ <br />
+\textbf 0 \ \end{bmatrix} =<br />
+\begin{bmatrix} L_s\boldsymbol d_{j<sup s="s">*}</sup>  \\ <br />
+\textbf 0 \ \end{bmatrix}<br />
+$$<br />
+进入Step 4。</p>
+<p>​   <strong>Step 4</strong>：<strong>生成下降方向</strong>。令下降方向为<span class="arithmatex"><span class="MathJax_Preview">\textbf d</span><script type="math/tex">\textbf d</script></span>，求解线性系统<span class="arithmatex"><span class="MathJax_Preview">\textbf B\textbf d = -\boldsymbol {\bar a}</span><script type="math/tex">\textbf B\textbf d = -\boldsymbol {\bar a}</script></span>得到<span class="arithmatex"><span class="MathJax_Preview">\textbf d</span><script type="math/tex">\textbf d</script></span>。如果<span class="arithmatex"><span class="MathJax_Preview">\textbf d \geq \textbf 0</span><script type="math/tex">\textbf d \geq \textbf 0</script></span>，那么原问题是无界的，**终止**算法，否则进入Step 5。</p>
+<p>​   <strong>Step 5</strong>：<strong>生成步长</strong>。利用<br />
+$$<br />
+\alpha = <br />
+\min_{l\in \boldsymbol{\bar B}} { <br />
+-\frac{x_l}{d_l} | d_l &lt; 0<br />
+}<br />
+$$<br />
+ 计算步长（最小比率检验 minimum ratio test），令<span class="arithmatex"><span class="MathJax_Preview">l^*</span><script type="math/tex">l^*</script></span>为指标满足 <br />
+$$<br />
+\alpha = - \frac{x_{l<sup>*}}{d_{l</sup>*}}<br />
+$$<br />
+进入Step 6。</p>
+<p>​   <strong>Step 6</strong>：<strong>更新基本解</strong>。<span class="arithmatex"><span class="MathJax_Preview">\textbf x_B := \textbf x_B + \alpha \textbf d</span><script type="math/tex">\textbf x_B := \textbf x_B + \alpha \textbf d</script></span>来更新基本解，进入Step 7。</p>
+<p>​   <strong>Step 7</strong>：<strong>更新基</strong>。令<span class="arithmatex"><span class="MathJax_Preview">\textbf B_{l^*}</span><script type="math/tex">\textbf B_{l^*}</script></span>为对应于出基变量<span class="arithmatex"><span class="MathJax_Preview">x_{l^*}</span><script type="math/tex">x_{l^*}</script></span>位于基<span class="arithmatex"><span class="MathJax_Preview">\textbf B</span><script type="math/tex">\textbf B</script></span>的列。通过<span class="arithmatex"><span class="MathJax_Preview">\textbf B_{l^*}</span><script type="math/tex">\textbf B_{l^*}</script></span>离开基，并在对应位置添加<span class="arithmatex"><span class="MathJax_Preview">\boldsymbol {\bar a}</span><script type="math/tex">\boldsymbol {\bar a}</script></span>的方式来更新基。回到Step 1。</p>
+<p><strong>参考代码下载</strong></p>
+<p>作者利用MATLAB完成了Dantzig – Wolfe分解的代码，代码下载地址为：</p>
+<p>链接: <a href="https://pan.baidu.com/s/1NDnLFnMq4MjRUqAfNPIKiQ">https://pan.baidu.com/s/1NDnLFnMq4MjRUqAfNPIKiQ</a> </p>
+<p>密码: l2tz</p>
+<h3 id="参考文献">参考文献<a class="headerlink" href="#参考文献" title="Permanent link">#</a></h3>
+<p>[1]  <a href="https://zhuanlan.zhihu.com/p/32718222">【学界/编码】从下料问题看整数规划中的列生成方法_附Gurobi求解器源代码</a></p>
+<p>[2] <a href="https://www.jianshu.com/p/efb59a5d1b13">干货 | 10分钟带你彻底了解column generation（列生成）算法的原理附java代码</a></p>
+<p>[3]  <a href="https://www.juliaopt.org/notebooks/Chiwei%20Yan%20-%20Cutting%20Stock.html">开源的Julia实例给出了column generation求解Cutting Stock Problem的详细步骤</a></p>
+
+              
+            </article>
+          </div>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="页脚">
+      
+        
+        <a href="../../chapter4/chapter4/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 第4章 对偶理论和敏感度分析" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              第4章 对偶理论和敏感度分析
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../../chapter6/chapter6/" class="md-footer__link md-footer__link--next" aria-label="下一页: 第六章 网络流问题" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              第六章 网络流问题
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4Z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../../../../..", "features": ["navigation.tabs", "toc.integrate"], "search": "../../../../../../assets/javascripts/workers/search.2a1c317c.min.js", "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\s\\-\uff0c\u3002]+", "search.placeholder": "\u641c\u7d22", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version.title": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}}</script>
+    
+    
+      <script src="../../../../../../assets/javascripts/bundle.a6c66575.min.js"></script>
+      
+    
+  </body>
+</html>
