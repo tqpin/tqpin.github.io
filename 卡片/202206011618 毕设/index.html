@@ -1,0 +1,1923 @@
+
+
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="学习 本科 毕业论文">
+      
+      
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.1.1">
+    
+    
+      
+        <title>学习和优化：基于人体参数模型的三维人体估计</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a676eddb.min.css">
+      
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    <body dir="">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#0-摘要" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="">
+    <a href="../.." title="TSHOGX" class="md-header-nav__button md-logo" aria-label="TSHOGX">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            TSHOGX
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              学习和优化：基于人体参数模型的三维人体估计
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            键入以开始搜索
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="TSHOGX" class="md-nav__button md-logo" aria-label="TSHOGX">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+
+    </a>
+    TSHOGX
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../%E6%97%A5%E8%AE%B0/" title="日记" class="md-nav__link">
+      日记
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
+    
+    <label class="md-nav__link" for="nav-3">
+      卡片
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="卡片" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        卡片
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../201800000000%20From%20workflowy/" title="201800000000 From workflowy" class="md-nav__link">
+      201800000000 From workflowy
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../202110010000%E4%B8%80%E4%BA%9B%E5%A5%87%E6%80%AA%E7%9A%84%E8%87%AA%E6%88%91%E5%88%86%E6%9E%90/" title="202110010000一些奇怪的自我分析" class="md-nav__link">
+      202110010000一些奇怪的自我分析
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../202203211400%20Ubuntu/" title="Ubuntu" class="md-nav__link">
+      Ubuntu
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../202203222154%20MBTI%2016%E4%BA%BA%E6%A0%BC%E6%B5%8B%E8%AF%95/" title="MBTI 16人格测试" class="md-nav__link">
+      MBTI 16人格测试
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../202203251555%20Unity/" title="Unity" class="md-nav__link">
+      Unity
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../202204131533%20%E5%86%A5%E6%83%B3%E4%B8%8E%E7%BB%B4%E4%BF%AE%E8%89%BA%E6%9C%AF/" title="冥想与维修艺术" class="md-nav__link">
+      冥想与维修艺术
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../202204140945%20OSU%20%E7%94%9F%E6%B4%BB/" title="OSU 生活信息" class="md-nav__link">
+      OSU 生活信息
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../202204162023%20%E4%BD%93%E6%80%81%E7%BA%A0%E6%AD%A3%E6%B1%87%E6%80%BB/" title="体态纠正汇总" class="md-nav__link">
+      体态纠正汇总
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../202205041942%20opendr%20install/" title="opendr install" class="md-nav__link">
+      opendr install
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../202205041953%20python%20to%20cpp%20%E8%BD%AC%E6%8D%A2/" title="python to cpp 转换" class="md-nav__link">
+      python to cpp 转换
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../202205132333%20%E7%AD%BE%E8%AF%81%E6%9D%90%E6%96%99/" title="签证材料" class="md-nav__link">
+      签证材料
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../202205162007%20%E5%8D%95%E5%8F%8D%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="单反基础知识" class="md-nav__link">
+      单反基础知识
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../202205181412%20%E4%B9%90%E5%99%A8/" title="乐器" class="md-nav__link">
+      乐器
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../202205201137%20%E5%92%96%E5%95%A1/" title="咖啡" class="md-nav__link">
+      咖啡
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+    <a href="./" title="学习和优化：基于人体参数模型的三维人体估计" class="md-nav__link md-nav__link--active">
+      学习和优化：基于人体参数模型的三维人体估计
+    </a>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../202206031318%20%E5%81%A5%E8%BA%AB/" title="健身" class="md-nav__link">
+      健身
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../202206032222%20ACE/" title="ACE" class="md-nav__link">
+      ACE
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../202206071545%20OSU%20%E5%AD%A6%E4%B9%A0/" title="OSU 学习信息" class="md-nav__link">
+      OSU 学习信息
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../202207141318%20%E9%A3%9F%E8%B0%B1/" title="食谱" class="md-nav__link">
+      食谱
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../202207141319%20%E5%81%A5%E8%BA%AB%E5%AE%89%E6%8E%92/" title="健身安排" class="md-nav__link">
+      健身安排
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../202207141320%20%E5%85%B6%E4%BB%96%E9%A1%B9%E7%9B%AE/" title="其他项目" class="md-nav__link">
+      其他项目
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      学习
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="学习" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        学习
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/draft/" title="Draft" class="md-nav__link">
+      Draft
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E4%BC%98%E5%8C%96/" title="优化" class="md-nav__link">
+      优化
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BE%AE%E7%A7%AF%E5%88%86/" title="微积分" class="md-nav__link">
+      微积分
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E6%A6%82%E7%8E%87%E8%AE%BA/" title="概率论" class="md-nav__link">
+      概率论
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E7%AE%97%E6%B3%95/" title="算法" class="md-nav__link">
+      算法
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" title="线性代数" class="md-nav__link">
+      线性代数
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7" type="checkbox" id="nav-4-7">
+    
+    <label class="md-nav__link" for="nav-4-7">
+      归档
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="归档" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-7">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        归档
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/SPIN/" title="SPIN" class="md-nav__link">
+      SPIN
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/%E5%8C%96%E5%AD%A6/" title="Lec 01" class="md-nav__link">
+      Lec 01
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6/" title="物体在空间运动的描述" class="md-nav__link">
+      物体在空间运动的描述
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7-4" type="checkbox" id="nav-4-7-4">
+    
+    <label class="md-nav__link" for="nav-4-7-4">
+      Ebook Linear Programming
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Ebook Linear Programming" data-md-level="3">
+      <label class="md-nav__title" for="nav-4-7-4">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Ebook Linear Programming
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/Ebook-Linear_Programming/Ebook-Linear_Programming/" title="Ebook Linear Programming" class="md-nav__link">
+      Ebook Linear Programming
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7-4-2" type="checkbox" id="nav-4-7-4-2">
+    
+    <label class="md-nav__link" for="nav-4-7-4-2">
+      Docs
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Docs" data-md-level="4">
+      <label class="md-nav__title" for="nav-4-7-4-2">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Docs
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7-4-2-1" type="checkbox" id="nav-4-7-4-2-1">
+    
+    <label class="md-nav__link" for="nav-4-7-4-2-1">
+      Chapter1
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Chapter1" data-md-level="5">
+      <label class="md-nav__title" for="nav-4-7-4-2-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Chapter1
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/Ebook-Linear_Programming/docs/chapter1/chapter1/" title="第1章 概述" class="md-nav__link">
+      第1章 概述
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7-4-2-2" type="checkbox" id="nav-4-7-4-2-2">
+    
+    <label class="md-nav__link" for="nav-4-7-4-2-2">
+      Chapter2
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Chapter2" data-md-level="5">
+      <label class="md-nav__title" for="nav-4-7-4-2-2">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Chapter2
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/Ebook-Linear_Programming/docs/chapter2/chapter2/" title="第2章 线性规划的几何原理" class="md-nav__link">
+      第2章 线性规划的几何原理
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7-4-2-3" type="checkbox" id="nav-4-7-4-2-3">
+    
+    <label class="md-nav__link" for="nav-4-7-4-2-3">
+      Chapter3
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Chapter3" data-md-level="5">
+      <label class="md-nav__title" for="nav-4-7-4-2-3">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Chapter3
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/Ebook-Linear_Programming/docs/chapter3/chapter3/" title="第3章 单纯形法" class="md-nav__link">
+      第3章 单纯形法
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7-4-2-4" type="checkbox" id="nav-4-7-4-2-4">
+    
+    <label class="md-nav__link" for="nav-4-7-4-2-4">
+      Chapter4
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Chapter4" data-md-level="5">
+      <label class="md-nav__title" for="nav-4-7-4-2-4">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Chapter4
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/Ebook-Linear_Programming/docs/chapter4/chapter4/" title="第4章 对偶理论和敏感度分析" class="md-nav__link">
+      第4章 对偶理论和敏感度分析
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7-4-2-5" type="checkbox" id="nav-4-7-4-2-5">
+    
+    <label class="md-nav__link" for="nav-4-7-4-2-5">
+      Chapter5
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Chapter5" data-md-level="5">
+      <label class="md-nav__title" for="nav-4-7-4-2-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Chapter5
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/Ebook-Linear_Programming/docs/chapter5/chapter5/" title="第5章 大规模线性规划求解算法" class="md-nav__link">
+      第5章 大规模线性规划求解算法
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7-4-2-6" type="checkbox" id="nav-4-7-4-2-6">
+    
+    <label class="md-nav__link" for="nav-4-7-4-2-6">
+      Chapter6
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Chapter6" data-md-level="5">
+      <label class="md-nav__title" for="nav-4-7-4-2-6">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Chapter6
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/Ebook-Linear_Programming/docs/chapter6/chapter6/" title="第六章 网络流问题" class="md-nav__link">
+      第六章 网络流问题
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7-4-2-7" type="checkbox" id="nav-4-7-4-2-7">
+    
+    <label class="md-nav__link" for="nav-4-7-4-2-7">
+      Chapter7
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Chapter7" data-md-level="5">
+      <label class="md-nav__title" for="nav-4-7-4-2-7">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Chapter7
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/Ebook-Linear_Programming/docs/chapter7/chapter7/" title="第7章 优化求解器及其比较" class="md-nav__link">
+      第7章 优化求解器及其比较
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7-5" type="checkbox" id="nav-4-7-5">
+    
+    <label class="md-nav__link" for="nav-4-7-5">
+      ML
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="ML" data-md-level="3">
+      <label class="md-nav__title" for="nav-4-7-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        ML
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/ML/" title="A list of ML" class="md-nav__link">
+      A list of ML
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/ML/DL/" title="Deep Learning" class="md-nav__link">
+      Deep Learning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/ML/Ensemble/" title="集成学习" class="md-nav__link">
+      集成学习
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/ML/LDA-QDA/" title="LDA QDA" class="md-nav__link">
+      LDA QDA
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/ML/linear-model/" title="Linear Model" class="md-nav__link">
+      Linear Model
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/ML/%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/" title="主成分分析" class="md-nav__link">
+      主成分分析
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/ML/%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA/" title="学习理论" class="md-nav__link">
+      学习理论
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/ML/%E6%96%B9%E5%B7%AE-%E5%81%8F%E5%B7%AE%E5%88%86%E8%A7%A3/" title="方差-偏差分解" class="md-nav__link">
+      方差-偏差分解
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/ML/%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B/" title="概率图模型" class="md-nav__link">
+      概率图模型
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/ML/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA/" title="统计学习理论" class="md-nav__link">
+      统计学习理论
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/ML/%E7%BB%B4%E5%BA%A6%E7%81%BE%E9%9A%BE/" title="维数灾难" class="md-nav__link">
+      维数灾难
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7-6" type="checkbox" id="nav-4-7-6">
+    
+    <label class="md-nav__link" for="nav-4-7-6">
+      数值最优化
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="数值最优化" data-md-level="3">
+      <label class="md-nav__title" for="nav-4-7-6">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        数值最优化
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/" title="数值最优化" class="md-nav__link">
+      数值最优化
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7-6-2" type="checkbox" id="nav-4-7-6-2">
+    
+    <label class="md-nav__link" for="nav-4-7-6-2">
+      知识点
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="知识点" data-md-level="4">
+      <label class="md-nav__title" for="nav-4-7-6-2">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        知识点
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%9F%A5%E8%AF%86%E7%82%B9/%E6%95%B4%E6%95%B0%E8%A7%84%E5%88%92%20-%20%E6%8C%87%E6%B4%BE%E9%97%AE%E9%A2%98/" title="整数规划 - 指派问题" class="md-nav__link">
+      整数规划 - 指派问题
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%9F%A5%E8%AF%86%E7%82%B9/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E7%9A%84%E6%9C%AC%E8%B4%A8-3Blue1Brown/" title="线性代数的本质-3Blue1Brown" class="md-nav__link">
+      线性代数的本质-3Blue1Brown
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%9F%A5%E8%AF%86%E7%82%B9/%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92%20-%20TSP/" title="路径规划 TSP" class="md-nav__link">
+      路径规划   TSP
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7-6-3" type="checkbox" id="nav-4-7-6-3">
+    
+    <label class="md-nav__link" for="nav-4-7-6-3">
+      笔记
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="笔记" data-md-level="4">
+      <label class="md-nav__title" for="nav-4-7-6-3">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        笔记
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%AC%94%E8%AE%B0/Ch1%20Introduction%20to%20linear%20optimization/" title="Ch1 Introduction to linear optimization" class="md-nav__link">
+      Ch1 Introduction to linear optimization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%AC%94%E8%AE%B0/Ch2%20The%20geometry%20of%20linear%20programmIng/" title="Ch2 The geometry of linear programmIng" class="md-nav__link">
+      Ch2 The geometry of linear programmIng
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%AC%94%E8%AE%B0/Ch3%20The%20simplex%20method/" title="Ch3 The simplex method" class="md-nav__link">
+      Ch3 The simplex method
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%AC%94%E8%AE%B0/Lec%2001%20Introduction/" title="Lec 01 Introduction" class="md-nav__link">
+      Lec 01 Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%AC%94%E8%AE%B0/Lec%2002%20Linear%20Programming%20%E7%BA%BF%E6%80%A7%E8%A7%84%E5%88%92/" title="Lec 02 Linear Programming 线性规划" class="md-nav__link">
+      Lec 02 Linear Programming 线性规划
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%AC%94%E8%AE%B0/Lec%200304%20Simplex%26Revised/" title="Lec 0304 Simplex&Revised" class="md-nav__link">
+      Lec 0304 Simplex&Revised
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%AC%94%E8%AE%B0/Lec%2005%20Duality%20%26%20Dual%20Simplex/" title="Lec 04 Duality & Dual Simplex" class="md-nav__link">
+      Lec 04 Duality & Dual Simplex
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%AC%94%E8%AE%B0/Lec%2006%20Sensitivity/" title="Lec 06 Sensitivity" class="md-nav__link">
+      Lec 06 Sensitivity
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%AC%94%E8%AE%B0/Lec%2007%20Interior%20Point/" title="Lec 07 Interior Point" class="md-nav__link">
+      Lec 07 Interior Point
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%AC%94%E8%AE%B0/Lec%200809%20Integer%20Programming/" title="Lec 0809 Integer Programming" class="md-nav__link">
+      Lec 0809 Integer Programming
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7-7" type="checkbox" id="nav-4-7-7">
+    
+    <label class="md-nav__link" for="nav-4-7-7">
+      算法 普林斯顿
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="算法 普林斯顿" data-md-level="3">
+      <label class="md-nav__title" for="nav-4-7-7">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        算法 普林斯顿
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/%E7%AE%97%E6%B3%95-%E6%99%AE%E6%9E%97%E6%96%AF%E9%A1%BF/Lecture%2001%20Union%E2%80%93Find/" title="Lecture 01 Union–Find" class="md-nav__link">
+      Lecture 01 Union–Find
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/%E7%AE%97%E6%B3%95-%E6%99%AE%E6%9E%97%E6%96%AF%E9%A1%BF/%E6%99%AE%E6%9E%97%E6%96%AF%E9%A1%BF%E7%AE%97%E6%B3%95/" title="普林斯顿算法" class="md-nav__link">
+      普林斯顿算法
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7-8" type="checkbox" id="nav-4-7-8">
+    
+    <label class="md-nav__link" for="nav-4-7-8">
+      艺术哲学
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="艺术哲学" data-md-level="3">
+      <label class="md-nav__title" for="nav-4-7-8">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        艺术哲学
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/%E8%89%BA%E6%9C%AF%E5%93%B2%E5%AD%A6/%E4%BA%BA%E9%97%B4%E8%AF%8D%E8%AF%9D%E7%9A%84%E8%AF%84%E8%AE%BA/" title="人间词话的评论" class="md-nav__link">
+      人间词话的评论
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/%E8%89%BA%E6%9C%AF%E5%93%B2%E5%AD%A6/%E5%8D%A1%E6%8B%89%E7%93%A6%E4%B9%94/" title="卡拉瓦乔" class="md-nav__link">
+      卡拉瓦乔
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/%E8%89%BA%E6%9C%AF%E5%93%B2%E5%AD%A6/%E5%93%B2%E5%AD%A6%E5%8F%B2%E5%A4%A7%E7%BA%B2/" title="哲学史大纲" class="md-nav__link">
+      哲学史大纲
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/%E8%89%BA%E6%9C%AF%E5%93%B2%E5%AD%A6/%E5%AD%98%E5%9C%A8%E7%9A%84%E8%89%BA%E6%9C%AF/" title="存在的艺术" class="md-nav__link">
+      存在的艺术
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/%E8%89%BA%E6%9C%AF%E5%93%B2%E5%AD%A6/%E8%89%BA%E6%9C%AF%E5%93%B2%E5%AD%A6/" title="艺术哲学 孙周兴" class="md-nav__link">
+      艺术哲学 孙周兴
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/%E8%89%BA%E6%9C%AF%E5%93%B2%E5%AD%A6/%E8%AE%BA%E6%80%9D%E7%BB%B4/" title="论思维" class="md-nav__link">
+      论思维
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      附件
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="附件" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        附件
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E9%99%84%E4%BB%B6/%E6%A8%A1%E6%9D%BF/" title="模板" class="md-nav__link">
+      模板
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  
+                
+                
+                <p><a href="../../%E5%AD%A6%E4%B9%A0/%E5%BD%92%E6%A1%A3/SPIN/">SPIN</a> </p>
+<p>现在是在 validation 的时候把 hybrIK 部分换成 SMPLify，就是缺少了 backward 部分，其他也是和 PPT 里描述的一样。所以就需要：<br />
+* 按照 PPT 里的逻辑先介绍一遍方法，<br />
+* 然后衔接部分才是需要描述为什么只写 validation，只写 validation 有啥好处（比如速度比 IK 快很多，效果也更好）<br />
+* 所以实验就需要比较 IK 的速度和效果，那就是两张图，几个表格</p>
+<p>绪论：<a href="https://www.sciencedirect.com/science/article/pii/S1077314221000692#b162">https://www.sciencedirect.com/science/article/pii/S1077314221000692#b162</a><br />
+多视角与单个：<br />
+* 虽然多视图系统[25]和激光扫描系统[58]现在能够重建精确的 3D 人体，但这些系统往往难以部署且价格昂贵，给普通用户带来不便 <a href="https://arxiv.org/pdf/2012.06178.pdf">https://arxiv.org/pdf/2012.06178.pdf</a><br />
+* 该路线的主要思想是将参数化的人体模型与骨架、二维关节点和轮廓等先验信息进行拟合[6, 8, 2]。这些方法已成功地应用于人体运动跟踪和三维姿态估计。然而，由于大多数参数化的人体如衣服和面部表情上缺少细节的外观，这些方法的结果往往是裸露的，在许多应用中不能满足现实主义的要求。</p>
+<p><a href="https://faculty.sist.shanghaitech.edu.cn/office/Academics/Undergraduate/Course/Undergraduate_final_project.htm">https://faculty.sist.shanghaitech.edu.cn/office/Academics/Undergraduate/Course/Undergraduate_final_project.htm</a></p>
+<h1 id="0-摘要">0 摘要<a class="headerlink" href="#0-摘要" title="Permanent link">#</a></h1>
+<p>基于模型的人体姿态估计目前有两种不同的方法。基于优化的方法以迭代的方式将参数体模型与二维观测相匹配，导致精确的图像模型对齐，但通常对初始化缓慢和敏感。相反，基于回归的方法，使用深度网络直接从像素估计模型参数，往往提供合理的，但像素不准确，但需要大量的监督。在这项工作中，我们不是研究哪种方法更好，而是认为这两种范式可以形成强有力的合作。一个合理的，直接从网络回归估计可以初始化迭代优化，使拟合更快，更准确。类似地，迭代优化的像素精确拟合可以作为网络的强有力监督。这是我们提出的方法 SPIN (SMPL oPtimization IN the loop) 的核心。深度网络初始化一个迭代优化程序，将身体模型拟合到训练循环内的 2D 关节，然后使用拟合估计监督网络。我们的方法本质上是自我改进的，因为更好的网络估计可以引导优化到更好的解决方案，而更准确的优化拟合可以为网络提供更好的监督。我们展示了我们的方法在不同环境下的有效性，其中 3D 地面真相是稀缺的，或不可用的，我们始终比最先进的基于模型的姿态估计方法的显著优势。</p>
+<h1 id="1-绪论">1 绪论<a class="headerlink" href="#1-绪论" title="Permanent link">#</a></h1>
+<p>三维人体重建任务主要是希望从包含人体的一幅图像、几个角度的图像或者一系列视频中估计人体关节点位置以及人体高矮胖瘦等形态信息。在本节中，本文首先介绍了三维人体重建的大量潜在应用，以突出本课题研究的意义，然后讨论了三维人体重建的几种研究方向的分类，最后描述了本文的主要研究方向。</p>
+<h2 id="11-应用前景">1.1 应用前景<a class="headerlink" href="#11-应用前景" title="Permanent link">#</a></h2>
+<p>因为三维人体模型包含了人体的姿态和形态信息，并且比二维的姿态估计提供了更多的深度信息，所以三维人体重建有更多更广泛的应用前景。这里我们提供了一些有趣的应用方向：<br />
+* VR/AR：虽然以视频为基础的内容共享系统极大的帮助了人们直接目睹事件的发生，或者替代面对面会议之类的情况，但这些方式依然缺少物理的真实的共享感。而比如谷歌的 JUMP 和微软的 Holoportation 可以提供共享的 3D 呈现，可是面临着所需设备价格昂贵的问题，迟迟无法让普通用户直接得到 3D 图像。如果可以用简单的设备重建 3D 人体，将会极大的推进内容共享系统的创新。 <a href="https://scholar.google.com/scholar_lookup?title=Microsoft%20kinect%20sensor%20and%20its%20effect&amp;publication_year=2012&amp;author=Z.%20Zhang">Google Scholar</a><br />
+* 电子商务的时尚领域：在过去的十年之中，消费者行为主要从传统的现场购物转向在线电子购物一直是主要趋势，随着 2020 年冠状病毒大流行，电子商务占所有服装销售的比例有了更大幅度的增加，市场对在线换衣等需求越来越大。深度相机、传感器等方法可以精准的重建人体表面的集合形状，但条件苛刻，难以推广；基于模型的方法能够很方便的恢复形态和姿势，但精度对于重建衣服表面纹理依然不够。<a href="https://ieeexplore.ieee.org/abstract/document/9483564">论文</a> <br />
+* 医疗健康：对于医疗应用来说，三维人体建模可以帮助医生获取病人的体脂率、追踪体型变化、分析病人行为姿态等等，但相对来说需要更加高的准确性和可靠性，以及会有需要长时间追踪等等额外需求。现在为医疗机构设计的系统通常价格昂贵、不灵活，需要训练有素的专业人员操作，公众很难使用高水平的医疗级扫描系统对自己进行扫描并获得健康数据反馈。研究人员正在寻求轻量化的、经济高效的三维人体重建解决方案。<a href="https://icg.gwu.edu/accurate-3d-human-body-reconstruction-system-medical-purpose">link</a> <br />
+* 体育运动：三维模拟和数字技术已经被广泛的应用到运动训练中，而运动教练在三维重建的基础上，可以进一步分析运动员的运动姿态和运动特点。比如通过人体运动跟踪，可以分析运动步长，建立整体运动轨迹；通过人体三维模型，我们可以分析人体各个部位的运动，包括平移和旋转自由度等等。从而更好的指导运动员的训练。<a href="https://www.researchgate.net/publication/314653591_Study_on_the_Movement_Posture_and_Sports_Characteristics_Based_on_the_3D_Reconstruction_of_Human_Body">link</a> <br />
+* 视频监控与行为分析：基于视频监控的人的行为分析已经得到了广泛的研究。但是作为一种消费视频应用，自动监控需要在有足够高的精度的同时，满足其实时性和轻量化。并且在应用上来看，我们需要分析人的运动和姿势，并以此为重要线索了解人物活动和理解场景。研究者希望能在此基础上快速识别检索入室盗窃、老年人跌倒等特殊行为的视频序列。<a href="https://scholar.google.com/scholar?q=Automatic+Video-Based+Human+Motion+Analyzer+for+Consumer+Surveillance+System&amp;hl=en&amp;as_sdt=0&amp;as_vis=1&amp;oi=scholart">link</a> <br />
+三维人体重建还有其他许多应用，是计算机视觉中一个基础的研究领域，并且有着活跃的研究氛围，对人们生活生产都有着重要的意义。</p>
+<h2 id="12-三维人体重建的研究现状">1.2 三维人体重建的研究现状<a class="headerlink" href="#12-三维人体重建的研究现状" title="Permanent link">#</a></h2>
+<p>三维人体重建领域包括多种不同的背景设置，在本节中我们简单的描述了从输入数据类型，包含人体数量以及交互方式，以及重建结果三个方面上的分类，并且简单描述了各个设置的优缺点。</p>
+<p>（1）从输入数据上分类<br />
+从三维重建基于的输入类型来看，该领域的研究方向非常多。除了传统的 RGB 图像或者视频，还包括具有深度信息的设备拍摄的图像或视频、点云数据、雷达数据、其他传感器（比如加速度仪或者分布在鞋底的压力传感器）数据等等。传统的 RGB 数据获取难度较小，设备成本也较低，因此我们主要考虑这种方法。</p>
+<p>从 RGB 图像得到人体三维模型也分成两种类型，分别是从单一视角的单张图片，和从几个视角的多张图片两种重建模型的方式。从单一视角的图片得到模型的问题本质上是一个不适定的问题，因为很难从一维的、不包含深度信息的图像数据得到一个完整的三维人体模型，因此该类型的研究大多需要依赖于人体结构与骨架、二维关节点和轮廓等先验信息，并且主要基于特定人体模型，比如 SMPL，得到一个参数化的人体重建结果。而从多个视角的图像重建虽然发展更早，而且重建精度更高，能够得到更准确的三维人体模型，但也面临这许多问题，比如摄像系统的标定过程的准确性和鲁棒性，又比如多视图系统往往价格昂贵，且部署不易，很难被普通用户广泛接受。而在本文中，我们的任务是基于单一视角的单张图片的。</p>
+<p>（2）从包含人物等交互上分类<br />
+三维人体重建还包括针对单个人的重建，以及考虑多个人或者人和物体之间相互交互的场景重建。对于单人重建来说，我们只需要考虑自遮挡问题，但对于人群或者人物交互的重建任务来说，我们还需要考虑人与人之间、人与物之间的遮挡问题，以及很多不一致的深度问题。对于多人重建来说，典型的方法分为自下而上和自上而下的两种类型。对于自下而上来说，我们需要检测图中所有身体关节，然后将其分组，即找到对应的人物组别。但这种方法只能较好的处理关节姿态，很难扩展到形状估计的问题上。对于自上而下的方法，我们首先需要检测场景中所有的人，然后对每个人物进行重建。而单一人体的重建任务是其他的基础，所以在本文之中，我们只考虑单人的重建问题。</p>
+<p>（3）从重建结果上分类<br />
+最后从方法上，或者重建的结果和需求上来看，主要有两种类型，分别是基于模型的和无模型的。无模型就是力求完整的还原人体表面皮肤或者衣服的纹理，用比较高的精度将人体数字化。这种方法往往依赖于多视角系统，需要严格的环境约束 (比如大量的相机、受控照明) ，成本很高，部署也很难。而近几年研究人员试图利用从粗到细的多层次框架对高分辨率的图像进行端到端的学习，从而从单一视角的图像中恢复出数字化的人体模型 <a href="https://scholar.google.com/scholar?hl=en&amp;as_sdt=0%2C5&amp;q=pifu&amp;btnG=">pifu</a> 。</p>
+<p>但这些方法还是很难取得较高的精度，因为人体是一个复杂的形状，并且能动态的具有多种不同的变化，并且人体表面的细节信息很难从单一图像中恢复出来。因此另一条路线，即基于模型的路线的主要思想就是为了减少训练参数，缩小模型的状态空间，我们可以用统计学的方式找到一种能够用较少参数简单的描述人体形态的模型，然后让系统基于特定模型估计输入中的人体姿态。虽然这样的模型大多缺少衣服等外观细节，但对于面部表情、手部动作等细节也可以参数化的进行表示，并且极大的方便了系统的学习，甚至做到实时，因此可以满足很大一部分的现实要求。</p>
+<p>总而言之，三维人体重建是计算机视觉领域一个基础且活跃的研究方向。随着数据集的不断扩张以及计算机深度学习能力的提升，三维人体重建也不断取得着巨大的进展。在本文当中，我们的主要任务是基于单一视角的 RGB 图像，对单个人体做基于模型的三维重建。</p>
+<h1 id="2-研究背景">2 研究背景<a class="headerlink" href="#2-研究背景" title="Permanent link">#</a></h1>
+<p>为了实现从单张 RGB 图像中重建基于参数模型的三维人体，目前有两种主要的方式，分别是基于优化的方法和基于回归的方法。本节主要介绍 SMPL 模型的基本信息，包括参数含义以及如何从参数转化成蒙皮，以及优化方法和回归方法的大致情况。</p>
+<h2 id="21-smpl-模型">2.1 SMPL 模型<a class="headerlink" href="#21-smpl-模型" title="Permanent link">#</a></h2>
+<p>SMPL 模型，全称 Skinned Multi-Person Linear Model，是目前最流行最成功的三维人体参数模型。它基于蒙皮（skinning）以及参数渲染形状（blend shapes）来描述人体姿态模型，并从数千个 3D 身体扫描中学习得到这些统计参数。SMPL 的宗旨是使人体模型尽可能简单和标准，能够用简易的公式进行描述。更重要的是，凭借简单的顶点拓扑结构，SMPL 模型可以使得计算机视觉和动画研究者以极高的渲染效率和学习能力，逼真的表示各种人体形状。并且它具有完善的工具支持，能够与现有的渲染引擎兼容。</p>
+<h3 id="211-smpl-模型的定义参数">2.1.1 SMPL 模型的定义参数<a class="headerlink" href="#211-smpl-模型的定义参数" title="Permanent link">#</a></h3>
+<p>SMPL 模型将人体形态分解为每个人体不同的形状参数和非刚性的、不依赖于特定人体的姿态参数。然后基于顶点的蒙皮方法，渲染出一个完整的人体模型。<br />
+（1）标准网格 T<br />
+标准网格是 SMPL 模型用来描述人体形态的三维拓扑结构，不依赖于特定人体或者姿势。标准姿态通常以形状像英文字母 T 的姿态展示，因此又被称为 T-pose。SMPL 模型的网格包含 N=6890 个顶点。<br />
+（1）形状参数 β<br />
+形状参数是用来描述特定人体的网格顶点相对于标准网格 T 的偏移量的，这些偏移可以用来描述包括高矮、胖瘦、腰围以及头身比例等等的形状。SMPL 模型把它视为一个向量，用 beta 表示。SMPL 模型包含多达三百个主成分，但前十个主成分可以概括大部分形态变化，因此我们通常使用十个维度的形状参数。使用更多的参数可以让我们对特定身体特征有更细粒度的控制，比如皮肤纹理和面部特征变化等等。<br />
+（2）姿态参数 theta<br />
+姿态参数也可以用来描述人体的网格顶点相对于标准网格 T 的偏移量，这里的偏移与特定人体形状无关，但与人体姿势有关。SMPL 通常用 23 个的旋转矩阵来表示 24 个人体关节的姿势变化，每一个旋转矩阵表示相应关节对应父节点的相对旋转。这里的数量并不和人体关节点一一对应，并且不同的数据集对关节点的回归位置有着不同的定义，比如 COCO 的数据集就把髋关节的位置放在靠外侧的位置，而 SMPL 则放在旋转的位置上。</p>
+<h3 id="212-smpl-模型的渲染方式">2.1.2 SMPL 模型的渲染方式<a class="headerlink" href="#212-smpl-模型的渲染方式" title="Permanent link">#</a></h3>
+<p>可以把这个向量视为图层添加到标准网格上（T + ß），以创建不同的人体模型。<br />
+我们也可以把这个向量添加到标准网格上（T + ß + θ），以表现我们旋转任意关节点时的肌肉变形。</p>
+<h3 id="213-基于-smpl-模型的关节点位置估计">2.1.3 基于 SMPL 模型的关节点位置估计<a class="headerlink" href="#213-基于-smpl-模型的关节点位置估计" title="Permanent link">#</a></h3>
+<blockquote>
+<p>等写完了看字数不够再补充吧，不然就这么一页正好<br />
+参考：<a href="https://blog.csdn.net/weixin_43822395/article/details/124378186">https://blog.csdn.net/weixin_43822395/article/details/124378186</a><br />
+马普：<a href="https://files.is.tue.mpg.de/black/talks/SMPL-made-simple-FAQs.pdf">https://files.is.tue.mpg.de/black/talks/SMPL-made-simple-FAQs.pdf</a><br />
+不同类型 SMPL 模型表格：<a href="https://meshcapade.wiki/SMPL#download-models">https://meshcapade.wiki/SMPL#download-models</a></p>
+</blockquote>
+<h2 id="22-研究方法">2.2 研究方法<a class="headerlink" href="#22-研究方法" title="Permanent link">#</a></h2>
+<p>虽然从单张图片恢复人体三维结构是一个非正定的问题，但是得益于人体参数模型对人体描述的统计学简化，我们可以用较少的参数控制生成一个比较真实的人体模型。大部分基于模型的方法可以分为三类：基于优化的方法，基于学习的方法以及结合两种方式的方法。本节主要介绍了这三类方法，并且简单描述了优缺点。</p>
+<h3 id="221-基于优化的方法">2.2.1 基于优化的方法<a class="headerlink" href="#221-基于优化的方法" title="Permanent link">#</a></h3>
+<p>基于优化的方法主要通过迭代拟合的过程，对统计学模型的参数进行调整，以减少设定的损失函数。损失项通常包括估计值与观测值的关节点位置差距、不合理的骨架弯曲。甚至优化的方法可以利用一些人体模型的先验知识，比如在 SMPLify-x 中，作者提出了一种变分自动编码器 VPoser，可以学习人类姿势的潜在表示，并将潜在代码的分布拟合成为正态分布，以作为人体姿态模型的先验知识，帮助图像和模型的拟合。<a href="https://github.com/nghorbani/human_body_prior">link</a> </p>
+<p>优化的方法往往能够更好的收敛，并且不需要依赖于庞大的数据集，而且能够利用一些关于人体模型的先验知识。但优化的缺点也很显著，比如它对初始值非常敏感，并且对于每张图片都需要很长的时间来处理，在[5, 17, 19, 24, 25, 39SCOPE]中，它们需要几十秒来适应三维人体姿态。在早期数据集还不够的时候，优化的方法能取得很好的结果，但是当数据集越来越丰富，优化的速度劣势就体现了出来。因此，优化的方法还是无法满足在实时之类的工业领域的应用。</p>
+<h3 id="222-基于学习的方法">2.2.2 基于学习的方法<a class="headerlink" href="#222-基于学习的方法" title="Permanent link">#</a></h3>
+<p>基于学习的方法通常先利用先进的关节点检测技术从图像中学到关于关节点的热图，然后让图片通过神经网络得到压缩后的特征图，最后两者结合在一起直接对人体统计学模型的参数进行回归。由于数据集的扩大，这种方法后续有很多的扩展和讨论，比如利用日益精准的 3d 骨骼预测直接从图像学习 SMPL 模型的两个参数，又利用 GCN 或者 transformer 直接学习 SMPL 模型的所有顶点。而在 2020 年的时候 Pose2Pose 意识到 SMPL 模型的旋转参数可以分解成扭转和旋转两方面，其中旋转可以直接利用 3D 的骨架信息得到，而扭转则更依赖于图像的视觉信息。然后在 2021 年的时候 HybrIK 利用这个分解，从图像中直接学习形状和扭转，然后从 3D 骨架中得到旋转，通过一个逆向动力学的框架，最终得到三维人体姿态模型所需要的几个参数。 </p>
+<p>与基于优化的方法相反的是，基于学习的方法极大的加快了速度，但是这种方法也存在一些缺点，比如很难利用模型的先验知识，并且对于数据集的数量要求很高。目前并没有一个完整的庞大的数据集可以支持模型的训练和测试，因此在实践过程中，研究人员通常把多个数据集合并起来用于训练和测试，因此在测试阶段可能会存在不同数据集之间的域差（domain gap）。</p>
+<h3 id="223-混合方法">2.2.3 混合方法<a class="headerlink" href="#223-混合方法" title="Permanent link">#</a></h3>
+<p>因为学习和优化的方式都有各自的优缺点，因此存在另一种方法，他们试图结合两者的优点，来完成人体三维姿态模型的估计。比较有名的一种方法是 SPIN，它首先利用一个神经网络来回归三维人体模型的几个参数，然后把这些回归得到的数值作为优化的方法的初始值，然后再通过优化的框架迭代。然后让这些参数再次进入神经网络，进行下一次的循环。</p>
+<p>SPIN 就是这样通过这种把一个结果最为另一个的初始值的方式，来结合两者的优点，但是这样的方式并不紧密，更像是两个独立的模型。并且随着数据集的增加，优化能够利用先验知识来约束模型的优势减弱了，直接利用大量数据集也可以训练出很好的模型，因此这种混合的方法后续很少发展。</p>
+<h1 id="3-研究方法">3 研究方法<a class="headerlink" href="#3-研究方法" title="Permanent link">#</a></h1>
+<p>介于优化方法、学习的方法以及混合的方法各自的特点，我们还是希望能利用优化与学习各自的优势，因此在这里我们想要继续尝试混合的方法。在调查了优化、学习以及混合的方法的发展之后，我们发现优化的方法在 SMPLify 之后很少有发展，只有在生成和预测下一帧的人体模型的任务中，对构建人体模型先验的方法有所改进。而因为数据集的扩大以及三维人体姿态标注的增加，学习的方法有了长足的发展。在很多用学习的方法进行训练的论文中，大多倾向于直接用神经网络从图中学习优化方法的其他约束项，比如骨骼长度、旋转角度等。</p>
+<h3 id="31-模型框架">3.1 模型框架<a class="headerlink" href="#31-模型框架" title="Permanent link">#</a></h3>
+<p>我们的主要框架是基于学习的方法的，参考了 HybrIK 的算法模型，利用旋转角度的分解来提升准确度，并从图像中直接学习三维关节点位置来作为监督。我们的方法主要改进在于最终生成旋转角度参数的时候，我们舍弃了 HybrIK 的主要贡献点，即 IK 部分，而利用优化的算法进行整合。因此是完全不同于 HybrIK 的方法。</p>
+<p><img alt="hybrik.png" src="../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/hybrik.png" /></p>
+<p>具体来说，首先，我们以 ResNet 作为骨干，让图片先通过预训练的 ResNet 得到特征图。然后，模型分流为上下两部分，分别学习姿态特征和形状特征。对于模型的上半部分来说，我们让特征图通过一个反卷积网络，得到关于每个关节点的热力图，再通过这些热力图得到关节点的三维坐标。而模型的下半部分中，我们让特征图通过两层全连接网络，分别得到模型形状参数距离标准形状的偏移量、初始化的扭转以及叶子结点的旋转的四元数。然后偏移量加上初始标准形状就可以得到模型的形状参数。接下来，我们就把这个形状参数、四元数、扭转参数和关节点的三维坐标输入到优化的模块中，优化得到最终的旋转参数。最终我们就可以利用旋转参数和形状参数渲染出最终的 SMPL 模型，即一千六百多个蒙皮的三维节点。</p>
+<h3 id="32-旋转参数的分解">3.2 旋转参数的分解<a class="headerlink" href="#32-旋转参数的分解" title="Permanent link">#</a></h3>
+<p>模型主要的想法之一是把 SMPL 的旋转参数分解成扭转和摆动两种参数。其中摆动参数是指两段骨骼的方向在三维空间中的摆动，因此可以很方便的从人体三维骨架模型计算得到。而扭转参数是指骨骼自身沿着轴方向发生的旋转，比如手背朝向哪里，脸部看向哪里之类的，因此这个参数更加依赖于图像的视觉信息，我们的模型会倾向于从图中直接学习扭转参数。<br />
+$$<br />
+R=R<sup>sR</sup>t<br />
+$$</p>
+<p><img alt="Pasted image 20220520134149.png" src="../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220520134149.png" /></p>
+<h3 id="33-优化算法">3.3 优化算法<a class="headerlink" href="#33-优化算法" title="Permanent link">#</a></h3>
+<p>模型的另一个主要想法是利用优化的方法来得到最终的旋转参数。本节就具体介绍优化的整个流程：</p>
+<p>（一）计算全局方向<br />
+首先，我们需要计算人体骨架位置的全局方向（global orientation）。我们只考虑人体骨架的盆骨位置，首先根据标准模型来得到一组初始化的盆骨位置向量，然后由模型上半部分得到的目标盆骨位置向量一起得到模型的全局方向。</p>
+<p>（二）计算扭转矩阵<br />
+然后，我们需要根据图像中学习到的扭转角度 phi，计算所有关节点的扭转参数 Rtw。我们从骨盆位置出发，沿着人体骨架的动力学树（kinematic tree）一层层的计算所有关节点。因为扭转是一个沿着轴方向向量的转动，因此我们只需要知道该关节点的轴 t 和扭转角度，也就是上一步我们从全连接层得到的 phi，就可以按照公式计算扭转矩阵了。<br />
+<img alt="Pasted image 20220519163202.png" src="../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220519163202.png" /><br />
+（三）计算摆动矩阵<br />
+接着，我们需要迭代优化关节点的摆动参数 <span class="arithmatex"><span class="MathJax_Preview">R_s</span><script type="math/tex">R_s</script></span>。这一部分的目的和逆向动力学的方法一样，就是想要优化旋转矩阵，来逼近目标骨架姿态。在本文的方法中，我们选择从图像中学习到的三维骨架，也就是模型上半部分的输出，来作为需要逼近的目标骨架。首先，我们需要初始化 18 个关节点的旋转角度 <span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span>，方便起见，我们初始化成零向量，只有 18 个是因为我们需要去掉叶子节点（头顶和四肢）和根节点（骨盆）。根据这个旋转角度，我们可以确定摆动方向的正弦函数和余弦函数。然后，我们还需要摆动的两个骨骼构成平面的法向量，即我们的旋转向量，我们取从模型上半部分学到的三维骨架来确定法向量：<br />
+<span class="arithmatex"><span class="MathJax_Preview"><span class="arithmatex"><span class="MathJax_Preview">\bar n=\frac{\bar t \times \bar p}{||\bar t \times \bar p||}</span><script type="math/tex">\bar n=\frac{\bar t \times \bar p}{||\bar t \times \bar p||}</script></span></span><script type="math/tex"><span class="arithmatex"><span class="MathJax_Preview">\bar n=\frac{\bar t \times \bar p}{||\bar t \times \bar p||}</span><script type="math/tex">\bar n=\frac{\bar t \times \bar p}{||\bar t \times \bar p||}</script></span></script></span><br />
+于是，我们就可以得到旋转向量生成的旋转矩阵的反堆成矩阵 K 了：<br />
+$$<br />
+K=<br />
+\begin{bmatrix}<br />
+0 &amp; -n_z &amp; n_y \ n_z &amp; 0 &amp; -n_x \ -n_y &amp; n_x &amp; 0<br />
+\end{bmatrix}<br />
+$$<br />
+最后，我们就可以根据罗德里格斯旋转公式（Rodrigues' rotation formula）的矩阵形式来计算每个节点的摆动矩阵：<br />
+$$<br />
+R_{s} = I + sin\alpha K+ (1− cos α)K^2<br />
+$$</p>
+<p>（四）计算新的关节点位置<br />
+有了扭转矩阵和摆动矩阵，我们就可以根据每个节点的摆动矩阵以及扭转矩阵，来得到最终的旋转矩阵：<br />
+$$<br />
+R = R_s \times R_t <br />
+$$<br />
+并且，我们可以根据每个节点的旋转矩阵以及关节点的动力学树，来计算全局的旋转矩阵了：<br />
+$$<br />
+R'<em i-1="i-1">i = R_i \times R</em><br />
+$$<br />
+而我们已经从图像中学习到了模型的形状参数 <span class="arithmatex"><span class="MathJax_Preview">\beta</span><script type="math/tex">\beta</script></span>，因此就可以确定骨架长度了。然后我们就可以根据每个节点的旋转矩阵、关节点的动力学树以及骨架长度，来计算新的关节点位置了。</p>
+<p>（五）优化旋转角度<br />
+接着，我们就根据 LM (Levenberg-Marquardt) 优化算法，来优化我们的目标，也就是旋转角度。我们把与变量摆动角度 <span class="arithmatex"><span class="MathJax_Preview">\alpha</span><script type="math/tex">\alpha</script></span> 有关的关节点位置记作 <span class="arithmatex"><span class="MathJax_Preview">P</span><script type="math/tex">P</script></span>，然后把目标关节点位置，也就是模型上半部分估计出的位置记作 <span class="arithmatex"><span class="MathJax_Preview">T</span><script type="math/tex">T</script></span>，然后构建函数 <span class="arithmatex"><span class="MathJax_Preview">f</span><script type="math/tex">f</script></span> 为他们的差值 ：<br />
+$$<br />
+f(x)=p(\alpha)-T=P-T<br />
+$$<br />
+然后构建如下目标函数：<br />
+$$<br />
+\begin{align*}<br />
+x&amp;=argmin_xF(x)\<br />
+&amp;=argmin_x\frac12||f(x)||^2\<br />
+&amp;=argmin_x\frac12f(x)^Tf(x)<br />
+\end{align*}<br />
+$$<br />
+然后，将 <span class="arithmatex"><span class="MathJax_Preview">f</span><script type="math/tex">f</script></span> 一阶泰勒展开：<br />
+$$<br />
+f(x+h)=f(x)+J(x)h+O(h^Th)<br />
+$$<br />
+去掉高阶项，带入目标函数 <span class="arithmatex"><span class="MathJax_Preview">F</span><script type="math/tex">F</script></span> 之中：<br />
+$$<br />
+\begin{align*}<br />
+F(x+h)&amp;=\frac12f(x+h)^Tf(x+h)\<br />
+&amp;=\frac12f<sup>Tf+h</sup>TJ<sup>Tf+\frac12h</sup>TJ^TJh<br />
+\end{align*}<br />
+$$<br />
+然后，引入一个阻尼项 <span class="arithmatex"><span class="MathJax_Preview">\frac12\mu h^Th</span><script type="math/tex">\frac12\mu h^Th</script></span> ：<br />
+$$<br />
+G(h)=\frac12f<sup>Tf+h</sup>TJ<sup>Tf+\frac12h</sup>TJ^TJh+\frac12\mu h^Th<br />
+$$<br />
+接着，对上式求偏导，并令其等于零：<br />
+$$<br />
+\begin{align*}<br />
+J<sup>Tf+J</sup>TJh+\mu h&amp;=0\<br />
+(J^TJ+\mu I)h&amp;=-J^Tf\<br />
+(H+\mu I)h&amp;=-J^Tf\<br />
+h&amp;=-(H+\mu I)<sup>{-1}J</sup>Tf<br />
+\end{align*}<br />
+$$<br />
+LM 算法的步骤就是：<br />
+$$<br />
+\usepackage{algorithm}<br />
+\usepackage{algorithmic}<br />
+\begin{algorithm}<br />
+\caption{LM}<br />
+\label{alg:LM}<br />
+\begin{algorithmic}<br />
+\STATE {set <span class="arithmatex"><span class="MathJax_Preview">k:=0</span><script type="math/tex">k:=0</script></span>, <span class="arithmatex"><span class="MathJax_Preview">\mu :=0.01</span><script type="math/tex">\mu :=0.01</script></span>, <span class="arithmatex"><span class="MathJax_Preview">v:=1.5</span><script type="math/tex">v:=1.5</script></span>, <span class="arithmatex"><span class="MathJax_Preview">R:=0</span><script type="math/tex">R:=0</script></span>} <br />
+\REPEAT <br />
+\STATE <span class="arithmatex"><span class="MathJax_Preview">k=k+1</span><script type="math/tex">k=k+1</script></span><br />
+\STATE <span class="arithmatex"><span class="MathJax_Preview">P=p(x)</span><script type="math/tex">P=p(x)</script></span><br />
+\STATE <span class="arithmatex"><span class="MathJax_Preview">h=-(H+\mu I)^{-1}J^Tf</span><script type="math/tex">h=-(H+\mu I)^{-1}J^Tf</script></span><br />
+\STATE <span class="arithmatex"><span class="MathJax_Preview">x=x+h</span><script type="math/tex">x=x+h</script></span><br />
+\STATE <span class="arithmatex"><span class="MathJax_Preview">R_{new}=P-T</span><script type="math/tex">R_{new}=P-T</script></span><br />
+\IF{<span class="arithmatex"><span class="MathJax_Preview">R_{new}\geq R</span><script type="math/tex">R_{new}\geq R</script></span>} <br />
+\STATE <span class="arithmatex"><span class="MathJax_Preview">\mu=\mu/v</span><script type="math/tex">\mu=\mu/v</script></span><br />
+\ELSE <br />
+\STATE <span class="arithmatex"><span class="MathJax_Preview">\mu=\mu v</span><script type="math/tex">\mu=\mu v</script></span><br />
+\ENDIF <br />
+\STATE <span class="arithmatex"><span class="MathJax_Preview">R=R_{new}</span><script type="math/tex">R=R_{new}</script></span><br />
+\UNTIL{k=30}<br />
+\end{algorithmic}<br />
+\end{algorithm}<br />
+$$</p>
+<p>我们使用的是一种简单的 LM 算法，并没有仔细选择 <span class="arithmatex"><span class="MathJax_Preview">\mu</span><script type="math/tex">\mu</script></span> 的初始化数值，更新 <span class="arithmatex"><span class="MathJax_Preview">\mu</span><script type="math/tex">\mu</script></span> 的方法也较为简略。</p>
+<p>（六）计算输出<br />
+现在我们有了优化之后的摆动角度，就可以根据上面描述的公式计算旋转矩阵，然后就可以得到最终的SMPL模型了。</p>
+<h1 id="4-实验结果与分析">4 实验结果与分析<a class="headerlink" href="#4-实验结果与分析" title="Permanent link">#</a></h1>
+<p>在这个部分中，我们首先介绍了学习和训练用到的数据集，然后给出了在一个数据集上的测试结果，最后展示了一些结果对比，并分析了可能的原因。</p>
+<h3 id="41-数据集">4.1 数据集<a class="headerlink" href="#41-数据集" title="Permanent link">#</a></h3>
+<p>（一）MPI-INF-3DHP<br />
+该数据集包括室内场景和复杂的室外场景，分别都包括了图像和视频，椅子的标注，以及前景遮罩。参考，我们利用这个数据集进行训练。</p>
+<p>（二）Human3.6M<br />
+该数据集包含了室内的三维姿势估计的基准。按照[18, 23]，我们使用 5 个对象（S1, S5, S6, S7, S8）进行训练。</p>
+<p>（三）MSCOCO<br />
+该数据集包含一个大规模的野外二维人体姿势数据集。我们结合其训练集进行训练。</p>
+<p>（四）3DPW<br />
+该数据集是一个具有挑战性的三维姿态和形状估计的户外基准。我们只使用这个数据集的测试集进行测试。</p>
+<h3 id="42-实验结果">4.2 实验结果<a class="headerlink" href="#42-实验结果" title="Permanent link">#</a></h3>
+<p>我们的模型在 3DPW 这个数据集上进行了测试，结果如下图所示。</p>
+<p>可以看到经过优化的改进，模型比 HybrIK 取得了更好的结果。我们分析主要原因在于，HybrIK 论文中的 IK 部分的模块存在一些问题。IK 原本是用在机器人学中，用来优化机械臂的行动轨迹的。机械臂和人体结构的最大的区别就在于，我们的骨架并不像机械臂一样有固定不变的出厂参数，人体的骨骼长度也是需要从图片学习的一部分。而 HybrIK 为了解决这个问题，利用的是用层级优化的方式，从根节点出发，沿着人体骨架的动力学树，一层层靠近目标位置的。这样就会使得骨架旋转和长度的误差一层层累计，导致最终的结果越靠近叶子节点，越容易出现偏差。我们希望可以替换该部分的方法，用优化的方式来对模型进一步细化，也是处于可以全局的考虑所有节点的误差，进行总体的优化，而避免沿着动力学树增加误差的累计。</p>
+<p>下面我们展示了一些结果图片的比较，可以进一步说明两种方法的区别。</p>
+<p>但是模型依然有很多缺点和可以改进的地方，比如优化的方法依赖的是对参数当场的优化迭代，因此验证速度会比之前更慢；并且我们只考虑了一种误差，没有利用人体模型的先验知识之类的信息。</p>
+<h1 id="5-结论">5 结论<a class="headerlink" href="#5-结论" title="Permanent link">#</a></h1>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="">
+        
+          <a href="../202205201137%20%E5%92%96%E5%95%A1/" title="咖啡" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  上一页
+                </span>
+                咖啡
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../202206031318%20%E5%81%A5%E8%BA%AB/" title="健身" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  下一页
+                </span>
+                健身
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" /></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.c51dfa35.min.js"></script>
+      <script src="../../assets/javascripts/bundle.eaaa3931.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "", "search.config.separator": "[\\uff0c\\u3002]+", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: ["navigation.tabs", "toc.integrate"],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.58d22e8e.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>

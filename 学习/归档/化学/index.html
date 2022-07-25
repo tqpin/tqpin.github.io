@@ -1,0 +1,2196 @@
+
+
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      <link rel="shortcut icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.1.1">
+    
+    
+      
+        <title>Lec 01 - TSHOGX</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.a676eddb.min.css">
+      
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    <body dir="">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#lec-01" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="">
+    <a href="../../.." title="TSHOGX" class="md-header-nav__button md-logo" aria-label="TSHOGX">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            TSHOGX
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Lec 01
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            键入以开始搜索
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="TSHOGX" class="md-nav__button md-logo" aria-label="TSHOGX">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
+
+    </a>
+    TSHOGX
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../.." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../../%E6%97%A5%E8%AE%B0/" title="日记" class="md-nav__link">
+      日记
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      卡片
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="卡片" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        卡片
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../%E5%8D%A1%E7%89%87/201800000000%20From%20workflowy/" title="201800000000 From workflowy" class="md-nav__link">
+      201800000000 From workflowy
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../%E5%8D%A1%E7%89%87/202110010000%E4%B8%80%E4%BA%9B%E5%A5%87%E6%80%AA%E7%9A%84%E8%87%AA%E6%88%91%E5%88%86%E6%9E%90/" title="202110010000一些奇怪的自我分析" class="md-nav__link">
+      202110010000一些奇怪的自我分析
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../%E5%8D%A1%E7%89%87/202203211400%20Ubuntu/" title="Ubuntu" class="md-nav__link">
+      Ubuntu
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../%E5%8D%A1%E7%89%87/202203222154%20MBTI%2016%E4%BA%BA%E6%A0%BC%E6%B5%8B%E8%AF%95/" title="MBTI 16人格测试" class="md-nav__link">
+      MBTI 16人格测试
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../%E5%8D%A1%E7%89%87/202203251555%20Unity/" title="Unity" class="md-nav__link">
+      Unity
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../%E5%8D%A1%E7%89%87/202204131533%20%E5%86%A5%E6%83%B3%E4%B8%8E%E7%BB%B4%E4%BF%AE%E8%89%BA%E6%9C%AF/" title="冥想与维修艺术" class="md-nav__link">
+      冥想与维修艺术
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../%E5%8D%A1%E7%89%87/202204140945%20OSU%20%E7%94%9F%E6%B4%BB/" title="OSU 生活信息" class="md-nav__link">
+      OSU 生活信息
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../%E5%8D%A1%E7%89%87/202204162023%20%E4%BD%93%E6%80%81%E7%BA%A0%E6%AD%A3%E6%B1%87%E6%80%BB/" title="体态纠正汇总" class="md-nav__link">
+      体态纠正汇总
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../%E5%8D%A1%E7%89%87/202205041942%20opendr%20install/" title="opendr install" class="md-nav__link">
+      opendr install
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../%E5%8D%A1%E7%89%87/202205041953%20python%20to%20cpp%20%E8%BD%AC%E6%8D%A2/" title="python to cpp 转换" class="md-nav__link">
+      python to cpp 转换
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../%E5%8D%A1%E7%89%87/202205132333%20%E7%AD%BE%E8%AF%81%E6%9D%90%E6%96%99/" title="签证材料" class="md-nav__link">
+      签证材料
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../%E5%8D%A1%E7%89%87/202205162007%20%E5%8D%95%E5%8F%8D%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="单反基础知识" class="md-nav__link">
+      单反基础知识
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../%E5%8D%A1%E7%89%87/202205181412%20%E4%B9%90%E5%99%A8/" title="乐器" class="md-nav__link">
+      乐器
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../%E5%8D%A1%E7%89%87/202205201137%20%E5%92%96%E5%95%A1/" title="咖啡" class="md-nav__link">
+      咖啡
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../%E5%8D%A1%E7%89%87/202206011618%20%E6%AF%95%E8%AE%BE/" title="学习和优化：基于人体参数模型的三维人体估计" class="md-nav__link">
+      学习和优化：基于人体参数模型的三维人体估计
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../%E5%8D%A1%E7%89%87/202206031318%20%E5%81%A5%E8%BA%AB/" title="健身" class="md-nav__link">
+      健身
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../%E5%8D%A1%E7%89%87/202206032222%20ACE/" title="ACE" class="md-nav__link">
+      ACE
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../%E5%8D%A1%E7%89%87/202206071545%20OSU%20%E5%AD%A6%E4%B9%A0/" title="OSU 学习信息" class="md-nav__link">
+      OSU 学习信息
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../%E5%8D%A1%E7%89%87/202207141318%20%E9%A3%9F%E8%B0%B1/" title="食谱" class="md-nav__link">
+      食谱
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../%E5%8D%A1%E7%89%87/202207141319%20%E5%81%A5%E8%BA%AB%E5%AE%89%E6%8E%92/" title="健身安排" class="md-nav__link">
+      健身安排
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../%E5%8D%A1%E7%89%87/202207141320%20%E5%85%B6%E4%BB%96%E9%A1%B9%E7%9B%AE/" title="其他项目" class="md-nav__link">
+      其他项目
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+    
+    <label class="md-nav__link" for="nav-4">
+      学习
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="学习" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        学习
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../draft/" title="Draft" class="md-nav__link">
+      Draft
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E4%BC%98%E5%8C%96/" title="优化" class="md-nav__link">
+      优化
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E5%BE%AE%E7%A7%AF%E5%88%86/" title="微积分" class="md-nav__link">
+      微积分
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E6%A6%82%E7%8E%87%E8%AE%BA/" title="概率论" class="md-nav__link">
+      概率论
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E7%AE%97%E6%B3%95/" title="算法" class="md-nav__link">
+      算法
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" title="线性代数" class="md-nav__link">
+      线性代数
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7" type="checkbox" id="nav-4-7" checked>
+    
+    <label class="md-nav__link" for="nav-4-7">
+      归档
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="归档" data-md-level="2">
+      <label class="md-nav__title" for="nav-4-7">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        归档
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../SPIN/" title="SPIN" class="md-nav__link">
+      SPIN
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Lec 01
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,9H17V7H3V9M3,13H17V11H3V13M3,17H17V15H3V17M19,17H21V15H19V17M19,7V9H21V7H19M19,13H21V11H19V13Z" /></svg>
+        </span>
+      </label>
+    
+    <a href="./" title="Lec 01" class="md-nav__link md-nav__link--active">
+      Lec 01
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-1-介绍原子结构" class="md-nav__link">
+    1-1 介绍&amp;原子结构
+  </a>
+  
+    <nav class="md-nav" aria-label="1-1 介绍&amp;原子结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#原子结构" class="md-nav__link">
+    原子结构
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-2-化学键分子结构" class="md-nav__link">
+    1-2 化学键&amp;分子结构
+  </a>
+  
+    <nav class="md-nav" aria-label="1-2 化学键&amp;分子结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#原子中总能量" class="md-nav__link">
+    原子中总能量
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#分子中总能量" class="md-nav__link">
+    分子中总能量
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#离子化合物总能量" class="md-nav__link">
+    离子化合物总能量
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-3-quantum-mechanics" class="md-nav__link">
+    1-3 Quantum Mechanics
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-4" class="md-nav__link">
+    1-4
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6/" title="物体在空间运动的描述" class="md-nav__link">
+      物体在空间运动的描述
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7-4" type="checkbox" id="nav-4-7-4">
+    
+    <label class="md-nav__link" for="nav-4-7-4">
+      Ebook Linear Programming
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Ebook Linear Programming" data-md-level="3">
+      <label class="md-nav__title" for="nav-4-7-4">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Ebook Linear Programming
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Ebook-Linear_Programming/Ebook-Linear_Programming/" title="Ebook Linear Programming" class="md-nav__link">
+      Ebook Linear Programming
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7-4-2" type="checkbox" id="nav-4-7-4-2">
+    
+    <label class="md-nav__link" for="nav-4-7-4-2">
+      Docs
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Docs" data-md-level="4">
+      <label class="md-nav__title" for="nav-4-7-4-2">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Docs
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7-4-2-1" type="checkbox" id="nav-4-7-4-2-1">
+    
+    <label class="md-nav__link" for="nav-4-7-4-2-1">
+      Chapter1
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Chapter1" data-md-level="5">
+      <label class="md-nav__title" for="nav-4-7-4-2-1">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Chapter1
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Ebook-Linear_Programming/docs/chapter1/chapter1/" title="第1章 概述" class="md-nav__link">
+      第1章 概述
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7-4-2-2" type="checkbox" id="nav-4-7-4-2-2">
+    
+    <label class="md-nav__link" for="nav-4-7-4-2-2">
+      Chapter2
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Chapter2" data-md-level="5">
+      <label class="md-nav__title" for="nav-4-7-4-2-2">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Chapter2
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Ebook-Linear_Programming/docs/chapter2/chapter2/" title="第2章 线性规划的几何原理" class="md-nav__link">
+      第2章 线性规划的几何原理
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7-4-2-3" type="checkbox" id="nav-4-7-4-2-3">
+    
+    <label class="md-nav__link" for="nav-4-7-4-2-3">
+      Chapter3
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Chapter3" data-md-level="5">
+      <label class="md-nav__title" for="nav-4-7-4-2-3">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Chapter3
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Ebook-Linear_Programming/docs/chapter3/chapter3/" title="第3章 单纯形法" class="md-nav__link">
+      第3章 单纯形法
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7-4-2-4" type="checkbox" id="nav-4-7-4-2-4">
+    
+    <label class="md-nav__link" for="nav-4-7-4-2-4">
+      Chapter4
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Chapter4" data-md-level="5">
+      <label class="md-nav__title" for="nav-4-7-4-2-4">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Chapter4
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Ebook-Linear_Programming/docs/chapter4/chapter4/" title="第4章 对偶理论和敏感度分析" class="md-nav__link">
+      第4章 对偶理论和敏感度分析
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7-4-2-5" type="checkbox" id="nav-4-7-4-2-5">
+    
+    <label class="md-nav__link" for="nav-4-7-4-2-5">
+      Chapter5
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Chapter5" data-md-level="5">
+      <label class="md-nav__title" for="nav-4-7-4-2-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Chapter5
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Ebook-Linear_Programming/docs/chapter5/chapter5/" title="第5章 大规模线性规划求解算法" class="md-nav__link">
+      第5章 大规模线性规划求解算法
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7-4-2-6" type="checkbox" id="nav-4-7-4-2-6">
+    
+    <label class="md-nav__link" for="nav-4-7-4-2-6">
+      Chapter6
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Chapter6" data-md-level="5">
+      <label class="md-nav__title" for="nav-4-7-4-2-6">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Chapter6
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Ebook-Linear_Programming/docs/chapter6/chapter6/" title="第六章 网络流问题" class="md-nav__link">
+      第六章 网络流问题
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7-4-2-7" type="checkbox" id="nav-4-7-4-2-7">
+    
+    <label class="md-nav__link" for="nav-4-7-4-2-7">
+      Chapter7
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Chapter7" data-md-level="5">
+      <label class="md-nav__title" for="nav-4-7-4-2-7">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        Chapter7
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../Ebook-Linear_Programming/docs/chapter7/chapter7/" title="第7章 优化求解器及其比较" class="md-nav__link">
+      第7章 优化求解器及其比较
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7-5" type="checkbox" id="nav-4-7-5">
+    
+    <label class="md-nav__link" for="nav-4-7-5">
+      ML
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="ML" data-md-level="3">
+      <label class="md-nav__title" for="nav-4-7-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        ML
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ML/" title="A list of ML" class="md-nav__link">
+      A list of ML
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ML/DL/" title="Deep Learning" class="md-nav__link">
+      Deep Learning
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ML/Ensemble/" title="集成学习" class="md-nav__link">
+      集成学习
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ML/LDA-QDA/" title="LDA QDA" class="md-nav__link">
+      LDA QDA
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ML/linear-model/" title="Linear Model" class="md-nav__link">
+      Linear Model
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ML/%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90/" title="主成分分析" class="md-nav__link">
+      主成分分析
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ML/%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA/" title="学习理论" class="md-nav__link">
+      学习理论
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ML/%E6%96%B9%E5%B7%AE-%E5%81%8F%E5%B7%AE%E5%88%86%E8%A7%A3/" title="方差-偏差分解" class="md-nav__link">
+      方差-偏差分解
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ML/%E6%A6%82%E7%8E%87%E5%9B%BE%E6%A8%A1%E5%9E%8B/" title="概率图模型" class="md-nav__link">
+      概率图模型
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ML/%E7%BB%9F%E8%AE%A1%E5%AD%A6%E4%B9%A0%E7%90%86%E8%AE%BA/" title="统计学习理论" class="md-nav__link">
+      统计学习理论
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../ML/%E7%BB%B4%E5%BA%A6%E7%81%BE%E9%9A%BE/" title="维数灾难" class="md-nav__link">
+      维数灾难
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7-6" type="checkbox" id="nav-4-7-6">
+    
+    <label class="md-nav__link" for="nav-4-7-6">
+      数值最优化
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="数值最优化" data-md-level="3">
+      <label class="md-nav__title" for="nav-4-7-6">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        数值最优化
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/" title="数值最优化" class="md-nav__link">
+      数值最优化
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7-6-2" type="checkbox" id="nav-4-7-6-2">
+    
+    <label class="md-nav__link" for="nav-4-7-6-2">
+      知识点
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="知识点" data-md-level="4">
+      <label class="md-nav__title" for="nav-4-7-6-2">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        知识点
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%9F%A5%E8%AF%86%E7%82%B9/%E6%95%B4%E6%95%B0%E8%A7%84%E5%88%92%20-%20%E6%8C%87%E6%B4%BE%E9%97%AE%E9%A2%98/" title="整数规划 - 指派问题" class="md-nav__link">
+      整数规划 - 指派问题
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%9F%A5%E8%AF%86%E7%82%B9/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0%E7%9A%84%E6%9C%AC%E8%B4%A8-3Blue1Brown/" title="线性代数的本质-3Blue1Brown" class="md-nav__link">
+      线性代数的本质-3Blue1Brown
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%9F%A5%E8%AF%86%E7%82%B9/%E8%B7%AF%E5%BE%84%E8%A7%84%E5%88%92%20-%20TSP/" title="路径规划 TSP" class="md-nav__link">
+      路径规划   TSP
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7-6-3" type="checkbox" id="nav-4-7-6-3">
+    
+    <label class="md-nav__link" for="nav-4-7-6-3">
+      笔记
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="笔记" data-md-level="4">
+      <label class="md-nav__title" for="nav-4-7-6-3">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        笔记
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%AC%94%E8%AE%B0/Ch1%20Introduction%20to%20linear%20optimization/" title="Ch1 Introduction to linear optimization" class="md-nav__link">
+      Ch1 Introduction to linear optimization
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%AC%94%E8%AE%B0/Ch2%20The%20geometry%20of%20linear%20programmIng/" title="Ch2 The geometry of linear programmIng" class="md-nav__link">
+      Ch2 The geometry of linear programmIng
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%AC%94%E8%AE%B0/Ch3%20The%20simplex%20method/" title="Ch3 The simplex method" class="md-nav__link">
+      Ch3 The simplex method
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%AC%94%E8%AE%B0/Lec%2001%20Introduction/" title="Lec 01 Introduction" class="md-nav__link">
+      Lec 01 Introduction
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%AC%94%E8%AE%B0/Lec%2002%20Linear%20Programming%20%E7%BA%BF%E6%80%A7%E8%A7%84%E5%88%92/" title="Lec 02 Linear Programming 线性规划" class="md-nav__link">
+      Lec 02 Linear Programming 线性规划
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%AC%94%E8%AE%B0/Lec%200304%20Simplex%26Revised/" title="Lec 0304 Simplex&Revised" class="md-nav__link">
+      Lec 0304 Simplex&Revised
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%AC%94%E8%AE%B0/Lec%2005%20Duality%20%26%20Dual%20Simplex/" title="Lec 04 Duality & Dual Simplex" class="md-nav__link">
+      Lec 04 Duality & Dual Simplex
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%AC%94%E8%AE%B0/Lec%2006%20Sensitivity/" title="Lec 06 Sensitivity" class="md-nav__link">
+      Lec 06 Sensitivity
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%AC%94%E8%AE%B0/Lec%2007%20Interior%20Point/" title="Lec 07 Interior Point" class="md-nav__link">
+      Lec 07 Interior Point
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E6%95%B0%E5%80%BC%E6%9C%80%E4%BC%98%E5%8C%96/%E7%AC%94%E8%AE%B0/Lec%200809%20Integer%20Programming/" title="Lec 0809 Integer Programming" class="md-nav__link">
+      Lec 0809 Integer Programming
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7-7" type="checkbox" id="nav-4-7-7">
+    
+    <label class="md-nav__link" for="nav-4-7-7">
+      算法 普林斯顿
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="算法 普林斯顿" data-md-level="3">
+      <label class="md-nav__title" for="nav-4-7-7">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        算法 普林斯顿
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E7%AE%97%E6%B3%95-%E6%99%AE%E6%9E%97%E6%96%AF%E9%A1%BF/Lecture%2001%20Union%E2%80%93Find/" title="Lecture 01 Union–Find" class="md-nav__link">
+      Lecture 01 Union–Find
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E7%AE%97%E6%B3%95-%E6%99%AE%E6%9E%97%E6%96%AF%E9%A1%BF/%E6%99%AE%E6%9E%97%E6%96%AF%E9%A1%BF%E7%AE%97%E6%B3%95/" title="普林斯顿算法" class="md-nav__link">
+      普林斯顿算法
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4-7-8" type="checkbox" id="nav-4-7-8">
+    
+    <label class="md-nav__link" for="nav-4-7-8">
+      艺术哲学
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="艺术哲学" data-md-level="3">
+      <label class="md-nav__title" for="nav-4-7-8">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        艺术哲学
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E8%89%BA%E6%9C%AF%E5%93%B2%E5%AD%A6/%E4%BA%BA%E9%97%B4%E8%AF%8D%E8%AF%9D%E7%9A%84%E8%AF%84%E8%AE%BA/" title="人间词话的评论" class="md-nav__link">
+      人间词话的评论
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E8%89%BA%E6%9C%AF%E5%93%B2%E5%AD%A6/%E5%8D%A1%E6%8B%89%E7%93%A6%E4%B9%94/" title="卡拉瓦乔" class="md-nav__link">
+      卡拉瓦乔
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E8%89%BA%E6%9C%AF%E5%93%B2%E5%AD%A6/%E5%93%B2%E5%AD%A6%E5%8F%B2%E5%A4%A7%E7%BA%B2/" title="哲学史大纲" class="md-nav__link">
+      哲学史大纲
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E8%89%BA%E6%9C%AF%E5%93%B2%E5%AD%A6/%E5%AD%98%E5%9C%A8%E7%9A%84%E8%89%BA%E6%9C%AF/" title="存在的艺术" class="md-nav__link">
+      存在的艺术
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E8%89%BA%E6%9C%AF%E5%93%B2%E5%AD%A6/%E8%89%BA%E6%9C%AF%E5%93%B2%E5%AD%A6/" title="艺术哲学 孙周兴" class="md-nav__link">
+      艺术哲学 孙周兴
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../%E8%89%BA%E6%9C%AF%E5%93%B2%E5%AD%A6/%E8%AE%BA%E6%80%9D%E7%BB%B4/" title="论思维" class="md-nav__link">
+      论思维
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
+    
+    <label class="md-nav__link" for="nav-5">
+      附件
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="附件" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+        </span>
+        附件
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../../%E9%99%84%E4%BB%B6/%E6%A8%A1%E6%9D%BF/" title="模板" class="md-nav__link">
+      模板
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+      </span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-1-介绍原子结构" class="md-nav__link">
+    1-1 介绍&amp;原子结构
+  </a>
+  
+    <nav class="md-nav" aria-label="1-1 介绍&amp;原子结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#原子结构" class="md-nav__link">
+    原子结构
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-2-化学键分子结构" class="md-nav__link">
+    1-2 化学键&amp;分子结构
+  </a>
+  
+    <nav class="md-nav" aria-label="1-2 化学键&amp;分子结构">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#原子中总能量" class="md-nav__link">
+    原子中总能量
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#分子中总能量" class="md-nav__link">
+    分子中总能量
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#离子化合物总能量" class="md-nav__link">
+    离子化合物总能量
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-3-quantum-mechanics" class="md-nav__link">
+    1-3 Quantum Mechanics
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-4" class="md-nav__link">
+    1-4
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  
+                
+                
+                <h1 id="lec-01">Lec 01<a class="headerlink" href="#lec-01" title="Permanent link">#</a></h1>
+<h2 id="1-1-介绍原子结构">1-1 介绍&amp;原子结构<a class="headerlink" href="#1-1-介绍原子结构" title="Permanent link">#</a></h2>
+<ul>
+<li>
+<p>课程大纲</p>
+<ul>
+<li>原子的本质和分子本质：原子和分子的微观结构， 经典化学键理论， 量子化学（ 量子力学）</li>
+<li>有机和高分子化学：有机化合物， 有机化合物中的成键、 常见有机反应类型、 高分子的基本概念。机化合物微观结构， 其反应性质， 建立微观结构与宏观性质的联系</li>
+<li>元素周期律、 过渡金属：元素周期律、 过渡金属</li>
+<li>物质形态（气体、 液体、 固体、 晶体结构、 相变、 分子间相互作用）： 介绍物质存在的基本形态, 分子间作用力的种类和形成原理， 物质的相（相变和相图） ， 晶体结构（对称性， 晶系的种类和特点） 。</li>
+</ul>
+</li>
+<li>
+<p>现代化学下有五个二级学科</p>
+<ul>
+<li>无机化学、 有机化学、 物理化学、 分析化学与高分子化学</li>
+</ul>
+</li>
+<li>
+<p>物质分类的宏观方法 Macroscopic Methods for Classifying Matter</p>
+<ul>
+<li>The <em>chemical transformation</em>, induced by the macroscopic apparatus, proceeds by rearrangement of atoms at the <em>nanoscale</em>.</li>
+<li>Chemists study involves two traditions:<ul>
+<li>Analysis (taking things apart)</li>
+<li>Synthesis (putting things together)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Conservation of Matter and Energy</p>
+<ul>
+<li>质量守恒定律：元素种类、质量、原子数目</li>
+<li>能量守恒定律 热力学第一定律；化学能转化为热能的是放热反应; 热能转化为化学能的是吸热反应 <a href="https://baike.baidu.com/item/%E6%94%BE%E7%83%AD%E5%8F%8D%E5%BA%94/9495334">哪些是放热</a> </li>
+</ul>
+</li>
+<li>
+<p>道尔顿的原子理论 Dalton’s Atomic Theory ppt19</p>
+</li>
+</ul>
+<h3 id="原子结构">原子结构<a class="headerlink" href="#原子结构" title="Permanent link">#</a></h3>
+<ul>
+<li>电子 electrons [有公式]<ul>
+<li>确认荷质比：1897年约瑟夫·约翰·汤姆逊 根据放电管中的阴极射线在电磁场和磁场作用下的轨迹 确定阴极射线中的粒子带负电</li>
+<li>确认电荷e：库仑油滴实验 Oil-drop experiment 方法主要是平衡重力与电力， 使油滴悬浮于两片金属电极之间。 并根据已知的电场强度， 计算出整颗油滴的总电荷量。 重复对许多油滴进行实验之后， 密立根发现所有油滴的总电荷值皆为**同一数字的倍数**， 因此认定此数值为单一电子的电荷e： 库仑</li>
+</ul>
+</li>
+</ul>
+<p><img alt="Pasted image 20220303194917.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220303194917.png" /></p>
+<ul>
+<li>原子核 nucleus<ul>
+<li>阳极射线：实验图如上，区别在于 偏转难-质量大 被加速向阴极-正电荷 带电质量不同</li>
+<li>卢瑟福实验：行星模型，大多数的质量和正电荷，都集中于一个很小的区域（“原子核”）；电子则包围在区域的外面。当一个（正价）α粒子移动到非常接近原子核，它会被很强烈的排斥，以大角度反弹；通过分析散射轨迹，卢瑟福得到：radius: less than 10︎-14 m；positive charge ca. ︎100e (the actual value is︎ 79e)</li>
+</ul>
+</li>
+</ul>
+<p><img alt="Pasted image 20220303201003.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220303201003.png" /></p>
+<ul>
+<li>成像原子、分子和化学反应 Imaging Atoms, Molecules, and Chemical Reactions<ul>
+<li>扫描隧道显微镜(STM)，1986年诺贝尔物理学奖，该显微镜利用低能电子成像原子</li>
+</ul>
+</li>
+</ul>
+<h2 id="1-2-化学键分子结构">1-2 化学键&amp;分子结构<a class="headerlink" href="#1-2-化学键分子结构" title="Permanent link">#</a></h2>
+<h3 id="原子中总能量">原子中总能量<a class="headerlink" href="#原子中总能量" title="Permanent link">#</a></h3>
+<p>Forces and Potential Energy in Atoms；Proton + Electron 体系中</p>
+<ul>
+<li>电场力 The potential energy<ul>
+<li>通过 Coulomb’s law 计算；E=Fr</li>
+<li>同符号电荷势能为正 无方向 作用力相互推开；通常约定 V&reg; → 0 as r → ∞</li>
+</ul>
+</li>
+<li>动能 The Kinetic Energy<br />
+<img alt="Pasted image 20220303201556.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220303201556.png" /><br />
+<img alt="Pasted image 20220303202010.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220303202010.png" /><br />
+<img alt="Pasted image 20220303204400.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220303204400.png" /><br />
+<img alt="Pasted image 20220303204435.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220303204435.png" /></li>
+</ul>
+<h3 id="分子中总能量">分子中总能量<a class="headerlink" href="#分子中总能量" title="Permanent link">#</a></h3>
+<ul>
+<li>系统喜欢待在能量最低点</li>
+<li>化学键的稳定性：形成时系统总能量减少；由一对原子在空气中自发形成(spontaneously)，仅当反应放热(exothermic)时</li>
+<li>裂解键能 bond dissociation energy：把每个分子从最低能量把原子拉开，所需要的能量</li>
+<li>分子的平衡键 equilibrium bond Re<br />
+<img alt="Pasted image 20220303210126.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220303210126.png" /></li>
+</ul>
+<h3 id="离子化合物总能量">离子化合物总能量<a class="headerlink" href="#离子化合物总能量" title="Permanent link">#</a></h3>
+<ul>
+<li>离子：指原子由于自身或外界的作用而失去或得到一个或几个电子使其达到最外层电子数为8个或2个（氦原子） 或没有电子（四中子） 的稳定结构</li>
+<li>这一过程称为电离</li>
+<li>电离能：电离过程所需或放出的能量 </li>
+<li>离子化合物 Ionic Bonding 的形成和图<ul>
+<li>比如 NaCl：Na给Cl一个电子</li>
+</ul>
+</li>
+</ul>
+<p><img alt="Pasted image 20220303210542.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220303210542.png" /></p>
+<h2 id="1-3-quantum-mechanics">1-3 Quantum Mechanics<a class="headerlink" href="#1-3-quantum-mechanics" title="Permanent link">#</a></h2>
+<p>连续性假设：早期科学的一个基本假设是，自然是continuous；也就是说，大自然不会“jumps”。</p>
+<p><img alt="Pasted image 20220309102524.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220309102524.png" /><br />
+<img alt="Pasted image 20220309102624.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220309102624.png" /><br />
+<img alt="Pasted image 20220309102753.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220309102753.png" /></p>
+<p>Electromagnetic Radiation 电磁辐射：<br />
+* 电荷产生电场；<br />
+* 移动的电荷产生磁场，会给别的电子一个垂直于速度方向的力；<br />
+* 正在加速的电荷产生电磁辐射，是电场和磁场以光速穿过空间，带电粒子在平衡位置振荡。<br />
+* 电磁辐射量与温度有关，通常高于绝对零度的物质或粒子都有电磁辐射，温度越高辐射量越大，但大多不能被肉眼观察到。<br />
+* The wavelength λ of this wave is given by λ = c/f f是振动频率<br />
+<img alt="Pasted image 20220309104746.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220309104746.png" /></p>
+<p>原子能量量子化的证据：根据麦克斯韦的电磁理论，加速电荷一定会发出电磁辐射。原子核轨道上的电子正在加速因为它的方向一直在变化。因此，它必须发射电磁辐射,失去能量,最终螺旋进入原子核。</p>
+<p>干涉；衍射；极化；</p>
+<p><strong>黑体辐射 Blackbody Radiation</strong></p>
+<ul>
+<li>
+<p>基础</p>
+<ul>
+<li>黑体-对任何波长的外来辐射完全吸收而无任何反射的物体，即吸收比为1的物体；</li>
+<li>黑体辐射-黑体随着温度不同发出的光颜色不同，从红到蓝白；</li>
+<li>色温：某个光源发射出的光和黑体的这个温度下发出的相同，红色成分和蓝色成分的区别</li>
+</ul>
+</li>
+<li>
+<p>传统理论：黑体辐射的来源是这些物体表面的振荡电荷 oscillator，它们被普通的热运动加速了（下图）</p>
+<ul>
+<li>反驳：频率高的时候也会趋于零（经典理论(虚线曲线)与短波长的观测结果不一致）</li>
+<li><img alt="Pasted image 20220309105624.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220309105624.png" /></li>
+</ul>
+</li>
+<li>
+<p>普朗克假设 Planck’s Hypothesis：</p>
+<ul>
+<li>系统的能量只能取离散值，用它的能级图表示。 quanta</li>
+<li>一个量子化的振荡器只能以离散的数量∆𝜀获得或损失能量，与它的频率相关︎∆𝜀= h𝜈，所以只能放出特定频率</li>
+<li>为了从更高的能态发射能量，量子化系统 quantized system 的温度必须足够高以激发这些态。</li>
+<li>波尔假设： <img alt="Pasted image 20220315120654.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220315120654.png" /></li>
+</ul>
+</li>
+<li>
+<p>根据普朗克假设修改的公式如下，加入了频率为n的振荡器 oscillator 在给定温度T下被激活的概率。</p>
+<ul>
+<li><img alt="Pasted image 20220312154046.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220312154046.png" /></li>
+</ul>
+</li>
+<li>
+<p>普朗克假设与经典物理的关系：在温度无限高的时候，上述两公式等价</p>
+<ul>
+<li><img alt="Pasted image 20220315120328.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220315120328.png" /></li>
+</ul>
+</li>
+<li>
+<p>实验证据：原子光谱和能态之间的跃迁 Atomic Spectra and Transitions between Energy States</p>
+<ul>
+<li>波尔假设的验证试验：弗兰克-赫兹实验 变化的E=eV</li>
+</ul>
+</li>
+<li>
+<p>波尔模型 The Bohr Model: Predicting Discrete Energy Levels</p>
+<ul>
+<li>波尔射线 </li>
+<li>分子光谱 可被其解释   Atomic Spectra: Interpretation by the Bohr Model</li>
+</ul>
+</li>
+</ul>
+<h2 id="1-4">1-4<a class="headerlink" href="#1-4" title="Permanent link">#</a></h2>
+<ul>
+<li>波粒二象性证据 Wave–Particle Duality<ul>
+<li>光电效应 The Photoelectric Effect：   Electron volt (eV）</li>
+<li>物质波 De Broglie Waves：任何<ul>
+<li>实验证明：   Electron Diffraction 电子衍射</li>
+</ul>
+</li>
+<li>海森堡原理 The Heisenberg Principle ：粒子的位置和动量不能同时被确定</li>
+</ul>
+</li>
+</ul>
+<p>比较微观粒子和宏观物体的特征：<br />
+1. 宏观物体同时具有确定的坐标和动量，可用牛顿力学描述；而微观粒子没有同时确<br />
+定的坐标和动量，需要用量子力学描述。<br />
+2. 宏观物体有连续可预测的运动轨道，可追踪个物体的运动轨迹加以分辨；微观粒子<br />
+具有概率分布的特性，不可能分辨出各个粒子的轨迹。<br />
+3. 宏观物体可以处于任意能量状态，体系的能量可以是任意的，连续变化的数值；微<br />
+观粒子只能处于某些确定的能量状态，能量的改变量不能取任意值的，连续变化的<br />
+数值，只能是分立的，即量子化的。<br />
+4. Indeterminacy对宏观物体无实际意义，Planck常数可当作0；微观粒子遵循<br />
+Indeterminacy 关系，Planck常数不能被看作0. 所以可以用不确定关系式作为区分<br />
+宏观物体与微观粒子的判别标准</p>
+<p>计算<img alt="Pasted image 20220315124212.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220315124212.png" /></p>
+<p>薛定谔方程   The Schrödinger Equation<br />
+*    Particle-in-a-Box Models<br />
+*    Quantum Harmonic Oscillator 量子谐振子</p>
+<p>还是看PPT吧</p>
+<h1 id="普化期末考试范围">普化期末考试范围<a class="headerlink" href="#普化期末考试范围" title="Permanent link">#</a></h1>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> 波长与能量的关系</li>
+<li>
+<p>普朗克假设，E=hv[1-3]=hc/lambda</p>
+</li>
+<li class="task-list-item">
+<p><input type="checkbox" disabled/> 波函数的的基本性质（收敛、归一化、物理意义）</p>
+</li>
+<li>波函数代表了量子系统的状态（量子态），是空间和时间的函数</li>
+<li>一种概率的波动，概率具有归一性，即粒子出现在所有位置的概率和为一</li>
+<li>满足线性叠加</li>
+<li>
+<p>一个粒子的波函数是多个确定的位置的叠加态 – 每个确定位置所代表的波函数就是这样一个δ波。而当我们观察粒子时，会使得粒子从它所有这些叠加分量中随机选取一个，从而“坍缩”到这上面去，而我们看到的相应的概率，就正比于该叠加波（δ波）在整个波函数中的叠加权重（它的叠加分量）的平方。 <a href="https://zhuanlan.zhihu.com/p/52220323">https://zhuanlan.zhihu.com/p/52220323</a> </p>
+</li>
+<li class="task-list-item">
+<p><input type="checkbox" disabled/> 无限深势阱的波函数、能量（公式不要求掌握）</p>
+</li>
+<li>
+<p>计算 [1-4: 32]</p>
+</li>
+<li class="task-list-item">
+<p><input type="checkbox" disabled/> 氢原子的波函数（公式不要求掌握）、原子轨道的量子数、波函数的基本性质（如对称性、节点的个数与类型等）[2-2]<br />
+<img alt="Pasted image 20220616235417.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220616235417.png" /><br />
+[2-3:12]原子核外电子排布</p>
+</li>
+<li class="task-list-item">
+<p><input type="checkbox" disabled/> 单电子原子轨道的能量（公式要求掌握）</p>
+</li>
+<li class="task-list-item">
+<p><input type="checkbox" disabled/> 多电子原子轨道的相对能量（定性结论）、多电子原子的电子排布</p>
+</li>
+<li class="task-list-item">
+<p><input type="checkbox" disabled/> 分子轨道的对称性</p>
+</li>
+<li class="task-list-item">
+<p><input type="checkbox" disabled/> LCAO、第二周期同种元素双原子分子的轨道关联图</p>
+</li>
+<li class="task-list-item">
+<p><input type="checkbox" disabled/> Lewis 结构式</p>
+</li>
+<li class="task-list-item">
+<p><input type="checkbox" disabled/> 判断多原子分子的 VSEPR 构型、杂化类型、分子形状</p>
+</li>
+<li class="task-list-item">
+<p><input type="checkbox" disabled/> 分子偶极、极性分子</p>
+</li>
+<li class="task-list-item">
+<p><input type="checkbox" disabled/> 元素周期表上元素电负性、原子半径的变化规律</p>
+</li>
+<li class="task-list-item">
+<p><input type="checkbox" disabled/> 晶体场理论（基本概念、八面体场配位化合物中心原子的电子排布、常见强场、弱场配体）</p>
+</li>
+</ul>
+<h1 id="hw1">hw1<a class="headerlink" href="#hw1" title="Permanent link">#</a></h1>
+<p><img alt="Pasted image 20220228202230.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220228202230.png" /></p>
+<p>1.5 - 2.2<br />
+1.6-1.14</p>
+<p><a href="D:\大学\4.2\普通化学\结构化学基础习题答案-周公度-第4版.pdf">答案</a> <br />
+<a href="https://wenku.baidu.com/view/8aa66c8e84868762caaed5e3.html">答案网页版</a> </p>
+<h1 id="hw2">hw2<a class="headerlink" href="#hw2" title="Permanent link">#</a></h1>
+<p>1 <img alt="Pasted image 20220315130001.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220315130001.png" /></p>
+<p>2 <img alt="Pasted image 20220315131322.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220315131322.png" /></p>
+<p>3 <img alt="Pasted image 20220315131549.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220315131549.png" /></p>
+<p>4 <img alt="Pasted image 20220315131854.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220315131854.png" /><br />
+<img alt="Pasted image 20220315131903.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220315131903.png" /></p>
+<p>5 <img alt="Pasted image 20220315132202.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220315132202.png" /></p>
+<p>3.1 <img alt="Pasted image 20220315143746.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220315143746.png" /></p>
+<p>3.2 <img alt="Pasted image 20220315150930.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220315150930.png" /><br />
+<img alt="Pasted image 20220315150920.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220315150920.png" /></p>
+<p>3.3<br />
+<img alt="Pasted image 20220315152525.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220315152525.png" /></p>
+<p>3.4<br />
+<img alt="Pasted image 20220315152724.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220315152724.png" /></p>
+<p>3.5<br />
+<img alt="Pasted image 20220315154450.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220315154450.png" /></p>
+<h1 id="hw3">hw3<a class="headerlink" href="#hw3" title="Permanent link">#</a></h1>
+<p>1 <img alt="Pasted image 20220424210034.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220424210034.png" /></p>
+<p>2<br />
+<a href="https://www.chegg.com/homework-help/determine-oxidation-state-metal-chapter-8-problem-18p-solution-9780840049315-exc">https://www.chegg.com/homework-help/determine-oxidation-state-metal-chapter-8-problem-18p-solution-9780840049315-exc</a></p>
+<p>3<br />
+<a href="https://www.chegg.com/homework-help/platinum-iv-forms-octahedral-complexes-sketch-structures-dis-chapter-8-problem-28p-solution-9781133715078-exc">https://www.chegg.com/homework-help/platinum-iv-forms-octahedral-complexes-sketch-structures-dis-chapter-8-problem-28p-solution-9781133715078-exc</a></p>
+<p>4<br />
+<a href="https://www.chegg.com/homework-help/following-ions-draw-diagrams-like-figure-818-show-orbital-oc-chapter-8-problem-29p-solution-9780840049315-exc">https://www.chegg.com/homework-help/following-ions-draw-diagrams-like-figure-818-show-orbital-oc-chapter-8-problem-29p-solution-9780840049315-exc</a></p>
+<p>5<br />
+<img alt="Pasted image 20220424214611.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220424214611.png" /></p>
+<p>6<br />
+<img alt="Pasted image 20220424214939.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220424214939.png" /></p>
+<p>7<br />
+<img alt="4b277de1a53eeff8593c6b43f604610.jpg" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/4b277de1a53eeff8593c6b43f604610.jpg" /></p>
+<h1 id="hw6">Hw6<a class="headerlink" href="#hw6" title="Permanent link">#</a></h1>
+<p><img alt="Pasted image 20220530191753.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220530191753.png" /></p>
+<p><a href="https://www.doc88.com/p-6671635191012.html">https://www.doc88.com/p-6671635191012.html</a><br />
+<img alt="Pasted image 20220530192321.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220530192321.png" /><br />
+<img alt="Pasted image 20220530192338.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220530192338.png" /><br />
+<img alt="Pasted image 20220530192352.png" src="../../../%E9%99%84%E4%BB%B6/%E5%9B%BE%E7%89%87/Pasted%20image%2020220530192352.png" /></p>
+<p><a href="https://www.slideserve.com/cindy/1-2-3">https://www.slideserve.com/cindy/1-2-3</a><br />
+<a href="https://m.61taotao.com/zxxedu/1081348.html">https://m.61taotao.com/zxxedu/1081348.html</a></p>
+<h1 id="hw7">HW7<a class="headerlink" href="#hw7" title="Permanent link">#</a></h1>
+<p>2： <a href="https://www.shangxueba.cn/question.aspx?id=6072680&amp;timestamp=1654430995622&amp;token=98fe4784acaafcfea8b01fe2adc114cc&amp;issxbask=1">https://www.shangxueba.cn/question.aspx?id=6072680&amp;timestamp=1654430995622&amp;token=98fe4784acaafcfea8b01fe2adc114cc&amp;issxbask=1</a><br />
+3： <a href="https://www.shangxueba.com/ask/16604903.html">https://www.shangxueba.com/ask/16604903.html</a></p>
+<p>6： <a href="https://www.vedantu.com/question-answer/geometry-of-left-nicl4-right2-left-nicn4-class-11-chemistry-cbse-5fd86074d7db7b0995bc1391">https://www.vedantu.com/question-answer/geometry-of-left-nicl4-right2-left-nicn4-class-11-chemistry-cbse-5fd86074d7db7b0995bc1391</a></p>
+<p><a href="https://www.doc88.com/p-77487064251603.html?r=1">https://www.doc88.com/p-77487064251603.html?r=1</a></p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="">
+        
+          <a href="../SPIN/" title="SPIN" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  上一页
+                </span>
+                SPIN
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="../%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6/" title="物体在空间运动的描述" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  下一页
+                </span>
+                物体在空间运动的描述
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" /></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../../assets/javascripts/vendor.c51dfa35.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.eaaa3931.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "", "search.config.separator": "[\\uff0c\\u3002]+", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../../..",
+          features: ["navigation.tabs", "toc.integrate"],
+          search: Object.assign({
+            worker: "../../../assets/javascripts/worker/search.58d22e8e.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
